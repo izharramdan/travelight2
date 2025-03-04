@@ -1,32 +1,14 @@
 import React, { useState } from "react";
-import ImageLoginRegis from "../../assets/cover-women.jpg"; // Adjust the path to your image file
+import ImageLoginRegis from "../../assets/login.svg"; // Adjust the path to your image file
+import UseLogin from "../../hooks/useLogin";
 
 const Login = () => {
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleLogin = (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
-      setSuccess(true);
-    }, 2000);
-  };
+  const { success, error, isLoading, handleLogin } = UseLogin();
 
   return (
     <div>
       <div className="flex flex-col h-screen md:flex-row-reverse">
-        <div className="flex md:flex md:w-1/2">
-          <img
-            src={ImageLoginRegis}
-            alt="Login"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="flex flex-col px-10 gap-5 md:p-20 w-full justify-center h-full md:w-1/2">
+      <div className="flex flex-col px-10 gap-5 md:p-20 w-full justify-center h-full md:w-1/2">
           <div>
             <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 my-5">
               Login
@@ -86,7 +68,7 @@ const Login = () => {
                   />
                 </div>
                 <button
-                  className="my-3 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                  className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md bg-stone-200 hover:bg-stone-100 relative bg-gradient-to-b from-green-200 to-green-100 border-stone-200 text-stone-700 rounded-lg hover:bg-gradient-to-b hover:from-stone-50 hover:to-stone-50 hover:border-stone-200 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.35),inset_0_-1px_0px_rgba(0,0,0,0.20)] after:pointer-events-none transition antialiased"
                   type="submit"
                   disabled={isLoading}
                 >
@@ -98,12 +80,7 @@ const Login = () => {
           <div className="flex items-center justify-center my-4">
             <span className="text-gray-500">or</span>
           </div>
-          <div className="flex items-center justify-center">
-            <button className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-              Continue with Google
-            </button>
-          </div>
-          <div className="md:pt-10 pb-10">
+          <div className="md:pt-5 pb-10">
             <a href="/" className="text-center text-sm mb-3 text-primary block">
               Continue as guest
             </a>
@@ -115,6 +92,14 @@ const Login = () => {
             </p>
           </div>
         </div>
+        <div className="flex md:flex md:w-1/2">
+          <img
+            src={ImageLoginRegis}
+            alt="Login"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
       </div>
     </div>
   );

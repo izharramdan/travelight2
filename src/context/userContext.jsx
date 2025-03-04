@@ -9,15 +9,20 @@ export function UserProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getToken = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken("token");
 
       if (!token) {
         setLoading(false);
         return;
       }
-
       const response = await axios.get(
         `${BASE_URL.API}${END_POINT.GET_LOGGED_USER}`,
         {
@@ -32,7 +37,6 @@ export function UserProvider({ children }) {
         setUser(response.data.data);
       }
     } catch (err) {
-
       setError("Failed to fetch user data");
     } finally {
       setLoading(false);
@@ -49,7 +53,7 @@ export function UserProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading, error, refreshUserData }}>
+    <UserContext.Provider value={{ user, loading, error, setUser, refreshUserData }}>
       {children}
     </UserContext.Provider>
   );
