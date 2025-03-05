@@ -41,9 +41,6 @@ const useLogout = () => {
           },
         }
       );
-
-      console.log("Logout response:", response);
-
       if (response.data?.code === "200") {
         deleteCookie("token");
         toast(`See you again`, {

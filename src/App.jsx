@@ -5,6 +5,7 @@ import Login from "./pages/Login/Index";
 import { UserProvider } from "./context/userContext";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout/Layout";
+import Register from "./pages/Register/Index";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
             <Route index element={<Home />} />
           </Route>
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
         </Routes>
       </Router>
     </UserProvider>

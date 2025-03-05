@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import ImageLoginRegis from "../../assets/login.svg"; // Adjust the path to your image file
+import React from "react";
+import ImageLoginRegis from "../../assets/login-logo.svg";
 import UseLogin from "../../hooks/useLogin";
 
 const Login = () => {
@@ -28,7 +28,7 @@ const Login = () => {
                 role="alert"
               >
                 <strong className="font-bold">Success</strong>
-                <span className="block sm:inline">Login Success</span>
+                <span className="block sm:inline">Regiter Success</span>
               </div>
             )}
           </div>
