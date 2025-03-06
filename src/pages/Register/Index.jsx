@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageLoginRegis from "../../assets/register-logo.svg";
 import useRegister from "../../hooks/useRegister";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const { success, error, isLoading, handleRegister } = useRegister();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleRepeatPasswordVisibility = () => {
+    setShowRepeatPassword(!showRepeatPassword);
+  };
 
   return (
     <div>
@@ -35,7 +46,7 @@ const Register = () => {
           <div>
             <form onSubmit={handleRegister}>
               <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col space-y-1.5">
                   <label
                     htmlFor="name"
                     className="block text-sm font-medium text-gray-700"
@@ -67,7 +78,7 @@ const Register = () => {
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
                 </div>
-                <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col space-y-1.5 relative">
                   <label
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
@@ -78,12 +89,19 @@ const Register = () => {
                     id="password"
                     name="password"
                     placeholder="password"
-                    type="text"
+                    type={showPassword ? "text" : "password"}
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
+                  <div
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                    style={{ top: "60%", transform: "translateY(-50%)" }}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
                 </div>
-                <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col space-y-1.5 relative">
                   <label
                     htmlFor="passwordRepeat"
                     className="block text-sm font-medium text-gray-700"
@@ -94,10 +112,17 @@ const Register = () => {
                     id="passwordRepeat"
                     name="passwordRepeat"
                     placeholder="repeat password"
-                    type="text"
+                    type={showRepeatPassword ? "text" : "password"}
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
+                  <div
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                    onClick={toggleRepeatPasswordVisibility}
+                    style={{ top: "60%", transform: "translateY(-50%)" }}
+                  >
+                    {showRepeatPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <label

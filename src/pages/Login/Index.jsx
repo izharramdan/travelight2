@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageLoginRegis from "../../assets/login-logo.svg";
 import UseLogin from "../../hooks/useLogin";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const { success, error, isLoading, handleLogin } = UseLogin();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div>
       <div className="flex flex-col h-screen md:flex-row-reverse">
-      <div className="flex flex-col px-10 gap-5 md:p-20 w-full justify-center h-full md:w-1/2">
+        <div className="flex flex-col px-10 gap-5 md:p-20 w-full justify-center h-full md:w-1/2">
           <div>
             <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 my-5">
               Login
@@ -51,7 +57,7 @@ const Login = () => {
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
                 </div>
-                <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col space-y-1.5 relative">
                   <label
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
@@ -62,10 +68,17 @@ const Login = () => {
                     id="password"
                     name="password"
                     placeholder="Enter your password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
+                  <div
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                    style={{ top: "60%", transform: "translateY(-50%)" }}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
                 </div>
                 <button
                   className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md bg-stone-200 hover:bg-stone-100 relative bg-gradient-to-b from-green-200 to-green-100 border-stone-200 text-stone-700 rounded-lg hover:bg-gradient-to-b hover:from-stone-50 hover:to-stone-50 hover:border-stone-200 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.35),inset_0_-1px_0px_rgba(0,0,0,0.20)] after:pointer-events-none transition antialiased"
@@ -99,7 +112,6 @@ const Login = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        
       </div>
     </div>
   );
