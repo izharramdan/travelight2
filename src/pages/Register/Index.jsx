@@ -4,9 +4,25 @@ import useRegister from "../../hooks/useRegister";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-  const { success, error, isLoading, handleRegister } = useRegister();
+  const { success, error, isLoading, handleRegister, setImageFile } =
+    useRegister();
+  const [profilePicturePreview, setProfilePicturePreview] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+  const handleProfilePictureChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePicturePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setProfilePicturePreview(null);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -21,7 +37,7 @@ const Register = () => {
       <div className="flex flex-col h-screen md:flex-row-reverse">
         <div className="flex flex-col px-10 gap-5 md:p-20 w-full justify-center h-full md:w-1/2">
           <div>
-            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 my-5">
+            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
               Register
             </h2>
             {error && (
@@ -135,8 +151,17 @@ const Register = () => {
                     id="profilePicture"
                     name="profilePicture"
                     type="file"
+                    accept="image/*"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    onChange={handleProfilePictureChange}
                   />
+                  {profilePicturePreview && (
+                    <img
+                      src={profilePicturePreview}
+                      alt="Profile Preview"
+                      className="mt-2 h-20 w-20 object-cover rounded-full"
+                    />
+                  )}
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <label

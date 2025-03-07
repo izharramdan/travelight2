@@ -16,7 +16,7 @@ const Login = () => {
       <div className="flex flex-col h-screen md:flex-row-reverse">
         <div className="flex flex-col px-10 gap-5 md:p-20 w-full justify-center h-full md:w-1/2">
           <div>
-            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 my-5">
+            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
               Login
             </h2>
             {error && (

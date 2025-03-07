@@ -8,8 +8,32 @@ const useRegister = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const navigate = useNavigate();
+
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL.API}${END_POINT.UPLOAD_IMAGE}`,
+        formData,
+        {
+          headers: {
+            apiKey: API_KEY,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data.url;
+    } catch (err) {
+      setError("Failed to upload image");
+      return null;
+    }
+  };
 
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -25,14 +49,24 @@ const useRegister = () => {
       return;
     }
 
+    let imageUrl = "";
+    if (imageFile) {
+      const uploadImageUrl = await uploadImage(imageFile);
+      if (uploadImageUrl) {
+        imageUrl = uploadImageUrl;
+      } else {
+        setIsLoading(false);
+        return;
+      }
+    }
+
     const registerData = {
       name: formData.get("name"),
       email: formData.get("email"),
       password: password,
       passwordRepeat: passwordRepeat,
       role: "user",
-      profilePictureUrl:
-        "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80",
+      profilePictureUrl: imageUrl,
       phoneNumber: formData.get("phoneNumber"),
     };
 
@@ -45,7 +79,8 @@ const useRegister = () => {
       setSuccess(true);
       setError("");
       toast.success("successfully registered");
-      navigate("/login");
+      setTimeout(() => navigate("/login"), 2000);
+      // navigate("/login");
     } catch (e) {
       setSuccess(false);
       setError(
@@ -63,6 +98,7 @@ const useRegister = () => {
     error,
     isLoading,
     handleRegister,
+    setImageFile,
   };
 };
 
