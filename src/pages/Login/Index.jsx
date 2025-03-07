@@ -94,12 +94,12 @@ const Login = () => {
             <span className="text-gray-500">or</span>
           </div>
           <div className="md:pt-5 pb-10">
-            <a href="/" className="text-center text-sm mb-3 text-primary block">
+            <a href="/" className="text-center text-sm mb-3 text-blue-600 block">
               Continue as guest
             </a>
             <p className="text-center text-sm">
               Don't have an account yet?{" "}
-              <a className="text-primary" href="/register">
+              <a className="text-blue-600" href="/register">
                 Register here
               </a>
             </p>

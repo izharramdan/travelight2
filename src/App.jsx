@@ -6,6 +6,8 @@ import { UserProvider } from "./context/userContext";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout/Layout";
 import Register from "./pages/Register/Index";
+import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
@@ -18,6 +20,14 @@ const App = () => {
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route
+            path="dashboard/*"
+            element={
+              <ProtectedRoute role="admin">
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          ></Route>
         </Routes>
       </Router>
     </UserProvider>

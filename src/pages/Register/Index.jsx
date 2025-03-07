@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ImageLoginRegis from "../../assets/register-logo.svg";
 import useRegister from "../../hooks/useRegister";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { success, error, isLoading, handleRegister, setImageFile } =
@@ -9,6 +10,7 @@ const Register = () => {
   const [profilePicturePreview, setProfilePicturePreview] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleProfilePictureChange = (event) => {
     const file = event.target.files[0];
@@ -30,6 +32,11 @@ const Register = () => {
 
   const toggleRepeatPasswordVisibility = () => {
     setShowRepeatPassword(!showRepeatPassword);
+  };
+
+  const handleLoginClick = (event) => {
+    event.preventDefault();
+    navigate("/login");
   };
 
   return (
@@ -186,6 +193,17 @@ const Register = () => {
                 >
                   {isLoading ? "Registering..." : "Register"}
                 </button>
+              </div>
+              <div className="md:pt-5 pb-10">
+                <p className="text-center text-sm">
+                  already have an account?{" "}
+                  <a
+                    className="text-blue-600 cursor-pointer"
+                    onClick={handleLoginClick}
+                  >
+                    Login here
+                  </a>
+                </p>
               </div>
             </form>
           </div>

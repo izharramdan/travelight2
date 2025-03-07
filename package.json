@@ -13,10 +13,12 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@material-tailwind/react": "^3.0.0-beta.24",
     "aos": "^2.3.4",
     "axios": "^1.7.3",
     "formik": "^2.4.6",
     "gh-pages": "^6.3.0",
+    "iconoir-react": "^7.10.1",
     "react": "^18.3.1",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
