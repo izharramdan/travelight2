@@ -85,7 +85,10 @@ const Navbar = () => {
                     Edit Profile
                   </a>
                   {user.role === "admin" && (
-                    <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <a
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => navigate("dashboard/*")}
+                    >
                       Admin Dashboard
                     </a>
                   )}

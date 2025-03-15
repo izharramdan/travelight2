@@ -1,14 +1,14 @@
-import * as React from "react";
+import { useState } from "react";
+import Logo from "../../../assets/travelight.png";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   List,
   Typography,
   Chip,
   Collapse,
-  Button,
-  Input,
+  Avatar,
   IconButton,
-  Drawer,
 } from "@material-tailwind/react";
 import {
   Archive,
@@ -16,187 +16,173 @@ import {
   Folder,
   LogOut,
   Mail,
-  Menu,
   MoreHorizCircle,
   NavArrowRight,
+  NavArrowLeft,
   Pin,
-  Search,
-  SelectFace3d,
   SendDiagonal,
   Bin,
   UserXmark,
-  Xmark,
 } from "iconoir-react";
 
 const Links = [
   {
     icon: Mail,
-    title: "Inbox",
+    title: "Dashboard",
     href: "#",
     badge: 14,
   },
   {
     icon: SendDiagonal,
-    title: "Sent",
+    title: "Banner",
     href: "#",
   },
   {
     icon: EmptyPage,
-    title: "Drafts",
+    title: "Promo",
     href: "#",
   },
   {
     icon: Pin,
-    title: "Pins",
+    title: "Category",
     href: "#",
   },
   {
     icon: Archive,
-    title: "Archive",
+    title: "Activity",
     href: "#",
   },
   {
     icon: Bin,
-    title: "Trash",
+    title: "Transaction",
+    href: "#",
+  },
+  {
+    icon: Bin,
+    title: "User",
     href: "#",
   },
 ];
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   return (
-    <>
-      <Drawer>
-        <Drawer.Trigger className="group">
-          <IconButton>
-            <Xmark className="hidden h-4 w-4 stroke-2 group-data-[open=true]:block" />
-            <Menu className="hidden h-4 w-4 stroke-2 group-data-[open=false]:block" />
+    <div
+      className={`flex flex-col h-screen ${
+        isCollapsed ? "w-16" : "w-64"
+      } transition-width duration-300`}
+    >
+      <Card className="flex flex-col h-full w-full">
+        <Card.Header
+          className={`flex items-center ${
+            isCollapsed ? "justify-center" : "justify-between"
+          } p-3`}
+        >
+          <div className="flex items-center gap-4">
+            <Avatar
+              size="md"
+              src={Logo}
+              alt="Travelight Logo"
+              className={`${isCollapsed ? "hidden" : "block"} cursor-pointer`}
+              onClick={() => navigate("/")}
+            />
+            {!isCollapsed && (
+              <Typography className="font-semibold">Dashboard</Typography>
+            )}
+          </div>
+          <IconButton
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            variant="outline"
+            className="rounded-full"
+          >
+            {isCollapsed ? (
+              <NavArrowRight className="h-5 w-5" />
+            ) : (
+              <NavArrowLeft className="h-5 w-5" />
+            )}
           </IconButton>
-        </Drawer.Trigger>
-        <Drawer.Overlay>
-          <Drawer.Panel placement="left" className="p-0">
-            <div className="flex items-center justify-between gap-4">
-              <Drawer.DismissTrigger
-                as={IconButton}
-                size="sm"
-                variant="ghost"
-                color="secondary"
-                className="absolute right-2 top-2"
-                isCircular
+        </Card.Header>
+        <Card.Body className="flex-grow p-3">
+          <List>
+            {Links.map(({ icon: Icon, title, href, badge }) => (
+              <List.Item
+                key={title}
+                href={href}
+                className="flex items-center gap-2"
               >
-                <Xmark className="h-5 w-5" />
-              </Drawer.DismissTrigger>
-            </div>
-            <Card className="grid h-full border-none shadow-none">
-              <div>
-                <Card.Header className="mx-3 mb-0 mt-3 flex h-max items-center gap-2">
-                  <img
-                    src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/ct-assets/logo.png"
-                    alt="brand"
-                    className="h-7 w-7 rounded-full"
-                  />
-                  <Typography className="font-semibold">
-                    Material Tailwind
-                  </Typography>
-                </Card.Header>
-                <Card.Body className="p-3">
-                  <Input type="search" placeholder="Search here...">
-                    <Input.Icon>
-                      <Search className="h-full w-full" />
-                    </Input.Icon>
-                  </Input>
-                  <List className="mt-3">
-                    {Links.map(({ icon: Icon, title, href, badge }) => (
-                      <List.Item key={title} href={href}>
-                        <List.ItemStart>
-                          <Icon className="h-[18px] w-[18px]" />
-                        </List.ItemStart>
-                        {title}
-                        {badge && (
-                          <List.ItemEnd>
-                            <Chip size="sm" variant="ghost">
-                              <Chip.Label>{badge}</Chip.Label>
-                            </Chip>
-                          </List.ItemEnd>
-                        )}
-                      </List.Item>
-                    ))}
-                    <hr className="-mx-3 my-3 border-secondary" />
-                    <List.Item onClick={() => setIsOpen((cur) => !cur)}>
-                      <List.ItemStart>
-                        <MoreHorizCircle className="h-[18px] w-[18px]" />
-                      </List.ItemStart>
-                      More
+                <List.ItemStart>
+                  <Icon className="h-[18px] w-[18px]" />
+                </List.ItemStart>
+                {!isCollapsed && (
+                  <>
+                    {title}
+                    {badge && (
                       <List.ItemEnd>
-                        <NavArrowRight
-                          className={`h-4 w-4 ${isOpen ? "rotate-90" : ""}`}
-                        />
+                        <Chip size="sm" variant="ghost">
+                          <Chip.Label>{badge}</Chip.Label>
+                        </Chip>
                       </List.ItemEnd>
-                    </List.Item>
-                    <Collapse open={isOpen}>
-                      <List>
-                        <List.Item>
-                          <List.ItemStart>
-                            <Folder className="h-[18px] w-[18px]" />
-                          </List.ItemStart>
-                          Spam
-                        </List.Item>
-                        <List.Item>
-                          <List.ItemStart>
-                            <UserXmark className="h-[18px] w-[18px]" />
-                          </List.ItemStart>
-                          Blocked
-                        </List.Item>
-                        <List.Item>
-                          <List.ItemStart>
-                            <Folder className="h-[18px] w-[18px]" />
-                          </List.ItemStart>
-                          Important
-                        </List.Item>
-                      </List>
-                    </Collapse>
-                    <hr className="-mx-3 my-3 border-secondary" />
-                    <List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error">
-                      <List.ItemStart>
-                        <LogOut className="h-[18px] w-[18px]" />
-                      </List.ItemStart>
-                      Logout
-                    </List.Item>
-                  </List>
-                </Card.Body>
-              </div>
-              <Card.Footer className="mt-8 grid">
-                <Card color="primary" className="mt-auto shadow-none">
-                  <Card.Header className="m-3">
-                    <SelectFace3d className="h-10 w-10 text-primary-foreground" />
-                  </Card.Header>
-                  <Card.Body>
-                    <Typography type="h6" className="mb-1 text-white">
-                      Upgrade to PRO
-                    </Typography>
-                    <Typography type="small" className="text-white/80">
-                      Upgrade to Material Tailwind PRO and get even more
-                      components, plugins, advanced features and premium.
-                    </Typography>
-                  </Card.Body>
-                  <Card.Footer>
-                    <Button
-                      size="sm"
-                      as="a"
-                      href="#"
-                      className="border-white bg-white text-black hover:border-white hover:bg-white hover:text-black"
-                    >
-                      Upgrade Now
-                    </Button>
-                  </Card.Footer>
-                </Card>
-              </Card.Footer>
-            </Card>
-          </Drawer.Panel>
-        </Drawer.Overlay>
-      </Drawer>
-    </>
+                    )}
+                  </>
+                )}
+              </List.Item>
+            ))}
+            <hr className="-mx-3 my-3 border-secondary" />
+            <List.Item
+              onClick={() => setIsOpen((cur) => !cur)}
+              className="flex items-center gap-2"
+            >
+              <List.ItemStart>
+                <MoreHorizCircle className="h-[18px] w-[18px]" />
+              </List.ItemStart>
+              {!isCollapsed && (
+                <>
+                  More
+                  <List.ItemEnd>
+                    <NavArrowRight
+                      className={`h-4 w-4 ${isOpen ? "rotate-90" : ""}`}
+                    />
+                  </List.ItemEnd>
+                </>
+              )}
+            </List.Item>
+            <Collapse open={isOpen}>
+              <List>
+                <List.Item className="flex items-center gap-2">
+                  <List.ItemStart>
+                    <Folder className="h-[18px] w-[18px]" />
+                  </List.ItemStart>
+                  {!isCollapsed && "Spam"}
+                </List.Item>
+                <List.Item className="flex items-center gap-2">
+                  <List.ItemStart>
+                    <UserXmark className="h-[18px] w-[18px]" />
+                  </List.ItemStart>
+                  {!isCollapsed && "Blocked"}
+                </List.Item>
+                <List.Item className="flex items-center gap-2">
+                  <List.ItemStart>
+                    <Folder className="h-[18px] w-[18px]" />
+                  </List.ItemStart>
+                  {!isCollapsed && "Important"}
+                </List.Item>
+              </List>
+            </Collapse>
+          </List>
+        </Card.Body>
+        <Card.Footer className="mt-auto p-3">
+          <List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error flex items-center gap-2">
+            <List.ItemStart>
+              <LogOut className="h-[18px] w-[18px]" />
+            </List.ItemStart>
+            {!isCollapsed && "Logout"}
+          </List.Item>
+        </Card.Footer>
+      </Card>
+    </div>
   );
 };
 

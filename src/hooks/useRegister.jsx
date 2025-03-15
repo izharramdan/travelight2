@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import useUploadImage from "./useUploadImage";
 
 const useRegister = () => {
   const [success, setSuccess] = useState(false);
@@ -10,30 +11,9 @@ const useRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
 
+  const { uploadImage } = useUploadImage();
+
   const navigate = useNavigate();
-
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const response = await axios.post(
-        `${BASE_URL.API}${END_POINT.UPLOAD_IMAGE}`,
-        formData,
-        {
-          headers: {
-            apiKey: API_KEY,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      return response.data.url;
-    } catch (err) {
-      setError("Failed to upload image");
-      return null;
-    }
-  };
 
   const handleRegister = async (event) => {
     event.preventDefault();
