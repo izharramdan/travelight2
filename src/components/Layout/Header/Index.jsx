@@ -35,8 +35,8 @@ const Navbar = () => {
   }, [isDropdownOpen]);
 
   return (
-    <div>
-      <nav className="rounded-lg border overflow-visible p-2 bg-white border-stone-200 shadow-stone-950/5 mx-auto mb-4 w-11/12">
+    <div className="sticky top-0 z-50">
+      <nav className="rounded-md overflow-visible p-2 bg-white mx-auto w-full bg-opacity-50">
         <div className="flex items-center">
           <a className="font-sans antialiased text-sm text-current ml-4 mr-4 block py-1 font-semibold cursor-pointer hover:text-primary">
             <img

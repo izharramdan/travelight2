@@ -1,14 +1,13 @@
 import React from "react";
-import { IconButton } from "@material-tailwind/react";
-import { BrightStar } from "iconoir-react";
+import PromoSection from "../../components/Views/Home/PromoSection";
+import HeroSection from "../../components/Views/Home/HeroSection";
 
 const Home = () => {
   return (
     <>
       <div className="item flex flex-wrap justify-center gap-4">
-        <IconButton>
-          <BrightStar className="h-4 w-4 stroke-2" />
-        </IconButton>
+        <HeroSection />
+        <PromoSection />
       </div>
     </>
   );
