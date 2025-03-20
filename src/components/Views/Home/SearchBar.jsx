@@ -20,7 +20,6 @@ const SearchBar = () => {
           </div>
           <Button
             color="lightBlue"
-            fullWidth
             className="bg-white text-gray-800 h-full"
           >
             Search

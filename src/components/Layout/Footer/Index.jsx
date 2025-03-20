@@ -4,7 +4,7 @@ import Logo from "../../../assets/travelight.png";
 const Footer = () => {
   return (
     <div>
-      <footer className="w-11/12 mx-auto my-4 border rounded-lg">
+      <footer className="w-11/12 mx-auto my-4 mt-8 border rounded-lg">
         <div className="flex w-full flex-row flex-wrap items-center justify-center gap-x-12 gap-y-3 text-center md:justify-between">
           <img
             src={Logo}

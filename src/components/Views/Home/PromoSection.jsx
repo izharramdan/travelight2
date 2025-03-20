@@ -76,11 +76,6 @@ const PromoSection = () => {
             {loading && <div>Loading...</div>}
             {error && <div>{error.message}</div>}
             <Swiper
-              pagination={{
-                enabled: true,
-                clickable: true,
-                dynamicBullets: true,
-              }}
               modules={[Navigation]}
               slidesPerView={3}
               spaceBetween={30}

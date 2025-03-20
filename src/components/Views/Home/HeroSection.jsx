@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Typography, IconButton } from "@material-tailwind/react";
+import { IconButton } from "@material-tailwind/react";
 import { NavArrowRight, NavArrowLeft } from "iconoir-react";
 import HeroImage1 from "../../../assets/hero/1.png";
 import HeroImage2 from "../../../assets/hero/2.png";
