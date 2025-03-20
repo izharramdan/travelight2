@@ -79,6 +79,20 @@ const PromoSection = () => {
               modules={[Navigation]}
               slidesPerView={3}
               spaceBetween={30}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                },
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
               className="relative rounded-lg"
             >
               {promos.map((promo) => (
