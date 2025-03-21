@@ -2,6 +2,7 @@ import React from "react";
 import PromoSection from "../../components/Views/Home/PromoSection";
 import HeroSection from "../../components/Views/Home/HeroSection";
 import BannerSection from "../../components/Views/Home/BannerSection";
+import CategorySection from "../../components/Views/Home/CategorySection";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
         <HeroSection />
         <PromoSection />
         <BannerSection />
+        {/* <CategorySection /> */}
       </div>
     </>
   );

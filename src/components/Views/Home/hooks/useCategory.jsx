@@ -4,11 +4,15 @@ import axios from "axios";
 
 const fetcher = async () => {
   try {
-    const response = await axios.get(`${BASE_URL.API}${END_POINT.GET_BANNER}`, {
-      headers: {
-        apiKey: API_KEY,
-      },
-    });
+    const response = await axios.get(
+      `${BASE_URL.API}${END_POINT.GET_CATEGORY}`,
+      {
+        headers: {
+          apiKey: API_KEY,
+        },
+      }
+    );
+    console.log(response.data.data);
     return response.data.data;
   } catch (error) {
     console.error(error);
@@ -16,16 +20,16 @@ const fetcher = async () => {
   }
 };
 
-const useBanner = () => {
-  const [banners, setBanners] = useState([]);
+const useCategory = () => {
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBanners = async () => {
+    const fetchCategories = async () => {
       try {
         const data = await fetcher();
-        setBanners(data);
+        setCategories(data);
       } catch (error) {
         setError(error);
       } finally {
@@ -33,10 +37,9 @@ const useBanner = () => {
       }
     };
 
-    fetchBanners();
+    fetchCategories();
   }, []);
-
-  return { banners, loading, error };
+  return { categories, loading, error };
 };
 
-export default useBanner;
+export default useCategory;
