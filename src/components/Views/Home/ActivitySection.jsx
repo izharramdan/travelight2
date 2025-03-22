@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
+import useActivity from "./hooks/useActivity";
 
 const ActivitySection = () => {
-  return (
-    <div>ActivitySection</div>
-  )
-}
+  const { activities, loading, error } = useActivity();
+  return <div>ActivitySection</div>;
+};
 
-export default ActivitySection
+export default ActivitySection;

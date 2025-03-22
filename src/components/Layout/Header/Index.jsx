@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50">
-      <nav className="rounded-md overflow-visible p-2 bg-white mx-auto w-full bg-opacity-50">
+      <nav className="rounded-md overflow-visible p-2 bg-white mx-auto w-full bg-opacity-90">
         <div className="flex items-center">
           <a className="font-sans antialiased text-sm text-current ml-4 mr-4 block py-1 font-semibold cursor-pointer hover:text-primary">
             <img
