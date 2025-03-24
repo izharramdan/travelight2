@@ -10,6 +10,7 @@ import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Activity from "./pages/Activity/Index";
 import Category from "./pages/Category/Index";
+import Promo from "./pages/Promo/Index";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="activity" index element={<Activity />} />
             <Route path="category" index element={<Category />} />
+            <Route path="promo" index element={<Promo />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
