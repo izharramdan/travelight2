@@ -8,6 +8,8 @@ import Layout from "./components/Layout/Layout";
 import Register from "./pages/Register/Index";
 import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Activity from "./pages/Activity/Index";
+import Category from "./pages/Category/Index";
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="activity" index element={<Activity />} />
+            <Route path="category" index element={<Category />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

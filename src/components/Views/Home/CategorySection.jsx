@@ -4,6 +4,7 @@ import { Card, Typography, IconButton } from "@material-tailwind/react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { NavArrowRight, NavArrowLeft } from "iconoir-react";
+import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -39,12 +40,15 @@ function CustomNavigation() {
 
 const CategorySection = () => {
   const { categories, loading, error } = useCategory();
+  const navigate = useNavigate();
   return (
     <div className="mt-4 mx-auto container w-11/12">
-      <div className="mb-2">
+      <div className="mb-2 flex justify-between items-center">
         <Typography type="h3" className="text-gray-800">
-          <span className="text-3xl italic text-yellow-500 font-bold">%</span>{" "}
           Where to go
+        </Typography>
+        <Typography type="h5" className="text-gray-800 italic cursor-pointer" onClick={() => navigate("/category")}>
+          see more
         </Typography>
       </div>
       <div
