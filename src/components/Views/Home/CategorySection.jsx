@@ -79,7 +79,6 @@ const CategorySection = () => {
                   slidesPerView: 5,
                 },
               }}
-              className="relative rounded-lg"
             >
               {categories.map((category) => (
                 <SwiperSlide key={category.id} className="select-none">

@@ -81,7 +81,6 @@ const ActivitySection = () => {
                   slidesPerView: 5,
                 },
               }}
-              className="relative rounded-lg"
             >
               {activities.map((activity) => (
                 <SwiperSlide key={activity.id} className="select-none">

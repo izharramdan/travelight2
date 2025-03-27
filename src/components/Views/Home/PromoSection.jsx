@@ -93,7 +93,6 @@ const PromoSection = () => {
                   slidesPerView: 3,
                 },
               }}
-              className="relative rounded-lg"
             >
               {promos.map((promo) => (
                 <SwiperSlide key={promo.id} className="select-none">
@@ -107,10 +106,7 @@ const PromoSection = () => {
                       </div>
                     </Card.Header>
                     <Card.Body className="flex z-10">
-                      <Typography
-                        type="lead"
-                        className="text-white italic"
-                      >
+                      <Typography type="lead" className="text-white italic">
                         {truncateDescription(promo.description)}
                       </Typography>
                     </Card.Body>
