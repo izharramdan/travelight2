@@ -1,34 +1,9 @@
 import React from "react";
 import { Card, Typography } from "@material-tailwind/react";
-
-const activities = [
-  {
-    id: 1,
-    title: "Hiking Adventure",
-    description: "Explore the mountains with our guided hiking tours.",
-    imageUrl: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  },
-  {
-    id: 2,
-    title: "City Tour",
-    description: "Discover the city's hidden gems with our expert guides.",
-    imageUrl: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  },
-  {
-    id: 3,
-    title: "Beach Day",
-    description: "Relax and enjoy the sun on our beautiful beaches.",
-    imageUrl: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  },
-  {
-    id: 3,
-    title: "Beach Day",
-    description: "Relax and enjoy the sun on our beautiful beaches.",
-    imageUrl: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  },
-];
+import useActivity from "../../components/Views/Home/hooks/useActivity";
 
 const Activity = () => {
+  const { activities, loading, error } = useActivity();
   return (
     <div className="container mx-auto mt-8 px-16">
       <Typography variant="h2" className="text-center mb-8">
@@ -39,7 +14,7 @@ const Activity = () => {
           <Card key={activity.id} className="relative flex flex-col h-full">
             <div
               className="h-48 bg-cover bg-center rounded-t-lg"
-              style={{ backgroundImage: `url(${activity.imageUrl})` }}
+              style={{ backgroundImage: `url(${activity.imageUrls[0]})` }}
             />
             <div className="p-4 flex flex-col flex-grow">
               <Typography variant="h5" className="mb-2">

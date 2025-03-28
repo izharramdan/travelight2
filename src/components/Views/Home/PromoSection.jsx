@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import usePromo from "./hooks/usePromo";
 import { Card, Typography, IconButton } from "@material-tailwind/react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
@@ -7,6 +7,7 @@ import { NavArrowRight, NavArrowLeft } from "iconoir-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import DetailPromoModal from "../../../pages/Promo/DetailPromoModal";
 
 function CustomNavigation() {
   const swiper = useSwiper();
@@ -39,6 +40,15 @@ function CustomNavigation() {
 
 const PromoSection = () => {
   const { promos, loading, error } = usePromo();
+  const [selectedPromo, setSelectedPromo] = useState(null);
+
+  const handleCardClick = (promo) => {
+    setSelectedPromo(promo);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPromo(null);
+  };
   const truncateDescription = (description) => {
     return description.length > 20
       ? description.substring(0, 20) + "..."
@@ -96,7 +106,10 @@ const PromoSection = () => {
             >
               {promos.map((promo) => (
                 <SwiperSlide key={promo.id} className="select-none">
-                  <Card className="relative flex h-[20rem] w-full max-w-[28rem] flex-col">
+                  <Card
+                    className="relative flex h-[20rem] w-full max-w-[28rem] flex-col cursor-pointer"
+                    onClick={() => handleCardClick(promo)}
+                  >
                     <Card.Header className="h-4/5">
                       <div
                         className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
@@ -126,6 +139,10 @@ const PromoSection = () => {
           </div>
         </div>
       </div>
+
+      {selectedPromo && (
+        <DetailPromoModal onClose={handleCloseModal} promo={selectedPromo} />
+      )}
     </div>
   );
 };
