@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { useUser } from "../context/userContext";
 
 const useLogout = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const useLogout = () => {
     isLoggedOut: false,
     shouldRedirect: false,
   });
+  const { setUser } = useUser();
 
   const getToken = (name) => {
     const value = `; ${document.cookie}`;
@@ -32,20 +34,18 @@ const useLogout = () => {
     }
 
     try {
-      const response = await axios.get(
-        `${BASE_URL.API}${END_POINT.LOGOUT}`,
-        {
-          headers: {
-            apiKey: API_KEY,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${BASE_URL.API}${END_POINT.LOGOUT}`, {
+        headers: {
+          apiKey: API_KEY,
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.data?.code === "200") {
         deleteCookie("token");
+        setUser(null);
         toast(`See you again`, {
-            icon: "👋",
-          });
+          icon: "👋",
+        });
         setLogoutState({
           isLoggedOut: true,
           shouldRedirect: true,
@@ -63,7 +63,7 @@ const useLogout = () => {
 
   useEffect(() => {
     if (logoutState.shouldRedirect && logoutState.isLoggedOut) {
-      navigate("/login");
+      // navigate("/login");
     }
   }, [logoutState, navigate]);
 

@@ -4,6 +4,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/userContext";
 import useLogout from "../../../hooks/useLogout";
+import LoginModal from "../../../pages/Login/LoginModal";
 
 const Navbar = () => {
   const { handleLogout, isLoading } = useLogout();
@@ -11,9 +12,15 @@ const Navbar = () => {
   const { user } = useUser();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogin = () => {
-    navigate("/login");
+    // navigate("/login");
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false); // Tutup LoginModal
   };
 
   const handleClickOutside = (event) => {
@@ -113,6 +120,7 @@ const Navbar = () => {
           )}
         </div>
       </nav>
+      {isOpen && <LoginModal onClose={handleCloseModal} />}
     </div>
   );
 };

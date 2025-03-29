@@ -60,6 +60,7 @@ const UseLogin = () => {
         role: user.role,
         shouldRedirect: true,
       });
+      setSuccess(true);
       toast(`Welcome ${user.name}`, {
         icon: "👋",
       });

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import ImageLoginRegis from "../../assets/login-logo.svg";
 import UseLogin from "../../hooks/useLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { success, error, isLoading, handleLogin } = UseLogin();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -99,7 +101,7 @@ const Login = () => {
             </a>
             <p className="text-center text-sm">
               Don't have an account yet?{" "}
-              <a className="text-blue-600" href="/register">
+              <a className="text-blue-600 cursor-pointer" onClick={() => navigate("/register")}>
                 Register here
               </a>
             </p>
