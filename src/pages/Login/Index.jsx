@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ImageLoginRegis from "../../assets/login-logo.svg";
 import UseLogin from "../../hooks/useLogin";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { EyeSolid, EyeClosed } from "iconoir-react";
 
 const Login = () => {
   const { success, error, isLoading, handleLogin } = UseLogin();
@@ -79,7 +79,11 @@ const Login = () => {
                     onClick={togglePasswordVisibility}
                     style={{ top: "60%", transform: "translateY(-50%)" }}
                   >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    {showPassword ? (
+                      <EyeSolid className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <EyeClosed className="h-5 w-5 text-gray-500" />
+                    )}
                   </div>
                 </div>
                 <button
@@ -96,12 +100,18 @@ const Login = () => {
             <span className="text-gray-500">or</span>
           </div>
           <div className="md:pt-5 pb-10">
-            <a href="/" className="text-center text-sm mb-3 text-blue-600 block">
+            <a
+              href="/"
+              className="text-center text-sm mb-3 text-blue-600 block"
+            >
               Continue as guest
             </a>
             <p className="text-center text-sm">
               Don't have an account yet?{" "}
-              <a className="text-blue-600 cursor-pointer" onClick={() => navigate("/register")}>
+              <a
+                className="text-blue-600 cursor-pointer"
+                onClick={() => navigate("/register")}
+              >
                 Register here
               </a>
             </p>

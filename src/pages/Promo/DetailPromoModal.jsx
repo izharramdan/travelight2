@@ -12,8 +12,8 @@ const DetailPromoModal = ({ onClose, promo }) => {
 
   return (
     <Dialog open={!!promo} handler={onClose} size="lg" className="rounded-lg">
-      <Dialog.Overlay>
-        <Dialog.Content>
+      <Dialog.Overlay onClick={onClose}>
+        <Dialog.Content onClick={(e) => e.stopPropagation()}>
           {/* Header */}
           <div className="mb-4 flex items-center justify-between gap-4">
             <Typography variant="h5" className="font-bold">

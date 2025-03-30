@@ -26,8 +26,8 @@ const LoginModal = ({ onClose }) => {
   }, [success, onClose]);
   return (
     <Dialog size="sm" open={true} handler={onClose}>
-      <Dialog.Overlay>
-        <Dialog.Content>
+      <Dialog.Overlay onClick={onClose}>
+        <Dialog.Content onClick={(e) => e.stopPropagation()}>
           <Dialog.DismissTrigger
             as={IconButton}
             size="sm"

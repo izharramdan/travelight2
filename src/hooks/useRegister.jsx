@@ -59,7 +59,7 @@ const useRegister = () => {
       setSuccess(true);
       setError("");
       toast.success("successfully registered");
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/"), 2000);
       // navigate("/login");
     } catch (e) {
       setSuccess(false);

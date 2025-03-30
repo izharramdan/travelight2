@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Activity from "./pages/Activity/Index";
 import Category from "./pages/Category/Index";
 import Promo from "./pages/Promo/Index";
+import CategoryById from "./pages/Category/CategoryById";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="activity" index element={<Activity />} />
             <Route path="category" index element={<Category />} />
+            <Route path="category/:category" element={<CategoryById />} />
             <Route path="promo" index element={<Promo />} />
           </Route>
           <Route path="login" element={<Login />} />

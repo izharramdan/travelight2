@@ -20,7 +20,8 @@ const Navbar = () => {
   };
 
   const handleCloseModal = () => {
-    setIsOpen(false); // Tutup LoginModal
+    setIsOpen(false);
+    setIsDropdownOpen(false);
   };
 
   const handleClickOutside = (event) => {
@@ -41,11 +42,18 @@ const Navbar = () => {
     };
   }, [isDropdownOpen]);
 
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, [user]);
+
   return (
     <div className="sticky top-0 z-50">
       <nav className="rounded-md overflow-visible p-2 bg-white mx-auto w-full bg-opacity-90">
         <div className="flex items-center">
-          <a className="font-sans antialiased text-sm text-current ml-4 mr-4 block py-1 font-semibold cursor-pointer hover:text-primary" onClick={() => navigate("/")}>
+          <a
+            className="font-sans antialiased text-sm text-current ml-4 mr-4 block py-1 font-semibold cursor-pointer hover:text-primary"
+            onClick={() => navigate("/")}
+          >
             <img
               src={Logo}
               alt="Travelight Logo"
@@ -56,17 +64,26 @@ const Navbar = () => {
           <div className="hidden lg:block">
             <ul className="mt-4 flex flex-col gap-x-3 gap-y-1.5 lg:mt-0 lg:flex-row lg:items-center">
               <li>
-                <a className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer" onClick={() => navigate("/")}>
+                <a
+                  className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer"
+                  onClick={() => navigate("/")}
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer" onClick={() => navigate("/category")}>
+                <a
+                  className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer"
+                  onClick={() => navigate("/category")}
+                >
                   Categories
                 </a>
               </li>
               <li>
-                <a className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer" onClick={() => navigate("/promo")}>
+                <a
+                  className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer"
+                  onClick={() => navigate("/promo")}
+                >
                   Promo
                 </a>
               </li>
@@ -86,7 +103,7 @@ const Navbar = () => {
                   className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
                 >
                   <a
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
                     onClick={() => navigate("editprofile")}
                   >
                     Edit Profile
@@ -102,7 +119,7 @@ const Navbar = () => {
                   <button
                     onClick={handleLogout}
                     disabled={isLoading}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
                   >
                     <span>Logout</span>
                     <FiLogOut className="inline-block ml-2" />

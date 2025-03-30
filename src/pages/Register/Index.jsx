@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ImageLoginRegis from "../../assets/register-logo.svg";
 import useRegister from "../../hooks/useRegister";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { EyeSolid, EyeClosed } from "iconoir-react";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -121,7 +122,11 @@ const Register = () => {
                     onClick={togglePasswordVisibility}
                     style={{ top: "60%", transform: "translateY(-50%)" }}
                   >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    {showPassword ? (
+                      <EyeSolid className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <EyeClosed className="h-5 w-5 text-gray-500" />
+                    )}
                   </div>
                 </div>
                 <div className="flex flex-col space-y-1.5 relative">
@@ -144,7 +149,11 @@ const Register = () => {
                     onClick={toggleRepeatPasswordVisibility}
                     style={{ top: "60%", transform: "translateY(-50%)" }}
                   >
-                    {showRepeatPassword ? <FaEyeSlash /> : <FaEye />}
+                    {showRepeatPassword ? (
+                      <EyeSolid className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <EyeClosed className="h-5 w-5 text-gray-500" />
+                    )}
                   </div>
                 </div>
                 <div className="flex flex-col space-y-1.5">

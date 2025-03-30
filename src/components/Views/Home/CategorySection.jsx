@@ -82,7 +82,7 @@ const CategorySection = () => {
             >
               {categories.map((category) => (
                 <SwiperSlide key={category.id} className="select-none">
-                  <Card className="relative flex h-[20rem] w-full max-w-[28rem] flex-col">
+                  <Card className="relative flex h-[20rem] w-full max-w-[28rem] flex-col cursor-pointer" onClick={() => navigate(`/category/${category.id}`)}>
                     <Card.Header className="h-4/5">
                       <div
                         className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
