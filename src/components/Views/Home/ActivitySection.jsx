@@ -84,31 +84,37 @@ const ActivitySection = () => {
             >
               {activities.map((activity) => (
                 <SwiperSlide key={activity.id} className="select-none">
-                  <Card className="relative flex h-[20rem] w-full max-w-[28rem] flex-col">
-                    <Card.Header className="h-4/5">
-                      <div
-                        className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
-                        style={{
-                          backgroundImage: `url(${activity.imageUrls[0]})`,
-                        }}
-                      >
-                        <div className="absolute inset-0 h-full w-full bg-gradient-to-t from-black/60 via-black/30 to-black/5 dark:from-black/70 dark:via-black/60 dark:to-black/20" />
-                      </div>
-                    </Card.Header>
-                    <Card.Body className="flex z-10">
-                      <Typography type="lead" className="text-white italic">
-                        {activity.city}
-                      </Typography>
-                    </Card.Body>
-                    <Card.Footer className="h-2/5 w-full bg-gray-900 bg-opacity-50 z-10 rounded-xl">
-                      <Typography
-                        type="lead"
-                        className="text-white font-semibold"
-                      >
-                        {activity.title}
-                      </Typography>
-                    </Card.Footer>
-                  </Card>
+                  <a
+                    href={`/activity/${activity.id}`} // Gunakan href untuk mendukung klik kanan
+                    target="_self" // Tetap di tab yang sama, atau gunakan _blank untuk tab baru
+                    rel="noopener noreferrer" // Tambahkan untuk keamanan jika menggunakan target="_blank"
+                  >
+                    <Card className="relative flex h-[20rem] w-full max-w-[28rem] flex-col cursor-pointer">
+                      <Card.Header className="h-4/5">
+                        <div
+                          className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
+                          style={{
+                            backgroundImage: `url(${activity.imageUrls[0]})`,
+                          }}
+                        >
+                          <div className="absolute inset-0 h-full w-full bg-gradient-to-t from-black/60 via-black/30 to-black/5 dark:from-black/70 dark:via-black/60 dark:to-black/20" />
+                        </div>
+                      </Card.Header>
+                      <Card.Body className="flex z-10">
+                        <Typography type="lead" className="text-white italic">
+                          {activity.city}
+                        </Typography>
+                      </Card.Body>
+                      <Card.Footer className="h-2/5 w-full bg-gray-900 bg-opacity-50 z-10 rounded-xl">
+                        <Typography
+                          type="lead"
+                          className="text-white font-semibold"
+                        >
+                          {activity.title}
+                        </Typography>
+                      </Card.Footer>
+                    </Card>
+                  </a>
                 </SwiperSlide>
               ))}
               <CustomNavigation />

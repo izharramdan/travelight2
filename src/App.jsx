@@ -12,6 +12,7 @@ import Activity from "./pages/Activity/Index";
 import Category from "./pages/Category/Index";
 import Promo from "./pages/Promo/Index";
 import CategoryById from "./pages/Category/CategoryById";
+import ActivityById from "./pages/Activity/ActivityById";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="activity" index element={<Activity />} />
+            <Route path="activity/:activity" element={<ActivityById />} />
             <Route path="category" index element={<Category />} />
             <Route path="category/:category" element={<CategoryById />} />
             <Route path="promo" index element={<Promo />} />
