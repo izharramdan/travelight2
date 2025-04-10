@@ -92,9 +92,9 @@ const CategorySection = () => {
                       </div>
                     </Card.Header>
                     <Card.Body className="flex z-10">
-                      <Typography type="lead" className="text-white italic">
+                      {/* <Typography type="lead" className="text-white italic">
                         {category.description}
-                      </Typography>
+                      </Typography> */}
                     </Card.Body>
                     <Card.Footer className="h-2/5 w-full bg-gray-900 bg-opacity-50 z-10 rounded-xl">
                       <Typography
