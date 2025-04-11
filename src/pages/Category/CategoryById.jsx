@@ -44,7 +44,7 @@ const CategoryById = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto mt-8 px-16">
       {/* Header Section */}
       <div className="relative mb-8">
         <div className="relative h-[400px] rounded-xl overflow-hidden">

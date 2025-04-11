@@ -30,7 +30,7 @@ const ActivityById = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto mt-8 px-16">
       {data && (
         <>
           {/* Header Section */}
