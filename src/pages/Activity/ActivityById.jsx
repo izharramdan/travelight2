@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import useActivityId from "../../hooks/useActivityId";
 import { Card, Typography, Button, Badge } from "@material-tailwind/react";
 import { MapPin, Star, Building, Dollar } from "iconoir-react";
+import { useNavigate } from "react-router-dom";
 
 const ActivityById = () => {
   const { activity } = useParams(); // Ambil ID aktivitas dari URL
   const { data, isLoading, error } = useActivityId(activity);
+  const navigate = useNavigate();
 
   const createMarkup = (htmlContent) => {
     return { __html: htmlContent };
