@@ -94,7 +94,7 @@ const ActivityById = () => {
                     </Typography>
                   </div>
                   <div
-                    className="w-full rounded-xl overflow-hidden"
+                    className="w-full overflow-hidden"
                     dangerouslySetInnerHTML={createMarkup(data.location_maps)}
                   />
                 </div>
