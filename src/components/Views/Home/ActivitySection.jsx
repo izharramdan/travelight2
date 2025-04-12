@@ -3,11 +3,12 @@ import useActivity from "./hooks/useActivity";
 import { Card, Typography, IconButton } from "@material-tailwind/react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { NavArrowRight, NavArrowLeft } from "iconoir-react";
+import { NavArrowRight, NavArrowLeft, MapPin, Star, Building, Dollar } from "iconoir-react";
 import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
 
 function CustomNavigation() {
   const swiper = useSwiper();
@@ -103,16 +104,17 @@ const ActivitySection = () => {
                       </div>
                     </Card.Header>
                     <Card.Body className="flex z-10">
-                      <Typography type="lead" className="text-white italic">
-                        {activity.city}
-                      </Typography>
-                    </Card.Body>
-                    <Card.Footer className="h-2/5 w-full bg-gray-900 bg-opacity-50 z-10 rounded-xl">
                       <Typography
                         type="lead"
                         className="text-white font-semibold"
                       >
                         {activity.title}
+                      </Typography>
+                    </Card.Body>
+                    <Card.Footer className="h-2/5 w-full bg-gray-900 bg-opacity-50 z-10 rounded-xl">
+                    <MapPin className="h-5 w-5 text-gray-500" />
+                      <Typography type="lead" className="text-white italic">
+                        {activity.city}
                       </Typography>
                     </Card.Footer>
                   </Card>

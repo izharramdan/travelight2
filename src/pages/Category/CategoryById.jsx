@@ -2,15 +2,17 @@ import React from "react";
 import useCategoryId from "../../hooks/useCategoryId";
 import useActivityCategory from "../../hooks/useActivityCategory";
 import { Card, Typography, Button } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
 const CategoryById = () => {
-  const { data: category, isLoading: isLoadingCategory, error: errorCategory } =
-    useCategoryId();
+  const navigate = useNavigate();
   const {
-    dataActivity,
-    isLoadingActivity,
-    errorActivity,
-  } = useActivityCategory();
+    data: category,
+    isLoading: isLoadingCategory,
+    error: errorCategory,
+  } = useCategoryId();
+  const { dataActivity, isLoadingActivity, errorActivity } =
+    useActivityCategory();
 
   if (isLoadingCategory || isLoadingActivity) {
     return (
@@ -69,7 +71,9 @@ const CategoryById = () => {
         </Typography>
         {dataActivity.length === 0 ? (
           <div className="text-center">
-            <p className="text-gray-600">No activities found in this category.</p>
+            <p className="text-gray-600">
+              No activities found in this category.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -95,19 +99,17 @@ const CategoryById = () => {
                     <Typography variant="small" className="text-gray-600 mb-4">
                       {activity.description}
                     </Typography>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Typography variant="h6" className="text-green-600">
-                      Rp {activity.price.toLocaleString("id-ID")}
-                    </Typography>
-                    <Button
-                      size="sm"
-                      onClick={() =>
-                        window.open(activity.location_maps, "_blank")
-                      }
-                    >
-                      View Map
-                    </Button>
+                    <div className="flex items-center justify-between">
+                      <Typography variant="h6" className="text-green-600">
+                        Rp {activity.price.toLocaleString("id-ID")}
+                      </Typography>
+                      <Button
+                        size="sm"
+                        onClick={() => navigate(`/activity/${activity.id}`)}
+                      >
+                        View Activity
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </Card>
