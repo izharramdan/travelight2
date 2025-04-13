@@ -1,12 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useActivityId from "../../hooks/useActivityId";
+import useAddCart from "../../components/Views/Home/hooks/cart/useAddCart"; // Import useAddCart
 import { Card, Typography, Button, Badge } from "@material-tailwind/react";
 import { MapPin, Star, Building, Dollar } from "iconoir-react";
 
 const ActivityById = () => {
   const { activity } = useParams(); // Ambil ID aktivitas dari URL
   const { data, isLoading, error } = useActivityId(activity);
+  const { addToCart, isLoading: isAddingToCart } = useAddCart(); // Gunakan useAddCart
 
   const createMarkup = (htmlContent) => {
     return { __html: htmlContent };
@@ -145,7 +147,14 @@ const ActivityById = () => {
                     </div>
                   </div>
                 </div>
-                <Button className="w-full mt-6">Add to Cart</Button>
+                {/* Integrasikan useAddCart pada tombol Add to Cart */}
+                <Button
+                  className="w-full mt-6"
+                  onClick={() => addToCart(data.id)}
+                  disabled={isAddingToCart} // Nonaktifkan tombol saat sedang memproses
+                >
+                  {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}
+                </Button>
               </Card>
             </div>
           </div>
