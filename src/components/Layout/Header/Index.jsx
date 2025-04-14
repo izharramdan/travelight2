@@ -100,34 +100,34 @@ const Navbar = () => {
               </button>
               
               {isDropdownOpen && (
-                <div
-                  ref={dropdownRef}
-                  className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
-                >
-                  <a
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
-                    onClick={() => navigate("editprofile")}
-                  >
-                    Edit Profile
-                  </a>
-                  {user.role === "admin" && (
-                    <a
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => navigate("dashboard/*")}
-                    >
-                      Admin Dashboard
-                    </a>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    disabled={isLoading}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
-                  >
-                    <span>Logout</span>
-                    <LogOut className="inline-block ml-2" />
-                  </button>
-                </div>
-              )}
+  <div
+    ref={dropdownRef}
+    className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+  >
+    <a
+      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
+      onClick={() => navigate("editprofile")}
+    >
+      Edit Profile
+    </a>
+    {user.role === "admin" && (
+      <a
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+        onClick={() => navigate("dashboard/*")}
+      >
+        Admin Dashboard
+      </a>
+    )}
+    <button
+      onClick={handleLogout}
+      disabled={isLoading}
+      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
+    >
+      <span>Logout</span>
+      <LogOut className="inline-block ml-2" />
+    </button>
+  </div>
+)}
             </div>
           ) : (
             <button

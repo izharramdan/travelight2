@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Card, Typography, Button, Checkbox } from "@material-tailwind/react";
-import { ShoppingBag, Trash } from "iconoir-react";
+import { Card, Typography, Button } from "@material-tailwind/react";
+import { ShoppingBag, Trash, ShoppingBagCheck } from "iconoir-react";
 import useGetCart from "../../components/Views/Home/hooks/cart/useGetCart";
 
 const Cart = () => {
@@ -17,9 +17,9 @@ const Cart = () => {
   // Handle select all checkbox
   const handleSelectAll = () => {
     if (selectedItems.length === cartItems.length) {
-      setSelectedItems([]);
+      setSelectedItems([]); // Kosongkan pilihan jika semua sudah dipilih
     } else {
-      setSelectedItems(cartItems.map((item) => item.id));
+      setSelectedItems(cartItems.map((item) => item.id)); // Pilih semua item
     }
   };
 
@@ -105,12 +105,19 @@ const Cart = () => {
         </div>
 
         <div className="flex items-center mb-4 pb-4 border-b">
-          <Checkbox
-            checked={selectedItems.length === cartItems.length && cartItems.length > 0}
-            onChange={handleSelectAll}
-            className="mr-2"
-          />
-          <Typography className="font-medium">Select All Items</Typography>
+          <Button
+            className={`flex items-center gap-2 px-4 py-2 rounded ${
+              selectedItems.length === cartItems.length && cartItems.length > 0
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-600"
+            }`}
+            onClick={handleSelectAll}
+          >
+            <ShoppingBagCheck className="h-5 w-5" />
+            {selectedItems.length === cartItems.length && cartItems.length > 0
+              ? "Unselect All"
+              : "Select All"}
+          </Button>
           <Typography className="ml-auto font-medium">
             {selectedItems.length} item(s) selected
           </Typography>
@@ -135,10 +142,16 @@ const Cart = () => {
                   {cartItems.map((cart) => (
                     <tr key={cart.id}>
                       <td>
-                        <Checkbox
-                          checked={selectedItems.includes(cart.id)}
-                          onChange={() => handleItemSelect(cart.id)}
-                        />
+                        <Button
+                          className={`border px-2 py-1 ${
+                            selectedItems.includes(cart.id)
+                              ? "bg-blue-500 text-white"
+                              : "bg-gray-200 text-gray-600"
+                          }`}
+                          onClick={() => handleItemSelect(cart.id)}
+                        >
+                          {selectedItems.includes(cart.id) ? "✓" : ""}
+                        </Button>
                       </td>
                       <td>
                         <div className="flex items-center gap-4">
