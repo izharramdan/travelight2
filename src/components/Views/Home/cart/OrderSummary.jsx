@@ -18,7 +18,7 @@ const OrderSummary = ({
           Order Summary
         </Typography>
         <div className="space-y-4">
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <Typography className="text-gray-600">Subtotal</Typography>
             <Typography className="font-medium">
               {calculateSubtotal().toLocaleString("id-ID", {
@@ -26,11 +26,8 @@ const OrderSummary = ({
                 currency: "IDR",
               })}
             </Typography>
-          </div>
-          <div className="flex justify-between">
-            <Typography className="text-gray-600">Service Fee</Typography>
-            <Typography className="font-medium">Free</Typography>
-          </div>
+          </div> */}
+
           <div className="border-t pt-4 flex justify-between">
             <Typography className="font-semibold">Total</Typography>
             <Typography className="font-semibold">

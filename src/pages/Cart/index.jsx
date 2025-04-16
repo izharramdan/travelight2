@@ -128,6 +128,7 @@ const Cart = () => {
           handleSelectAll={handleSelectAll}
           handleIncrement={handleIncrement}
           handleDecrement={handleDecrement}
+          refreshCart={refreshCart}
         />
         <OrderSummary
           calculateSubtotal={calculateSubtotal}

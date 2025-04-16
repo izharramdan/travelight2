@@ -1,15 +1,17 @@
 import React from "react";
 import { Card, Typography, Button } from "@material-tailwind/react";
 import { Check, Trash } from "iconoir-react";
+import useDeleteCart from "../hooks/cart/useDeleteCart";
 
 const CartItems = ({
   cartItems,
   selectedItems,
   handleItemSelect,
-  handleSelectAll,
   handleIncrement,
   handleDecrement,
+  refreshCart,
 }) => {
+  const { deleteCart } = useDeleteCart();
   return (
     <div className="lg:col-span-2">
       <Card className="p-6">
@@ -72,7 +74,7 @@ const CartItems = ({
                 <td>
                   <div className="flex items-center gap-2">
                     <Button
-                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md"
+                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md hover:bg-gray-300"
                       onClick={() => handleDecrement(cart.id, cart.quantity)}
                       disabled={cart.quantity <= 1}
                     >
@@ -80,7 +82,7 @@ const CartItems = ({
                     </Button>
                     <Typography>{cart.quantity}</Typography>
                     <Button
-                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md"
+                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md hover:bg-gray-300"
                       onClick={() => handleIncrement(cart.id, cart.quantity)}
                     >
                       +
@@ -99,7 +101,10 @@ const CartItems = ({
                   </Typography>
                 </td>
                 <td>
-                  <Button className="text-red-500 bg-gray-100 px-2 py-1 rounded border-none shadow-md">
+                  <Button
+                    className="text-red-500 bg-gray-100 px-2 py-1 rounded border-none shadow-md hover:bg-gray-300"
+                    onClick={() => deleteCart(cart.id, refreshCart)}
+                  >
                     <Trash className="h-5 w-5" />
                   </Button>
                 </td>
