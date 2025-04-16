@@ -6,7 +6,7 @@ import { useUser } from "../../../context/userContext";
 import useLogout from "../../../hooks/useLogout";
 import LoginModal from "../../../pages/Login/LoginModal";
 import useGetCart from "../../Views/Home/hooks/cart/useGetCart";
-import { Badge } from "@material-tailwind/react";
+import { Badge, Avatar } from "@material-tailwind/react";
 
 const Navbar = () => {
   const { handleLogout, isLoading } = useLogout();
@@ -14,6 +14,7 @@ const Navbar = () => {
   const { user } = useUser();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const buttonRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const { cartItems } = useGetCart();
 
@@ -27,7 +28,12 @@ const Navbar = () => {
   };
 
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target)
+    ) {
       setIsDropdownOpen(false);
     }
   };
@@ -102,10 +108,19 @@ const Navbar = () => {
                 )}
               </Badge>
               <button
+                ref={buttonRef}
                 className="ml-4 mr-4 items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-1.5 px-3 shadow-sm hover:shadow bg-stone-800 hover:bg-stone-700 relative bg-gradient-to-b from-stone-700 to-stone-800 border-stone-900 text-stone-50 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 hover:border-stone-900 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased lg:ml-auto lg:inline-block"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                {user.name}
+                <div className="flex items-center justify-between">
+                  <Avatar
+                    size="xs"
+                    alt={user.name}
+                    src={user.profilePictureUrl}
+                    className="mr-2"
+                  />
+                  {user.name}
+                </div>
               </button>
               {isDropdownOpen && (
                 <div
@@ -117,6 +132,12 @@ const Navbar = () => {
                     onClick={() => navigate("editprofile")}
                   >
                     Edit Profile
+                  </a>
+                  <a
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
+                    onClick={() => navigate("transaction")}
+                  >
+                    Transaction
                   </a>
                   {user.role === "admin" && (
                     <a
