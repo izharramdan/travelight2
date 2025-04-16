@@ -83,7 +83,7 @@ const OrderSummary = ({
           disabled={isCreatingTransaction || !selectedPayment}
           onClick={handleCreateTransaction}
         >
-          {isCreatingTransaction ? "Processing..." : "Create Transaction"}
+          {isCreatingTransaction ? "Processing..." : "Place Order"}
         </Button>
       </Card>
     </div>

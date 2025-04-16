@@ -78,41 +78,45 @@ const CategoryById = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {dataActivity.map((activity) => (
-              <Card key={activity.id} className="h-full">
-                <div className="relative h-52 overflow-hidden">
-                  <img
-                    src={activity.imageUrls[0]}
-                    alt={activity.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded-md">
-                    <Typography variant="small" className="text-gray-800">
-                      Rating: {activity.rating.toFixed(1)}
-                    </Typography>
-                  </div>
+              <Card key={activity.id} className="flex flex-col h-full">
+              {/* Gambar */}
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src={activity.imageUrls[0]}
+                  alt={activity.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded-md">
+                  <Typography variant="small" className="text-gray-800">
+                    Rating: {activity.rating.toFixed(1)}
+                  </Typography>
                 </div>
-                <div className="p-4 flex flex-col justify-between h-full">
-                  <div>
-                    <Typography variant="h5" className="font-semibold mb-2">
-                      {activity.title}
-                    </Typography>
-                    <Typography variant="small" className="text-gray-600 mb-4">
-                      {activity.description}
-                    </Typography>
-                    <div className="flex items-center justify-between">
-                      <Typography variant="h6" className="text-green-600">
-                        Rp {activity.price.toLocaleString("id-ID")}
-                      </Typography>
-                      <Button
-                        size="sm"
-                        onClick={() => navigate(`/activity/${activity.id}`)}
-                      >
-                        View Activity
-                      </Button>
-                    </div>
-                  </div>
+              </div>
+            
+              {/* Konten */}
+              <div className="flex flex-col justify-between flex-grow p-4">
+                <div>
+                  <Typography variant="h5" className="font-semibold mb-2">
+                    {activity.title}
+                  </Typography>
+                  <Typography variant="small" className="text-gray-600 mb-4">
+                    {activity.description}
+                  </Typography>
                 </div>
-              </Card>
+            
+                <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-200">
+                  <Typography variant="h6" className="text-green-600">
+                    Rp {activity.price.toLocaleString("id-ID")}
+                  </Typography>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate(`/activity/${activity.id}`)}
+                  >
+                    View Activity
+                  </Button>
+                </div>
+              </div>
+            </Card>
             ))}
           </div>
         )}

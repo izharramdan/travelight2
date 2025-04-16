@@ -42,11 +42,11 @@ const App = () => {
           <Route
             path="dashboard/*"
             element={
-              <ProtectedRoute role="admin">
+              <ProtectedRoute roles={["admin"]}>
                 <DashboardLayout />
               </ProtectedRoute>
             }
-          ></Route>
+          />
         </Routes>
       </Router>
     </UserProvider>

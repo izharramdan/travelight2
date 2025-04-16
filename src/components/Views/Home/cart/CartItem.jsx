@@ -72,7 +72,7 @@ const CartItems = ({
                 <td>
                   <div className="flex items-center gap-2">
                     <Button
-                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg"
+                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md"
                       onClick={() => handleDecrement(cart.id, cart.quantity)}
                       disabled={cart.quantity <= 1}
                     >
@@ -80,7 +80,7 @@ const CartItems = ({
                     </Button>
                     <Typography>{cart.quantity}</Typography>
                     <Button
-                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg"
+                      className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md"
                       onClick={() => handleIncrement(cart.id, cart.quantity)}
                     >
                       +
@@ -99,7 +99,7 @@ const CartItems = ({
                   </Typography>
                 </td>
                 <td>
-                  <Button className="text-red-500 bg-white px-2 py-1 rounded">
+                  <Button className="text-red-500 bg-gray-100 px-2 py-1 rounded border-none shadow-md">
                     <Trash className="h-5 w-5" />
                   </Button>
                 </td>

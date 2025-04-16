@@ -91,14 +91,14 @@ const Cart = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header dan Select All */}
-      <div className="flex items-center justify-between mb-8">
+      {/* <div className="flex items-center justify-between mb-8">
         <Typography variant="h4" className="font-bold">
           Your Cart
         </Typography>
         <Typography className="text-gray-500">
           {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
         </Typography>
-      </div>
+      </div> */}
 
       <div className="flex items-center mb-4 pb-4 border-b">
         <Button
