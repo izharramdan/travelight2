@@ -1,11 +1,24 @@
 import React from "react";
 import { Card, Typography, Button } from "@material-tailwind/react";
 import useActivity from "../../components/Views/Home/hooks/useActivity";
+import useAddCart from "../../components/Views/Home/hooks/cart/useAddCart";
+import { useUser } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 
 const Activity = () => {
   const { activities, loading, error } = useActivity();
+  const { addToCart, isLoading: isAddingToCart } = useAddCart();
+  const { user } = useUser();
   const navigate = useNavigate();
+
+  const handleAddToCart = (activityId) => {
+    if (!user) {
+      navigate("/login"); // Arahkan ke halaman login jika belum login
+      return;
+    }
+
+    addToCart(activityId); // Tambahkan ke keranjang jika sudah login
+  };
 
   if (loading) {
     return (
@@ -37,8 +50,8 @@ const Activity = () => {
         {activities.map((activity) => (
           <Card
             key={activity.id}
-            className="relative flex flex-col h-full cursor-pointer overflow-hidden group rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-200 hover:border-gray-300"
-            onClick={() => navigate(`/activity/${activity.id}`)}
+            className="relative flex flex-col h-full overflow-hidden group rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-200 hover:border-gray-300"
+            // onClick={() => navigate(`/activity/${activity.id}`)}
           >
             {/* Image */}
             <div
@@ -60,24 +73,25 @@ const Activity = () => {
                 <Typography variant="h6" className="text-green-600">
                   Rp {activity.price.toLocaleString("id-ID")}
                 </Typography>
-                <Button
-                 
-                  color="primary"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/activity/${activity.id}`);
-                  }}
-                >
-                  View Activity
-                </Button>
-                <Button
-                  
-                  fullWidth
-                  color="secondary"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Add to Cart
-                </Button>
+          
+                  <Button
+                   
+                    color="primary"
+                    onClick={() => handleAddToCart(activity.id)}
+                  >
+                    Add to Cart
+                  </Button>
+                  <Button
+                
+                    color="secondary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/activity/${activity.id}`);
+                    }}
+                  >
+                    View Activity
+                  </Button>
+         
               </div>
             </div>
           </Card>

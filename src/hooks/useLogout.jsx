@@ -41,6 +41,7 @@ const useLogout = () => {
         },
       });
       if (response.data?.code === "200") {
+        window.confirm("Are you sure you want to logout?");
         deleteCookie("token");
         setUser(null);
         toast(`See you again`, {
