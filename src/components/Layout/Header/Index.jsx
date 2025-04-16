@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/userContext";
 import useLogout from "../../../hooks/useLogout";
 import LoginModal from "../../../pages/Login/LoginModal";
+import useGetCart from "../../Views/Home/hooks/cart/useGetCart";
+import { Badge } from "@material-tailwind/react";
 
 const Navbar = () => {
   const { handleLogout, isLoading } = useLogout();
@@ -13,9 +15,9 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const { cartItems } = useGetCart();
 
   const handleLogin = () => {
-    // navigate("/login");
     setIsOpen(true);
   };
 
@@ -90,44 +92,50 @@ const Navbar = () => {
             </ul>
           </div>
           {user ? (
-            <div className="relative ml-auto flex items-center">
-              <Cart className="mr-4 cursor-pointer" onClick={() => navigate("/cart")} />
+            <div className="relative ml-auto flex items-center cursor-pointer">
+              <Badge className="mr-4" color="error">
+                <Badge.Content onClick={() => navigate("/cart")}>
+                  <Cart className="h-6 w-6" />
+                </Badge.Content>
+                {cartItems.length > 0 && (
+                  <Badge.Indicator>{cartItems.length}</Badge.Indicator>
+                )}
+              </Badge>
               <button
                 className="ml-4 mr-4 items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-1.5 px-3 shadow-sm hover:shadow bg-stone-800 hover:bg-stone-700 relative bg-gradient-to-b from-stone-700 to-stone-800 border-stone-900 text-stone-50 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 hover:border-stone-900 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased lg:ml-auto lg:inline-block"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 {user.name}
               </button>
-              
               {isDropdownOpen && (
-  <div
-    ref={dropdownRef}
-    className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
-  >
-    <a
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
-      onClick={() => navigate("editprofile")}
-    >
-      Edit Profile
-    </a>
-    {user.role === "admin" && (
-      <a
-        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-        onClick={() => navigate("dashboard/*")}
-      >
-        Admin Dashboard
-      </a>
-    )}
-    <button
-      onClick={handleLogout}
-      disabled={isLoading}
-      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
-    >
-      <span>Logout</span>
-      <LogOut className="inline-block ml-2" />
-    </button>
-  </div>
-)}
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                >
+                  <a
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
+                    onClick={() => navigate("editprofile")}
+                  >
+                    Edit Profile
+                  </a>
+                  {user.role === "admin" && (
+                    <a
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => navigate("dashboard/*")}
+                    >
+                      Admin Dashboard
+                    </a>
+                  )}
+                  <button
+                    onClick={handleLogout}
+                    disabled={isLoading}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
+                  >
+                    <span>Logout</span>
+                    <LogOut className="inline-block ml-2" />
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <button
