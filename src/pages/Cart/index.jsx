@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Card, Typography, Button } from "@material-tailwind/react";
-import { ShoppingBag, Trash, ShoppingBagCheck, Check } from "iconoir-react";
+import { Typography, Button, Card } from "@material-tailwind/react";
+import { ShoppingBag, ShoppingBagCheck } from "iconoir-react";
 import useGetCart from "../../components/Views/Home/hooks/cart/useGetCart";
 import usePaymentMethod from "../../components/Views/Home/hooks/cart/usePaymentMethod";
 import useCreateTransaction from "../../components/Views/Home/hooks/transaction/useCreateTransaction";
+import CartItems from "../../components/Views/Home/cart/CartItem";
+import OrderSummary from "../../components/Views/Home/cart/OrderSummary";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItems, isLoadingCart, errorCart, refreshCart } = useGetCart();
+  const { cartItems, refreshCart } = useGetCart();
   const {
     paymentMethods,
     isLoading: isLoadingPayment,
@@ -19,7 +21,6 @@ const Cart = () => {
   const [selectedPayment, setSelectedPayment] = useState("");
   const navigate = useNavigate();
 
-  // Handle checkbox individu
   const handleItemSelect = (itemId) => {
     setSelectedItems((prev) =>
       prev.includes(itemId)
@@ -28,31 +29,28 @@ const Cart = () => {
     );
   };
 
-  // Handle select all checkbox
   const handleSelectAll = () => {
     if (selectedItems.length === cartItems.length) {
-      setSelectedItems([]); // Kosongkan pilihan jika semua sudah dipilih
+      setSelectedItems([]);
     } else {
-      setSelectedItems(cartItems.map((item) => item.id)); // Pilih semua item
+      setSelectedItems(cartItems.map((item) => item.id));
     }
   };
 
-  // Hitung subtotal
+  const handleIncrement = async (cartId, currentQuantity) => {
+    // Tambahkan logika increment
+  };
+
+  const handleDecrement = async (cartId, currentQuantity) => {
+    // Tambahkan logika decrement
+  };
+
   const calculateSubtotal = () => {
     return cartItems
       .filter((item) => selectedItems.includes(item.id))
       .reduce((total, item) => total + item.activity.price * item.quantity, 0);
   };
 
-  // Format harga ke IDR
-  const formatToIDR = (value) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(value);
-  };
-
-  // Handle Create Transaction
   const handleCreateTransaction = async () => {
     const data = {
       cartIds: selectedItems,
@@ -62,40 +60,12 @@ const Cart = () => {
     const success = await createTransaction(data);
 
     if (success) {
-      
-      await refreshCart(); // Memuat ulang data keranjang
-      setSelectedItems([]); // Kosongkan pilihan setelah transaksi berhasil
-    } else {
-      
+      await refreshCart();
+      setSelectedItems([]);
     }
   };
 
-  if (isLoadingCart) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-          <Typography className="mt-4 text-gray-600">
-            Loading your cart...
-          </Typography>
-        </div>
-      </div>
-    );
-  }
-
-  if (errorCart) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center text-red-500">
-          <Typography className="text-lg font-semibold mb-2">
-            Failed to load cart data.
-          </Typography>
-          <Typography>{errorCart}</Typography>
-        </div>
-      </div>
-    );
-  }
-
+  // Kondisi jika keranjang kosong
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center w-11/12 mx-auto">
@@ -120,196 +90,55 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <Typography variant="h4" className="font-bold">
-            Your Cart
-          </Typography>
-          <Typography className="text-gray-500">
-            {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
-          </Typography>
-        </div>
+      {/* Header dan Select All */}
+      <div className="flex items-center justify-between mb-8">
+        <Typography variant="h4" className="font-bold">
+          Your Cart
+        </Typography>
+        <Typography className="text-gray-500">
+          {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
+        </Typography>
+      </div>
 
-        <div className="flex items-center mb-4 pb-4 border-b">
-          <Button
-            className={`flex items-center gap-2 px-4 py-2 rounded ${
-              selectedItems.length === cartItems.length && cartItems.length > 0
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-600"
-            }`}
-            onClick={handleSelectAll}
-          >
-            <ShoppingBagCheck className="h-5 w-5" />
-            {selectedItems.length === cartItems.length && cartItems.length > 0
-              ? "Unselect All"
-              : "Select All"}
-          </Button>
-          <Typography className="ml-auto font-medium">
-            {selectedItems.length} item(s) selected
-          </Typography>
-        </div>
+      <div className="flex items-center mb-4 pb-4 border-b">
+        <Button
+          className={`flex items-center gap-2 px-4 py-2 rounded ${
+            selectedItems.length === cartItems.length && cartItems.length > 0
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-600"
+          }`}
+          onClick={handleSelectAll}
+        >
+          <ShoppingBagCheck className="h-5 w-5" />
+          {selectedItems.length === cartItems.length && cartItems.length > 0
+            ? "Unselect All"
+            : "Select All"}
+        </Button>
+        <Typography className="ml-auto font-medium">
+          {selectedItems.length} item(s) selected
+        </Typography>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Cart Items */}
-          <div className="lg:col-span-2">
-            <Card className="p-6">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-left">Select</th>
-                    <th className="text-left">Activity</th>
-                    <th className="text-left">Price</th>
-                    <th className="text-left">Quantity</th>
-                    <th className="text-left">Total</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cartItems.map((cart) => (
-                    <tr key={cart.id}>
-                      <td>
-                        <div
-                          className={`flex items-center justify-center w-6 h-6 rounded cursor-pointer ${
-                            selectedItems.includes(cart.id)
-                              ? "bg-blue-500 text-white"
-                              : "bg-gray-200 text-gray-600"
-                          }`}
-                          onClick={() => handleItemSelect(cart.id)}
-                        >
-                          {selectedItems.includes(cart.id) && (
-                            <Check className="h-4 w-4" />
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <div className="flex items-center gap-4">
-                          <img
-                            src={
-                              cart.activity.imageUrls[0] ||
-                              "https://placehold.co/200x200/png"
-                            }
-                            alt={cart.activity.title}
-                            className="w-20 h-20 object-cover rounded-lg"
-                          />
-                          <div>
-                            <Typography className="font-medium">
-                              {cart.activity.title}
-                            </Typography>
-                            <Typography className="text-sm text-gray-500">
-                              {cart.activity.city}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <Typography className="font-medium">
-                          {formatToIDR(cart.activity.price)}
-                        </Typography>
-                      </td>
-                      <td>
-                        <Typography>{cart.quantity}</Typography>
-                      </td>
-                      <td>
-                        <Typography className="font-medium">
-                          {formatToIDR(cart.activity.price * cart.quantity)}
-                        </Typography>
-                      </td>
-                      <td>
-                        <Button
-                          className="text-red-500"
-                          onClick={() => console.log("Delete item")}
-                        >
-                          <Trash className="h-5 w-5" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </Card>
-          </div>
-
-          {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <Card className="p-6">
-              <Typography variant="h5" className="font-semibold mb-4">
-                Order Summary
-              </Typography>
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <Typography className="text-gray-600">Subtotal</Typography>
-                  <Typography className="font-medium">
-                    {formatToIDR(calculateSubtotal())}
-                  </Typography>
-                </div>
-                <div className="flex justify-between">
-                  <Typography className="text-gray-600">Service Fee</Typography>
-                  <Typography className="font-medium">Free</Typography>
-                </div>
-                <div className="border-t pt-4 flex justify-between">
-                  <Typography className="font-semibold">Total</Typography>
-                  <Typography className="font-semibold">
-                    {formatToIDR(calculateSubtotal())}
-                  </Typography>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <Typography variant="h6" className="font-semibold mb-2">
-                  Payment Method
-                </Typography>
-                {isLoadingPayment ? (
-                  <Typography className="text-gray-600">
-                    Loading payment methods...
-                  </Typography>
-                ) : errorPayment ? (
-                  <Typography className="text-red-500">
-                    {errorPayment}
-                  </Typography>
-                ) : (
-                  <div>
-                    {paymentMethods.map((method) => (
-                      <div
-                        key={method.id}
-                        className="flex flex-col items-start gap-2 mb-4"
-                      >
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="radio"
-                            id={method.id}
-                            name="paymentMethod"
-                            value={method.id}
-                            checked={selectedPayment === method.id}
-                            onChange={() => setSelectedPayment(method.id)}
-                          />
-                          <img
-                            src={
-                              method.imageUrl || "https://placehold.co/100x50"
-                            }
-                            alt={method.name}
-                            className="h-12 object-contain"
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <Button
-                className="bg-blue-500 text-white px-4 py-2 rounded w-full mt-4"
-                disabled={
-                  selectedItems.length === 0 ||
-                  !selectedPayment ||
-                  isCreatingTransaction
-                }
-                onClick={handleCreateTransaction}
-              >
-                {isCreatingTransaction ? "Processing..." : "Create Transaction"}
-              </Button>
-            </Card>
-          </div>
-        </div>
+      {/* Grid untuk Cart Items dan Order Summary */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <CartItems
+          cartItems={cartItems}
+          selectedItems={selectedItems}
+          handleItemSelect={handleItemSelect}
+          handleSelectAll={handleSelectAll}
+          handleIncrement={handleIncrement}
+          handleDecrement={handleDecrement}
+        />
+        <OrderSummary
+          calculateSubtotal={calculateSubtotal}
+          paymentMethods={paymentMethods}
+          selectedPayment={selectedPayment}
+          setSelectedPayment={setSelectedPayment}
+          handleCreateTransaction={handleCreateTransaction}
+          isCreatingTransaction={isCreatingTransaction}
+          isLoadingPayment={isLoadingPayment}
+          errorPayment={errorPayment}
+        />
       </div>
     </div>
   );
