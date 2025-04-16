@@ -15,7 +15,7 @@ const useCreateTransaction = () => {
 
       if (!userConfirmed) {
         // Jika pengguna membatalkan, hentikan proses
-        return;
+        return false;
       }
 
       setIsLoading(true);
@@ -39,10 +39,14 @@ const useCreateTransaction = () => {
 
       if (response.status === 200) {
         toast.success(response.data.message);
+        return true;
       } else {
         toast.error(response.data.message);
+        return false;
       }
     } catch (error) {
+      toast.error("An error occurred while creating the transaction.");
+      return false; // Transaksi gagal
     } finally {
       setIsLoading(false);
     }

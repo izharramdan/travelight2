@@ -26,7 +26,14 @@ const App = () => {
             <Route path="activity" index element={<Activity />} />
             <Route path="activity/:activity" element={<ActivityById />} />
             <Route path="category" index element={<Category />} />
-            <Route path="cart" index element={<Cart />} />
+            <Route
+              path="cart"
+              element={
+                <ProtectedRoute roles={["admin", "user"]}>
+                  <Cart />
+                </ProtectedRoute>
+              }
+            />
             <Route path="category/:category" element={<CategoryById />} />
             <Route path="promo" index element={<Promo />} />
           </Route>

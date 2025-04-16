@@ -1,17 +1,28 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useActivityId from "../../hooks/useActivityId";
 import useAddCart from "../../components/Views/Home/hooks/cart/useAddCart"; // Import useAddCart
 import { Card, Typography, Button, Badge } from "@material-tailwind/react";
 import { MapPin, Star, Building, Dollar } from "iconoir-react";
+import { useUser } from "../../context/userContext";
 
 const ActivityById = () => {
+  const { user } = useUser();
   const { activity } = useParams(); // Ambil ID aktivitas dari URL
   const { data, isLoading, error } = useActivityId(activity);
   const { addToCart, isLoading: isAddingToCart } = useAddCart(); // Gunakan useAddCart
-
+  const navigate = useNavigate();
   const createMarkup = (htmlContent) => {
     return { __html: htmlContent };
+  };
+
+  const handleAddToCart = (activityId) => {
+    if (!user) {
+      navigate("/login"); // Arahkan ke halaman login jika belum login
+      return;
+    }
+
+    addToCart(activityId); // Tambahkan ke keranjang jika sudah login
   };
 
   if (isLoading) {
@@ -133,7 +144,7 @@ const ActivityById = () => {
                     <div>
                       <Typography className="font-medium">Rating</Typography>
                       <Typography className="text-gray-600">
-                        {data.rating} / 5
+                        {data.rating} / 10
                       </Typography>
                     </div>
                   </div>
@@ -150,7 +161,7 @@ const ActivityById = () => {
                 {/* Integrasikan useAddCart pada tombol Add to Cart */}
                 <Button
                   className="w-full mt-6"
-                  onClick={() => addToCart(data.id)}
+                  onClick={() => handleAddToCart(data.id)}
                   disabled={isAddingToCart} // Nonaktifkan tombol saat sedang memproses
                 >
                   {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}

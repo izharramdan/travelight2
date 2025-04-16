@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 import { Card, Typography, Button } from "@material-tailwind/react";
-import { ShoppingBag, Trash, ShoppingBagCheck, CheckSquare } from "iconoir-react";
+import { ShoppingBag, Trash, ShoppingBagCheck, Check } from "iconoir-react";
 import useGetCart from "../../components/Views/Home/hooks/cart/useGetCart";
 import usePaymentMethod from "../../components/Views/Home/hooks/cart/usePaymentMethod";
 import useCreateTransaction from "../../components/Views/Home/hooks/transaction/useCreateTransaction";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItems, isLoadingCart, errorCart } = useGetCart();
-  const { paymentMethods, isLoading: isLoadingPayment, error: errorPayment } = usePaymentMethod();
-  const { isLoading: isCreatingTransaction, createTransaction } = useCreateTransaction();
+  const { cartItems, isLoadingCart, errorCart, refreshCart } = useGetCart();
+  const {
+    paymentMethods,
+    isLoading: isLoadingPayment,
+    error: errorPayment,
+  } = usePaymentMethod();
+  const { isLoading: isCreatingTransaction, createTransaction } =
+    useCreateTransaction();
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedPayment, setSelectedPayment] = useState("");
+  const navigate = useNavigate();
 
   // Handle checkbox individu
   const handleItemSelect = (itemId) => {
     setSelectedItems((prev) =>
-      prev.includes(itemId) ? prev.filter((id) => id !== itemId) : [...prev, itemId]
+      prev.includes(itemId)
+        ? prev.filter((id) => id !== itemId)
+        : [...prev, itemId]
     );
   };
 
@@ -44,12 +53,21 @@ const Cart = () => {
   };
 
   // Handle Create Transaction
-  const handleCreateTransaction = () => {
+  const handleCreateTransaction = async () => {
     const data = {
       cartIds: selectedItems,
       paymentMethodId: selectedPayment,
     };
-    createTransaction(data);
+
+    const success = await createTransaction(data);
+
+    if (success) {
+      
+      await refreshCart(); // Memuat ulang data keranjang
+      setSelectedItems([]); // Kosongkan pilihan setelah transaksi berhasil
+    } else {
+      
+    }
   };
 
   if (isLoadingCart) {
@@ -57,7 +75,9 @@ const Cart = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center">
           <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-          <Typography className="mt-4 text-gray-600">Loading your cart...</Typography>
+          <Typography className="mt-4 text-gray-600">
+            Loading your cart...
+          </Typography>
         </div>
       </div>
     );
@@ -78,8 +98,8 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="p-6 text-center">
+      <div className="min-h-screen flex items-center justify-center w-11/12 mx-auto">
+        <Card className="p-6 text-center bg-white">
           <ShoppingBag className="h-16 w-16 text-gray-400 mb-4 mx-auto" />
           <Typography variant="h5" className="font-semibold mb-2">
             Your cart is empty
@@ -87,8 +107,11 @@ const Cart = () => {
           <Typography className="text-gray-500 mb-6">
             Looks like you haven't added anything to your cart yet.
           </Typography>
-          <Button className="bg-blue-500 text-white px-4 py-2 rounded">
-            Start Shopping
+          <Button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={() => navigate("/activity")}
+          >
+            Explore Your Destinations
           </Button>
         </Card>
       </div>
@@ -154,19 +177,24 @@ const Cart = () => {
                           onClick={() => handleItemSelect(cart.id)}
                         >
                           {selectedItems.includes(cart.id) && (
-                            <CheckSquare className="h-4 w-4" />
+                            <Check className="h-4 w-4" />
                           )}
                         </div>
                       </td>
                       <td>
                         <div className="flex items-center gap-4">
                           <img
-                            src={cart.activity.imageUrls[0] || "https://placehold.co/200x200/png"}
+                            src={
+                              cart.activity.imageUrls[0] ||
+                              "https://placehold.co/200x200/png"
+                            }
                             alt={cart.activity.title}
                             className="w-20 h-20 object-cover rounded-lg"
                           />
                           <div>
-                            <Typography className="font-medium">{cart.activity.title}</Typography>
+                            <Typography className="font-medium">
+                              {cart.activity.title}
+                            </Typography>
                             <Typography className="text-sm text-gray-500">
                               {cart.activity.city}
                             </Typography>
@@ -231,18 +259,20 @@ const Cart = () => {
                   Payment Method
                 </Typography>
                 {isLoadingPayment ? (
-                  <Typography className="text-gray-600">Loading payment methods...</Typography>
+                  <Typography className="text-gray-600">
+                    Loading payment methods...
+                  </Typography>
                 ) : errorPayment ? (
-                  <Typography className="text-red-500">{errorPayment}</Typography>
+                  <Typography className="text-red-500">
+                    {errorPayment}
+                  </Typography>
                 ) : (
                   <div>
                     {paymentMethods.map((method) => (
-                      <div key={method.id} className="flex flex-col items-start gap-2 mb-4">
-                        <img
-                          src={method.imageUrl || "https://placehold.co/100x50"}
-                          alt={method.name}
-                          className="h-12 object-contain"
-                        />
+                      <div
+                        key={method.id}
+                        className="flex flex-col items-start gap-2 mb-4"
+                      >
                         <div className="flex items-center gap-2">
                           <input
                             type="radio"
@@ -252,9 +282,13 @@ const Cart = () => {
                             checked={selectedPayment === method.id}
                             onChange={() => setSelectedPayment(method.id)}
                           />
-                          <label htmlFor={method.id} className="text-gray-700">
-                            {method.name}
-                          </label>
+                          <img
+                            src={
+                              method.imageUrl || "https://placehold.co/100x50"
+                            }
+                            alt={method.name}
+                            className="h-12 object-contain"
+                          />
                         </div>
                       </div>
                     ))}
@@ -264,7 +298,11 @@ const Cart = () => {
 
               <Button
                 className="bg-blue-500 text-white px-4 py-2 rounded w-full mt-4"
-                disabled={selectedItems.length === 0 || !selectedPayment || isCreatingTransaction}
+                disabled={
+                  selectedItems.length === 0 ||
+                  !selectedPayment ||
+                  isCreatingTransaction
+                }
                 onClick={handleCreateTransaction}
               >
                 {isCreatingTransaction ? "Processing..." : "Create Transaction"}
