@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Card, Typography, Button } from "@material-tailwind/react";
-import { ShoppingBag, Trash, ShoppingBagCheck } from "iconoir-react";
+import { ShoppingBag, Trash, ShoppingBagCheck, CheckSquare } from "iconoir-react";
 import useGetCart from "../../components/Views/Home/hooks/cart/useGetCart";
+import usePaymentMethod from "../../components/Views/Home/hooks/cart/usePaymentMethod";
+import useCreateTransaction from "../../components/Views/Home/hooks/transaction/useCreateTransaction";
 
 const Cart = () => {
-  const { cartItems, isLoadingCart, errorCart, refreshCart } = useGetCart();
+  const { cartItems, isLoadingCart, errorCart } = useGetCart();
+  const { paymentMethods, isLoading: isLoadingPayment, error: errorPayment } = usePaymentMethod();
+  const { isLoading: isCreatingTransaction, createTransaction } = useCreateTransaction();
   const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedPayment, setSelectedPayment] = useState("");
 
   // Handle checkbox individu
   const handleItemSelect = (itemId) => {
@@ -38,15 +43,13 @@ const Cart = () => {
     }).format(value);
   };
 
-  // Handle penghapusan item
-  const handleDeleteItem = async (itemId) => {
-    setSelectedItems((prev) => prev.filter((id) => id !== itemId));
-    await refreshCart(); // Refresh data keranjang
-  };
-
-  // Handle perubahan jumlah item
-  const handleQuantityChange = (itemId, newQuantity) => {
-    refreshCart(); // Refresh data keranjang
+  // Handle Create Transaction
+  const handleCreateTransaction = () => {
+    const data = {
+      cartIds: selectedItems,
+      paymentMethodId: selectedPayment,
+    };
+    createTransaction(data);
   };
 
   if (isLoadingCart) {
@@ -142,16 +145,18 @@ const Cart = () => {
                   {cartItems.map((cart) => (
                     <tr key={cart.id}>
                       <td>
-                        <Button
-                          className={`border px-2 py-1 ${
+                        <div
+                          className={`flex items-center justify-center w-6 h-6 rounded cursor-pointer ${
                             selectedItems.includes(cart.id)
                               ? "bg-blue-500 text-white"
                               : "bg-gray-200 text-gray-600"
                           }`}
                           onClick={() => handleItemSelect(cart.id)}
                         >
-                          {selectedItems.includes(cart.id) ? "✓" : ""}
-                        </Button>
+                          {selectedItems.includes(cart.id) && (
+                            <CheckSquare className="h-4 w-4" />
+                          )}
+                        </div>
                       </td>
                       <td>
                         <div className="flex items-center gap-4">
@@ -174,25 +179,7 @@ const Cart = () => {
                         </Typography>
                       </td>
                       <td>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            className="border px-2 py-1"
-                            onClick={() =>
-                              handleQuantityChange(cart.id, cart.quantity - 1)
-                            }
-                          >
-                            -
-                          </Button>
-                          <Typography>{cart.quantity}</Typography>
-                          <Button
-                            className="border px-2 py-1"
-                            onClick={() =>
-                              handleQuantityChange(cart.id, cart.quantity + 1)
-                            }
-                          >
-                            +
-                          </Button>
-                        </div>
+                        <Typography>{cart.quantity}</Typography>
                       </td>
                       <td>
                         <Typography className="font-medium">
@@ -202,7 +189,7 @@ const Cart = () => {
                       <td>
                         <Button
                           className="text-red-500"
-                          onClick={() => handleDeleteItem(cart.id)}
+                          onClick={() => console.log("Delete item")}
                         >
                           <Trash className="h-5 w-5" />
                         </Button>
@@ -237,13 +224,51 @@ const Cart = () => {
                     {formatToIDR(calculateSubtotal())}
                   </Typography>
                 </div>
-                <Button
-                  className="bg-blue-500 text-white px-4 py-2 rounded w-full"
-                  disabled={selectedItems.length === 0}
-                >
-                  Proceed to Checkout
-                </Button>
               </div>
+
+              <div className="mt-6">
+                <Typography variant="h6" className="font-semibold mb-2">
+                  Payment Method
+                </Typography>
+                {isLoadingPayment ? (
+                  <Typography className="text-gray-600">Loading payment methods...</Typography>
+                ) : errorPayment ? (
+                  <Typography className="text-red-500">{errorPayment}</Typography>
+                ) : (
+                  <div>
+                    {paymentMethods.map((method) => (
+                      <div key={method.id} className="flex flex-col items-start gap-2 mb-4">
+                        <img
+                          src={method.imageUrl || "https://placehold.co/100x50"}
+                          alt={method.name}
+                          className="h-12 object-contain"
+                        />
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            id={method.id}
+                            name="paymentMethod"
+                            value={method.id}
+                            checked={selectedPayment === method.id}
+                            onChange={() => setSelectedPayment(method.id)}
+                          />
+                          <label htmlFor={method.id} className="text-gray-700">
+                            {method.name}
+                          </label>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <Button
+                className="bg-blue-500 text-white px-4 py-2 rounded w-full mt-4"
+                disabled={selectedItems.length === 0 || !selectedPayment || isCreatingTransaction}
+                onClick={handleCreateTransaction}
+              >
+                {isCreatingTransaction ? "Processing..." : "Create Transaction"}
+              </Button>
             </Card>
           </div>
         </div>
