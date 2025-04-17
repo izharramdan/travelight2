@@ -68,14 +68,14 @@ const Cart = () => {
   // Kondisi jika keranjang kosong
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center w-11/12 mx-auto">
-        <Card className="p-6 text-center bg-white">
+      <div className="h-full pt-11 flex w-11/12 mx-auto">
+        <Card className="p-6 text-center bg-white bg-opacity-30 border-none">
           <ShoppingBag className="h-16 w-16 text-gray-400 mb-4 mx-auto" />
           <Typography variant="h5" className="font-semibold mb-2">
             Your cart is empty
           </Typography>
           <Typography className="text-gray-500 mb-6">
-            Looks like you haven't added anything to your cart yet.
+            Starts your journey here.
           </Typography>
           <Button
             className="bg-blue-500 text-white px-4 py-2 rounded"

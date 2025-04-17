@@ -2,16 +2,32 @@ import React from "react";
 import { Card, Typography, Button } from "@material-tailwind/react";
 import { Check, Trash } from "iconoir-react";
 import useDeleteCart from "../hooks/cart/useDeleteCart";
+import useUpdateCart from "../hooks/cart/useUpdateCart";
 
 const CartItems = ({
   cartItems,
   selectedItems,
   handleItemSelect,
-  handleIncrement,
-  handleDecrement,
   refreshCart,
 }) => {
-  const { deleteCart } = useDeleteCart();
+  const { deleteCart, isLoading: isDeleting } = useDeleteCart();
+  const { updateCart, isLoading: isUpdating } = useUpdateCart();
+
+  const handleIncrement = async (cartId, quantity) => {
+    await updateCart(cartId, quantity + 1);
+    refreshCart(); // Refresh data keranjang setelah update
+  };
+
+  const handleDecrement = async (cartId, quantity) => {
+    if (quantity > 1) {
+      await updateCart(cartId, quantity - 1);
+      refreshCart(); // Refresh data keranjang setelah update
+    }
+  };
+
+  // Urutkan cartItems berdasarkan properti tetap, misalnya id
+  const sortedCartItems = [...cartItems].sort((a, b) => a.id.localeCompare(b.id));
+
   return (
     <div className="lg:col-span-2">
       <Card className="p-6">
@@ -27,7 +43,7 @@ const CartItems = ({
             </tr>
           </thead>
           <tbody>
-            {cartItems.map((cart) => (
+            {sortedCartItems.map((cart) => (
               <tr key={cart.id}>
                 <td>
                   <div
@@ -76,7 +92,7 @@ const CartItems = ({
                     <Button
                       className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md hover:bg-gray-300"
                       onClick={() => handleDecrement(cart.id, cart.quantity)}
-                      disabled={cart.quantity <= 1}
+                      disabled={cart.quantity <= 1 || isUpdating}
                     >
                       -
                     </Button>
@@ -84,6 +100,7 @@ const CartItems = ({
                     <Button
                       className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md hover:bg-gray-300"
                       onClick={() => handleIncrement(cart.id, cart.quantity)}
+                      disabled={isUpdating}
                     >
                       +
                     </Button>
@@ -104,6 +121,7 @@ const CartItems = ({
                   <Button
                     className="text-red-500 bg-gray-100 px-2 py-1 rounded border-none shadow-md hover:bg-gray-300"
                     onClick={() => deleteCart(cart.id, refreshCart)}
+                    disabled={isDeleting}
                   >
                     <Trash className="h-5 w-5" />
                   </Button>
