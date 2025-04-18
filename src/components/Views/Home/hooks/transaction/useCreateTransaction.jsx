@@ -10,7 +10,7 @@ const useCreateTransaction = () => {
     try {
       // Tampilkan dialog konfirmasi sebelum melanjutkan
       const userConfirmed = window.confirm(
-        "Are you sure you want to add this item to the cart?"
+        "Are you sure you want to place this order?"
       );
 
       if (!userConfirmed) {

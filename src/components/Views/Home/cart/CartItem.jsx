@@ -26,7 +26,9 @@ const CartItems = ({
   };
 
   // Urutkan cartItems berdasarkan properti tetap, misalnya id
-  const sortedCartItems = [...cartItems].sort((a, b) => a.id.localeCompare(b.id));
+  const sortedCartItems = [...cartItems].sort((a, b) =>
+    a.id.localeCompare(b.id)
+  );
 
   return (
     <div className="lg:col-span-2">
@@ -88,7 +90,7 @@ const CartItems = ({
                   </Typography>
                 </td>
                 <td>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-6">
                     <Button
                       className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md hover:bg-gray-300"
                       onClick={() => handleDecrement(cart.id, cart.quantity)}
@@ -96,7 +98,12 @@ const CartItems = ({
                     >
                       -
                     </Button>
-                    <Typography>{cart.quantity}</Typography>
+                    <Typography
+                      className="text-center"
+                      style={{ width: "40px" }} // Tambahkan lebar tetap
+                    >
+                      {cart.quantity}
+                    </Typography>
                     <Button
                       className="px-2 py-1 bg-gray-200 text-gray-600 rounded-lg border-none shadow-md hover:bg-gray-300"
                       onClick={() => handleIncrement(cart.id, cart.quantity)}
@@ -107,7 +114,7 @@ const CartItems = ({
                   </div>
                 </td>
                 <td>
-                  <Typography className="font-medium">
+                  <Typography className="font-medium" style={{ width: "120px" }} >
                     {(cart.activity.price * cart.quantity).toLocaleString(
                       "id-ID",
                       {
