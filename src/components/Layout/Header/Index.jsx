@@ -67,7 +67,7 @@ const Navbar = () => {
             <ul className="hidden lg:flex items-center space-x-6">
               <li>
                 <a
-                  className="text-gray-700 font-medium hover:text-primary transition cursor-pointer"
+                  className="text-gray-700 font-semibold hover:text-primary transition cursor-pointer"
                   onClick={() => navigate("/")}
                 >
                   Home
@@ -75,7 +75,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-700 font-medium hover:text-primary transition cursor-pointer"
+                  className="text-gray-700 font-semibold hover:text-primary transition cursor-pointer"
                   onClick={() => navigate("/category")}
                 >
                   Categories
@@ -83,7 +83,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  className="text-gray-700 font-medium hover:text-primary transition cursor-pointer"
+                  className="text-gray-700 font-semibold hover:text-primary transition cursor-pointer"
                   onClick={() => navigate("/promo")}
                 >
                   Promo
