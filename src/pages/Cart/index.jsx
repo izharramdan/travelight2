@@ -68,21 +68,23 @@ const Cart = () => {
   // Kondisi jika keranjang kosong
   if (cartItems.length === 0) {
     return (
-      <div className="h-full pt-11 flex w-11/12 mx-auto">
-        <Card className="p-6 text-center bg-white bg-opacity-30 border-none">
-          <ShoppingBag className="h-16 w-16 text-gray-400 mb-4 mx-auto" />
-          <Typography variant="h5" className="font-semibold mb-2">
-            Your cart is empty
-          </Typography>
-          <Typography className="text-gray-500 mb-6">
-            Starts your journey here.
-          </Typography>
-          <Button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={() => navigate("/activity")}
-          >
-            Explore Your Destinations
-          </Button>
+      <div className="min-h-[70vh] flex items-center justify-center px-4">
+        <Card className="w-full max-w-md p-8 text-center bg-white/60 backdrop-blur-md shadow-lg rounded-2xl border border-blue-gray-100">
+          <div className="flex flex-col items-center justify-center">
+            <ShoppingBag className="h-20 w-20 text-blue-400 mb-6" />
+            <Typography variant="h4" className="font-bold text-gray-800 mb-2">
+              Your cart is empty
+            </Typography>
+            <Typography className="text-gray-600 mb-6">
+              Start your journey and discover exciting activities to add!
+            </Typography>
+            <Button
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium px-6 py-3 rounded-lg shadow hover:scale-105 transition-transform"
+              onClick={() => navigate("/activity")}
+            >
+              Explore Your Destinations
+            </Button>
+          </div>
         </Card>
       </div>
     );

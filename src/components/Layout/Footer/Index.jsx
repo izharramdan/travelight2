@@ -9,7 +9,7 @@ const Footer = () => {
           <img
             src={Logo}
             alt="Travelight Logo"
-            className="h-10 w-auto transform scale-125 md:h-10 m-4"
+            className="h-10 w-auto m-4"
           />
           <p className="font-sans antialiased text-base text-current text-center m-4">
             © 2025 TraveLight

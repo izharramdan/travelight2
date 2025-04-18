@@ -56,24 +56,18 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50">
-      <nav className="rounded-md overflow-visible p-2 bg-white mx-auto w-full bg-opacity-90">
-        <div className="flex items-center">
-          <a
-            className="font-sans antialiased text-sm text-current ml-4 mr-4 block py-1 font-semibold cursor-pointer hover:text-primary"
-            onClick={() => navigate("/")}
-          >
-            <img
-              src={Logo}
-              alt="Travelight Logo"
-              className="h-10 w-auto transform scale-125 md:h-10"
-            />
-          </a>
-          <hr className="ml-1 mr-4 hidden h-5 w-px border-l border-t-0 border-secondary-dark lg:block" />
-          <div className="hidden lg:block">
-            <ul className="mt-4 flex flex-col gap-x-3 gap-y-1.5 lg:mt-0 lg:flex-row lg:items-center">
+      <nav className="sticky top-0 z-50 bg-white bg-opacity-95 shadow-md">
+        <div className="max-w-7xl mx-auto px-8 py-3 flex items-center justify-between">
+          {/* Logo + Menu */}
+          <div className="flex items-center space-x-8">
+            <a className="cursor-pointer" onClick={() => navigate("/")}>
+              <img src={Logo} alt="Travelight Logo" className="h-10 w-auto" />
+            </a>
+
+            <ul className="hidden lg:flex items-center space-x-6">
               <li>
                 <a
-                  className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer"
+                  className="text-gray-700 font-medium hover:text-primary transition cursor-pointer"
                   onClick={() => navigate("/")}
                 >
                   Home
@@ -81,7 +75,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer"
+                  className="text-gray-700 font-medium hover:text-primary transition cursor-pointer"
                   onClick={() => navigate("/category")}
                 >
                   Categories
@@ -89,7 +83,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  className="font-sans antialiased text-sm text-current flex items-center gap-x-2 p-1 hover:text-primary font-bold cursor-pointer"
+                  className="text-gray-700 font-medium hover:text-primary transition cursor-pointer"
                   onClick={() => navigate("/promo")}
                 >
                   Promo
@@ -97,77 +91,83 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          {user ? (
-            <div className="relative ml-auto flex items-center cursor-pointer">
-              <Badge className="mr-4" color="error">
+
+          {/* Cart & Avatar/Sign In */}
+          <div className="flex items-center space-x-4">
+            {user && (
+              <Badge color="red">
                 <Badge.Content onClick={() => navigate("/cart")}>
-                  <Cart className="h-6 w-6" />
+                  <Cart className="h-6 w-6 text-gray-800 cursor-pointer" />
                 </Badge.Content>
                 {cartItems.length > 0 && (
                   <Badge.Indicator>{cartItems.length}</Badge.Indicator>
                 )}
               </Badge>
-              <button
-                ref={buttonRef}
-                className="ml-4 mr-4 items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-1.5 px-3 shadow-sm hover:shadow bg-stone-800 hover:bg-stone-700 relative bg-gradient-to-b from-stone-700 to-stone-800 border-stone-900 text-stone-50 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 hover:border-stone-900 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased lg:ml-auto lg:inline-block"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              >
-                <div className="flex items-center justify-between">
+            )}
+
+            {user ? (
+              <div className="relative">
+                <button
+                  ref={buttonRef}
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center space-x-2 px-4 py-1.5 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition text-sm"
+                >
                   <Avatar
                     size="xs"
                     alt={user.name}
                     src={user.profilePictureUrl}
-                    className="mr-2"
+                    className="mr-1"
                   />
-                  {user.name}
-                </div>
-              </button>
-              {isDropdownOpen && (
-                <div
-                  ref={dropdownRef}
-                  className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
-                >
-                  <a
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
-                    onClick={() => navigate("editprofile")}
+                  <span className="text-sm">{user.name}</span>
+                </button>
+
+                {isDropdownOpen && (
+                  <div
+                    ref={dropdownRef}
+                    className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
                   >
-                    Edit Profile
-                  </a>
-                  <a
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
-                    onClick={() => navigate("transaction")}
-                  >
-                    Transaction
-                  </a>
-                  {user.role === "admin" && (
                     <a
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => navigate("dashboard/*")}
+                      onClick={() => navigate("editprofile")}
                     >
-                      Admin Dashboard
+                      Edit Profile
                     </a>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    disabled={isLoading}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
-                  >
-                    <span>Logout</span>
-                    <LogOut className="inline-block ml-2" />
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <button
-              className="ml-auto mr-4 items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-1.5 px-3 shadow-sm hover:shadow bg-stone-800 hover:bg-stone-700 relative bg-gradient-to-b from-stone-700 to-stone-800 border-stone-900 text-stone-50 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 hover:border-stone-900 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased lg:ml-auto lg:inline-block"
-              onClick={handleLogin}
-            >
-              Sign In
-            </button>
-          )}
+                    <a
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => navigate("transaction")}
+                    >
+                      Transaction
+                    </a>
+                    {user.role === "admin" && (
+                      <a
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => navigate("dashboard/*")}
+                      >
+                        Admin Dashboard
+                      </a>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      disabled={isLoading}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Logout <LogOut className="inline ml-2" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                className="px-4 py-1.5 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition text-sm"
+                onClick={handleLogin}
+              >
+                Sign In
+              </button>
+            )}
+          </div>
         </div>
       </nav>
+
       {isOpen && <LoginModal onClose={handleCloseModal} />}
     </div>
   );

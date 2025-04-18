@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useActivityId from "../../hooks/useActivityId";
 import useAddCart from "../../components/Views/Home/hooks/cart/useAddCart"; // Import useAddCart
-import { Card, Typography, Button, Badge } from "@material-tailwind/react";
+import { Card, Typography, Button, Chip } from "@material-tailwind/react";
 import { MapPin, Star, Building, Dollar } from "iconoir-react";
 import { useUser } from "../../context/userContext";
 
@@ -54,14 +54,15 @@ const ActivityById = () => {
                 alt={data.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.src = "https://placehold.co/600x400/png";
+                  e.target.src =
+                    "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg";
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-                <Badge className="mb-4" variant="gradient">
-                  {data.category.name}
-                </Badge>
+                 <Chip isPill={false} color="secondary" className="mb-4">
+                   <Chip.Label>{data.category.name}</Chip.Label>
+                </Chip>
                 <Typography variant="h2" className="text-white font-bold">
                   {data.title}
                 </Typography>

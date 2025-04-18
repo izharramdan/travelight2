@@ -54,6 +54,10 @@ const CategoryById = () => {
             src={category.imageUrl}
             alt={category.name}
             className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.src =
+                "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg";
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
           <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
@@ -85,6 +89,10 @@ const CategoryById = () => {
                   src={activity.imageUrls[0]}
                   alt={activity.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src =
+                      "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg";
+                  }}
                 />
                 <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded-md">
                   <Typography variant="small" className="text-gray-800">

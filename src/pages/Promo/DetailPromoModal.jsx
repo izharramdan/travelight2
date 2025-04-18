@@ -11,54 +11,81 @@ const DetailPromoModal = ({ onClose, promo }) => {
   if (!promo) return null;
 
   return (
-    <Dialog open={!!promo} handler={onClose} size="lg" className="rounded-lg">
+    <Dialog open={!!promo} handler={onClose} size="lg" className="rounded-xl">
       <Dialog.Overlay onClick={onClose}>
-        <Dialog.Content onClick={(e) => e.stopPropagation()}>
+        <Dialog.Content
+          onClick={(e) => e.stopPropagation()}
+          className="rounded-lg p-6 bg-white shadow-xl"
+        >
           {/* Header */}
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <Typography variant="h5" className="font-bold">
+          <div className="flex items-center justify-between mb-4">
+            <Typography variant="h5" className="font-bold text-blue-600">
               {promo.title}
             </Typography>
-            <IconButton
+            <Dialog.DismissTrigger
+              as={IconButton}
               size="sm"
-              variant="ghost"
-              color="gray"
               onClick={onClose}
               className="absolute right-2 top-2"
+              isCircular
             >
               <Xmark className="h-5 w-5" />
-            </IconButton>
+            </Dialog.DismissTrigger>
           </div>
 
-          {/* Body */}
-          <div className="mb-4">
-            <img
-              src={promo.imageUrl}
-              alt={promo.title}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-            />
-            <Typography className="text-gray-700 mb-4">
-              {promo.description}
-            </Typography>
-            <div
-              className="text-gray-700 mb-4"
-              dangerouslySetInnerHTML={{ __html: promo.terms_condition }}
-            />
-            <Typography className="text-gray-700 mb-4">
-              <strong>Promo Code:</strong> {promo.promo_code}
-            </Typography>
-            <Typography className="text-gray-700 mb-4">
-              <strong>Discount Price:</strong> IDR {promo.promo_discount_price}
-            </Typography>
-            <Typography className="text-gray-700 mb-4">
-              <strong>Minimum Claim Price:</strong> IDR{" "}
-              {promo.minimum_claim_price}
-            </Typography>
+          {/* Image */}
+          <img
+            src={promo.imageUrl}
+            alt={promo.title}
+            className="w-full h-56 object-cover rounded-lg mb-4 shadow"
+            onError={(e) => {
+              e.target.src =
+                "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg";
+            }}
+          />
+
+          {/* Description */}
+          <Typography className="text-sm text-gray-700 mb-4">
+            {promo.description}
+          </Typography>
+
+          {/* Terms & Conditions */}
+          <div
+            className="text-sm text-gray-700 mb-4 prose max-w-none"
+            dangerouslySetInnerHTML={{ __html: promo.terms_condition }}
+          />
+
+          {/* Promo Details */}
+          <div className="grid sm:grid-cols-2 gap-4 mb-6 text-sm">
+            <div className="bg-blue-50 p-4 rounded-md border">
+              <Typography className="text-gray-700 font-medium">
+                Promo Code
+              </Typography>
+              <Typography className="text-blue-600 font-bold">
+                {promo.promo_code}
+              </Typography>
+            </div>
+            <div className="bg-green-50 p-4 rounded-md border">
+              <Typography className="text-gray-700 font-medium">
+                Discount Price
+              </Typography>
+              <Typography className="text-green-600 font-bold">
+                IDR {promo.promo_discount_price?.toLocaleString()}
+              </Typography>
+            </div>
+            <div className="bg-yellow-50 p-4 rounded-md border sm:col-span-2">
+              <Typography className="text-gray-700 font-medium">
+                Minimum Claim Price
+              </Typography>
+              <Typography className="text-yellow-600 font-bold">
+                IDR {promo.minimum_claim_price?.toLocaleString()}
+              </Typography>
+            </div>
           </div>
 
           {/* Footer */}
-          <div className="mb-1 flex items-center justify-end gap-2 pt-4">
-            <Button variant="ghost" color="red" onClick={onClose}>
+          <div className="flex justify-end gap-2">
+            <Button variant="solid" onClick={onClose}>
               Close
             </Button>
           </div>
