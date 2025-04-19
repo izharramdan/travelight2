@@ -57,7 +57,7 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-50">
       <nav className="sticky top-0 z-50 bg-white bg-opacity-95 shadow-md">
-        <div className="max-w-7xl mx-auto px-8 py-3 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto py-3 flex items-center justify-between">
           {/* Logo + Menu */}
           <div className="flex items-center space-x-8">
             <a className="cursor-pointer" onClick={() => navigate("/")}>

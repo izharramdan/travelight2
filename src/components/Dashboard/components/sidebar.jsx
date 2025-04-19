@@ -89,9 +89,9 @@ const Sidebar = () => {
               className={`${isCollapsed ? "hidden" : "block"} cursor-pointer`}
               onClick={() => navigate("/")}
             />
-            {!isCollapsed && (
+            {/* {!isCollapsed && (
               <Typography className="font-semibold">Dashboard</Typography>
-            )}
+            )} */}
           </div>
           <IconButton
             onClick={() => setIsCollapsed(!isCollapsed)}
