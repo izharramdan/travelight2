@@ -42,22 +42,6 @@ const useGetCart = () => {
     await fetchCartItems();
   };
 
-  // Fungsi untuk menambahkan item ke keranjang
-  const addToCart = async (newItem) => {
-    try {
-      const token = getToken();
-      await axios.post(`${BASE_URL.API}${END_POINT.ADD_CART}`, newItem, {
-        headers: {
-          apiKey: API_KEY,
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      await refreshCart();
-    } catch (error) {
-      console.error("Failed to add item to cart:", error.message);
-    }
-  };
-
   // Fungsi untuk memperbarui item di keranjang secara optimis
   const updateCartOptimistically = (updater) => {
     setCartItems((currentItems) => updater(currentItems || []));
@@ -73,7 +57,6 @@ const useGetCart = () => {
     isLoadingCart, // Status loading
     errorCart, // Pesan error
     refreshCart, // Fungsi untuk merefresh data
-    addToCart, // Fungsi untuk menambahkan item ke keranjang
     updateCartOptimistically, // Fungsi untuk pembaruan optimis
   };
 };

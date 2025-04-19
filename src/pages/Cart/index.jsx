@@ -37,11 +37,11 @@ const Cart = () => {
     }
   };
 
-  const handleIncrement = async (cartId, currentQuantity) => {
+  const handleIncrement = async () => {
     // Tambahkan logika increment
   };
 
-  const handleDecrement = async (cartId, currentQuantity) => {
+  const handleDecrement = async () => {
     // Tambahkan logika decrement
   };
 
@@ -65,11 +65,10 @@ const Cart = () => {
     }
   };
 
-  // Kondisi jika keranjang kosong
   if (cartItems.length === 0) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4">
-        <Card className="w-full max-w-md p-8 text-center bg-white/60 backdrop-blur-md shadow-lg rounded-2xl border border-blue-gray-100">
+        <Card className="w-full max-w-md p-8 text-center bg-white/50 backdrop-blur-xl shadow-xl rounded-3xl border border-blue-gray-100 animate-fade-in">
           <div className="flex flex-col items-center justify-center">
             <ShoppingBag className="h-20 w-20 text-blue-400 mb-6" />
             <Typography variant="h4" className="font-bold text-gray-800 mb-2">
@@ -91,23 +90,13 @@ const Cart = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header dan Select All */}
-      {/* <div className="flex items-center justify-between mb-8">
-        <Typography variant="h4" className="font-bold">
-          Your Cart
-        </Typography>
-        <Typography className="text-gray-500">
-          {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
-        </Typography>
-      </div> */}
-
-      <div className="flex items-center mb-4 pb-4 border-b">
+    <div className="container mx-auto px-4 py-10">
+      <div className="flex items-center mb-6 pb-4 border-b border-blue-gray-100">
         <Button
-          className={`flex items-center gap-2 px-4 py-2 rounded ${
+          className={`flex items-center gap-2 px-5 py-2.5 font-medium rounded-lg transition duration-300 shadow-md ${
             selectedItems.length === cartItems.length && cartItems.length > 0
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-600"
+              ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:opacity-90"
+              : "bg-gray-200 text-gray-600 hover:bg-gray-300"
           }`}
           onClick={handleSelectAll}
         >
@@ -116,13 +105,12 @@ const Cart = () => {
             ? "Unselect All"
             : "Select All"}
         </Button>
-        <Typography className="ml-auto font-medium">
+        <Typography className="ml-auto font-semibold text-blue-gray-700">
           {selectedItems.length} item(s) selected
         </Typography>
       </div>
 
-      {/* Grid untuk Cart Items dan Order Summary */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <CartItems
           cartItems={cartItems}
           selectedItems={selectedItems}

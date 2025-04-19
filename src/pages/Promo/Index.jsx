@@ -38,7 +38,7 @@ const Promo = () => {
   return (
     <div className="container mx-auto mt-8 px-4 lg:px-16">
       <Typography
-        type="h1"
+        type="h3"
         className="mb-10 text-gray-900 tracking-wide"
       >
         Promo

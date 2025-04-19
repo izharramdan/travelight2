@@ -11,7 +11,6 @@ import DetailPromoModal from "../../../pages/Promo/DetailPromoModal";
 
 function CustomNavigation() {
   const swiper = useSwiper();
-
   return (
     <>
       <IconButton
@@ -49,94 +48,75 @@ const PromoSection = () => {
   const handleCloseModal = () => {
     setSelectedPromo(null);
   };
+
   const truncateDescription = (description) => {
-    return description.length > 20
-      ? description.substring(0, 20) + "..."
+    return description.length > 30
+      ? description.substring(0, 30) + "..."
       : description;
   };
 
   return (
-    <div className="mt-4 mx-auto container w-11/12">
-      <div className="mb-2">
-        <Typography type="h3" className="text-gray-800">
-          <span className="text-3xl italic text-yellow-500 font-bold">%</span>{" "}
-          Promo
+    <div className="mt-10 mx-auto container w-11/12">
+      <div className="text-center mb-6">
+        <Typography
+          variant="h2"
+          className="text-4xl font-extrabold text-gray-800 italic"
+        >
+          Discover Hot Deals 🔥
+        </Typography>
+        <Typography className="text-gray-700 text-md mt-2 italic">
+          Get the best travel experiences with special discounts you can’t miss.
         </Typography>
       </div>
+
       <div
-        className="relative bg-green-200 rounded-xl p-6 shadow-lg w-full mx-auto"
+        className="relative rounded-2xl p-6 shadow-xl overflow-hidden"
         style={{
-          backgroundImage: `url(https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+          backgroundImage: `url(https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=1974&auto=format&fit=crop)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
-        <div className="flex flex-col gap-4 md:flex-row p-5 rounded-base">
-          <div className="md:w-1/3 w-full justify-center flex flex-col gap-2">
-            <Typography
-              type="h3"
-              className="tracking-tight"
-              style={{ color: "white" }}
-            >
-              Our Exclusive Offers
-            </Typography>
-            <Typography className="italic" style={{ color: "white" }}>
-              Book your perfect getaway with special discounts!
-            </Typography>
-          </div>
-          <div className="px-10 md:w-2/3 w-full">
-            {loading && <div>Loading...</div>}
-            {error && <div>{error.message}</div>}
-            <Swiper
-              modules={[Navigation]}
-              slidesPerView={3}
-              spaceBetween={30}
-              breakpoints={{
-                0: {
-                  slidesPerView: 1,
-                },
-                640: {
-                  slidesPerView: 1,
-                },
-                768: {
-                  slidesPerView: 2,
-                },
-                1024: {
-                  slidesPerView: 3,
-                },
-              }}
-            >
-              {promos.map((promo) => (
-                <SwiperSlide key={promo.id} className="select-none">
-                  <Card
-                    className="relative flex h-[20rem] w-full max-w-[28rem] flex-col cursor-pointer"
-                    onClick={() => handleCardClick(promo)}
+        <div className="bg-black/50 backdrop-blur-md rounded-2xl p-6 md:p-10">
+          {loading && <div className="text-white">Loading...</div>}
+          {error && <div className="text-red-500">{error.message}</div>}
+
+          <Swiper
+            modules={[Navigation]}
+            slidesPerView={3}
+            spaceBetween={30}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              640: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+          >
+            {promos.map((promo) => (
+              <SwiperSlide key={promo.id} className="select-none">
+                <Card
+                  onClick={() => handleCardClick(promo)}
+                  className="relative overflow-hidden backdrop-blur-xl transition-transform hover:scale-105 duration-300 ease-in-out bg-white/10 border border-white/30 shadow-xl cursor-pointer"
+                >
+                  <div
+                    className="h-52 w-full bg-cover bg-center relative"
+                    style={{ backgroundImage: `url(${promo.imageUrl})` }}
                   >
-                    <Card.Header className="h-4/5">
-                      <div
-                        className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
-                        style={{ backgroundImage: `url(${promo.imageUrl})` }}
-                      >
-                        <div className="absolute inset-0 h-full w-full bg-gradient-to-t from-black/60 via-black/30 to-black/5 dark:from-black/70 dark:via-black/60 dark:to-black/20" />
-                      </div>
-                    </Card.Header>
-                    <Card.Body className="flex z-10">
-                      <Typography type="lead" className="text-white italic">
-                        {truncateDescription(promo.description)}
-                      </Typography>
-                    </Card.Body>
-                    <Card.Footer className="h-2/5 w-full bg-gray-900 bg-opacity-50 z-10 rounded-xl">
-                      <Typography
-                        type="lead"
-                        className="text-white font-semibold"
-                      >
-                        {promo.title}
-                      </Typography>
-                    </Card.Footer>
-                  </Card>
-                </SwiperSlide>
-              ))}
-              <CustomNavigation />
-            </Swiper>
-          </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                  </div>
+                  <div className="p-4 space-y-2 text-white">
+                    <Typography variant="h6" className="font-bold text-lg">
+                      {promo.title}
+                    </Typography>
+                    <Typography className="italic text-sm text-white/80">
+                      {truncateDescription(promo.description)}
+                    </Typography>
+                  </div>
+                </Card>
+              </SwiperSlide>
+            ))}
+            <CustomNavigation />
+          </Swiper>
         </div>
       </div>
 

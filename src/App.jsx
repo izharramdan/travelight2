@@ -14,6 +14,7 @@ import Promo from "./pages/Promo/Index";
 import CategoryById from "./pages/Category/CategoryById";
 import ActivityById from "./pages/Activity/ActivityById";
 import Cart from "./pages/Cart";
+import MyTransaction from "./pages/Transaction/MyTransaction";
 
 const App = () => {
   return (
@@ -31,6 +32,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin", "user"]}>
                   <Cart />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="transaction"
+              element={
+                <ProtectedRoute roles={["admin", "user"]}>
+                  <MyTransaction />
                 </ProtectedRoute>
               }
             />

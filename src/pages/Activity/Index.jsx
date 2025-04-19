@@ -42,7 +42,7 @@ const Activity = () => {
 
   return (
     <div className="container mx-auto mt-8 px-16">
-      <Typography type="h1" className="mb-10 text-gray-900 tracking-wide">
+      <Typography type="h3" className="mb-10 text-gray-900 tracking-wide">
         Activities
       </Typography>
 

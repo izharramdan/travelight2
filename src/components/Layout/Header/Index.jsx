@@ -95,7 +95,7 @@ const Navbar = () => {
           {/* Cart & Avatar/Sign In */}
           <div className="flex items-center space-x-4">
             {user && (
-              <Badge color="red">
+              <Badge color="error">
                 <Badge.Content onClick={() => navigate("/cart")}>
                   <Cart className="h-6 w-6 text-gray-800 cursor-pointer" />
                 </Badge.Content>
