@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useTransactionById from "../../components/Views/Home/hooks/transaction/useTransactionById";
 import {
@@ -9,23 +9,24 @@ import {
   DollarCircle,
   Package,
   Copy,
-  Clock,
-  CheckCircle,
   Upload,
 } from "iconoir-react";
 import { Button } from "@material-tailwind/react";
 import useCancelTransaction from "../../components/Views/Home/hooks/transaction/useCancelTransaction";
+import TransactionStatus from "../../components/Views/Home/transaction/TransactionStatus";
 
 const TransactionById = () => {
   const { transactionId } = useParams();
-  const { transaction, isLoading, error, refetch } =
+  const { transaction, isLoading, error } =
     useTransactionById(transactionId);
   const { cancelTransaction } = useCancelTransaction();
+  const [localStatus, setLocalStatus] = useState(null);
 
   const handleCancelTransaction = async (transactionId) => {
     const success = await cancelTransaction(transactionId);
     if (success) {
-      refetch(); // Ambil ulang data transaksi setelah berhasil dibatalkan
+      setLocalStatus("cancelled"); // Perbarui status secara lokal
+      // refetch(); 
     }
   };
 
@@ -66,6 +67,7 @@ const TransactionById = () => {
       </div>
     );
   }
+  const status = localStatus || transaction.status;
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -90,28 +92,7 @@ const TransactionById = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-gray-600">Status:</span>
-              <span
-                className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                  transaction.status === "pending"
-                    ? "bg-amber-100 text-amber-800"
-                    : transaction.status === "success"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
-                <span className="flex items-center gap-2">
-                  {transaction.status === "pending" && (
-                    <Clock className="w-4 h-4" />
-                  )}
-                  {transaction.status === "success" && (
-                    <CheckCircle className="w-4 h-4" />
-                  )}
-                  {transaction.status === "cancelled" && (
-                    <XmarkCircle className="w-4 h-4" />
-                  )}
-                  {transaction.status.toUpperCase()}
-                </span>
-              </span>
+              <TransactionStatus status={status} />
             </div>
 
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">

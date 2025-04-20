@@ -39,11 +39,15 @@ const useTransactionById = (transactionId) => {
     }
   };
 
+  const refetch = async () => {
+    await fetchTransaction();
+  };
+
   useEffect(() => {
     fetchTransaction();
   }, [transactionId]);
 
-  return { transaction, isLoading, error };
+  return { transaction, isLoading, error, refetch };
 };
 
 export default useTransactionById;
