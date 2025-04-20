@@ -10,10 +10,19 @@ import {
   Upload,
 } from "iconoir-react";
 import { useNavigate } from "react-router-dom";
+import useCancelTransaction from "../../components/Views/Home/hooks/transaction/useCancelTransaction";
 
 const MyTransaction = () => {
-  const { transactions, isLoading } = useMyTransactions();
+  const { transactions, isLoading, fetcher } = useMyTransactions();
+  const { cancelTransaction } = useCancelTransaction();
   const navigate = useNavigate();
+
+  const handleCancelTransaction = async (transactionId) => {
+    const success = await cancelTransaction(transactionId);
+    if (success) {
+      fetcher(); // Ambil ulang data transaksi setelah berhasil dibatalkan
+    }
+  };
 
   if (isLoading) {
     return (
@@ -135,7 +144,7 @@ const MyTransaction = () => {
             {/* Right: Actions */}
             <div className="flex flex-col gap-3 w-full lg:w-48">
               <Button
-                fullWidth
+                fullwidth="true"
                 className="bg-blue-600 text-white hover:bg-blue-700 rounded-lg shadow-sm flex items-center justify-center gap-2"
                 onClick={() => navigate(`/transaction/${transaction.id}`)}
               >
@@ -144,7 +153,7 @@ const MyTransaction = () => {
               </Button>
 
               <Button
-                fullWidth
+                fullwidth="true"
                 className="bg-green-600 text-white hover:bg-green-700 rounded-lg shadow-sm flex items-center justify-center gap-2"
                 onClick={() =>
                   alert(`Upload payment proof for ${transaction.invoiceId}`)
@@ -157,13 +166,14 @@ const MyTransaction = () => {
               {(transaction.status === "pending" ||
                 transaction.status === "cancelled") && (
                 <Button
-                  fullWidth
+                  fullwidth="true"
                   disabled={transaction.status === "cancelled"}
                   className={`rounded-lg shadow-sm ${
                     transaction.status === "pending"
                       ? "bg-red-600 text-white hover:bg-red-700"
                       : "bg-gray-300 text-gray-600 cursor-not-allowed"
                   }`}
+                  onClick={() => handleCancelTransaction(transaction.id)}
                 >
                   {transaction.status === "pending" ? "Cancel" : "Cancelled"}
                 </Button>
