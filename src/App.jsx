@@ -45,7 +45,7 @@ const App = () => {
               }
             />
             <Route
-              path="transaction/:transaction"
+              path="transaction/:transactionId"
               element={
                 <ProtectedRoute roles={["admin", "user"]}>
                   <TransactionById />

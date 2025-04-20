@@ -17,11 +17,12 @@ const MyTransaction = () => {
 
   if (isLoading) {
     return (
-      <div className="text-center mt-10 animate-pulse">
-        <Typography variant="h6" className="text-gray-600">
-          Loading transactions...
-        </Typography>
-        <div className="mt-4 h-2 bg-blue-100 rounded-full w-1/4 mx-auto"></div>
+      <div className="text-center py-10 animate-pulse space-y-4">
+        <div className="h-8 bg-gray-100 rounded-full w-48 mx-auto"></div>
+        <div className="space-y-2">
+          <div className="h-4 bg-gray-100 rounded-full max-w-[300px] mx-auto"></div>
+          <div className="h-4 bg-gray-100 rounded-full max-w-[280px] mx-auto"></div>
+        </div>
       </div>
     );
   }
@@ -40,7 +41,7 @@ const MyTransaction = () => {
             Your transaction history will appear here once you make your first
             purchase.
           </Typography>
-          <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
+          <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded-lg shadow-sm">
             Start Shopping
           </Button>
         </Card>
@@ -50,17 +51,19 @@ const MyTransaction = () => {
 
   return (
     <div className="container mx-auto mt-10 px-4 lg:px-16">
+      {/* Header */}
       <div className="mb-10">
         <Typography type="h3" className="mb-10 text-gray-900 tracking-wide">
           My Transactions
         </Typography>
       </div>
 
+      {/* Transaction List */}
       <div className="grid gap-6">
         {transactions.map((transaction) => (
           <Card
             key={transaction.id}
-            className="flex flex-col lg:flex-row items-start gap-6 p-6 bg-white border border-gray-200 rounded-xl"
+            className="group flex flex-col lg:flex-row items-start gap-6 p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow"
           >
             {/* Left: Icon Section */}
             <div className="flex-shrink-0 bg-blue-100 p-4 rounded-xl">
@@ -86,7 +89,7 @@ const MyTransaction = () => {
                     {transaction.status === "pending" && (
                       <Clock className="w-4 h-4" />
                     )}
-                    {transaction.status === "completed" && (
+                    {transaction.status === "success" && (
                       <CheckCircle className="w-4 h-4" />
                     )}
                     {transaction.status === "cancelled" && (
@@ -99,22 +102,26 @@ const MyTransaction = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
                     <span className="text-gray-600">Total Amount:</span>
-                    <span className="font-bold text-xl text-green-600">
+                    <span className="font-bold text-green-600">
                       Rp {transaction.totalAmount.toLocaleString("id-ID")}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
                     <span className="text-gray-600">Payment Method:</span>
                     <span className="font-semibold text-gray-800 flex items-center gap-2">
                       <Wallet className="w-5 h-5 text-blue-600" />
-                      {transaction.payment_method.name}
+                      <img
+                        src={transaction.payment_method.imageUrl}
+                        alt={transaction.payment_method.name}
+                        className="w-16 h-16 object-contain"
+                      />
                     </span>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-lg border border-dashed border-gray-200">
                   <Typography className="text-sm text-gray-600 mb-2">
                     Payment Instructions
                   </Typography>
@@ -129,10 +136,8 @@ const MyTransaction = () => {
             <div className="flex flex-col gap-3 w-full lg:w-48">
               <Button
                 fullWidth
-                className="bg-blue-600 text-white hover:bg-blue-700 rounded-lg flex items-center justify-center gap-2"
-                onClick={() =>
-                  navigate("/transaction/" + transaction.id)
-                }
+                className="bg-blue-600 text-white hover:bg-blue-700 rounded-lg shadow-sm flex items-center justify-center gap-2"
+                onClick={() => navigate(`/transaction/${transaction.id}`)}
               >
                 <Cart className="w-4 h-4" />
                 Details
@@ -140,9 +145,9 @@ const MyTransaction = () => {
 
               <Button
                 fullWidth
-                className="bg-green-600 text-white hover:bg-green-700 rounded-lg flex items-center justify-center gap-2"
+                className="bg-green-600 text-white hover:bg-green-700 rounded-lg shadow-sm flex items-center justify-center gap-2"
                 onClick={() =>
-                  alert("Upload payment proof for " + transaction.invoiceId)
+                  alert(`Upload payment proof for ${transaction.invoiceId}`)
                 }
               >
                 <Upload className="w-4 h-4" />
@@ -154,7 +159,7 @@ const MyTransaction = () => {
                 <Button
                   fullWidth
                   disabled={transaction.status === "cancelled"}
-                  className={`rounded-lg ${
+                  className={`rounded-lg shadow-sm ${
                     transaction.status === "pending"
                       ? "bg-red-600 text-white hover:bg-red-700"
                       : "bg-gray-300 text-gray-600 cursor-not-allowed"
