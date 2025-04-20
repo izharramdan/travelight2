@@ -90,7 +90,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-10">
+    <div className="container mx-auto px-4 py-10 w-11/12">
       <div className="flex items-center mb-6 pb-4 border-b border-blue-gray-100">
         <Button
           className={`flex items-center gap-2 px-5 py-2.5 font-medium rounded-lg transition duration-300 shadow-md ${

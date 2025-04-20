@@ -111,7 +111,7 @@ const CartItems = ({
                       </Button>
                     </div>
                   </td>
-                  <td className="px-4 py-3 font-medium text-gray-700">
+                  <td className="px-4 py-3 font-medium text-gray-700 w-[150px]">
                     {(cart.activity.price * cart.quantity).toLocaleString(
                       "id-ID",
                       {
