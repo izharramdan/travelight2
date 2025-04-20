@@ -15,6 +15,7 @@ import CategoryById from "./pages/Category/CategoryById";
 import ActivityById from "./pages/Activity/ActivityById";
 import Cart from "./pages/Cart";
 import MyTransaction from "./pages/Transaction/MyTransaction";
+import TransactionById from "./pages/Transaction/TransactionById";
 
 const App = () => {
   return (
@@ -40,6 +41,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin", "user"]}>
                   <MyTransaction />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="transaction/:transaction"
+              element={
+                <ProtectedRoute roles={["admin", "user"]}>
+                  <TransactionById />
                 </ProtectedRoute>
               }
             />
