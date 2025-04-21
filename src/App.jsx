@@ -18,7 +18,7 @@ import MyTransaction from "./pages/Transaction/MyTransaction";
 import TransactionById from "./pages/Transaction/TransactionById";
 import AllTransaction from "./pages/Dashboard/Transaction";
 import AllUsers from "./pages/Dashboard/User";
-import DashboardLayout from "./components/Dashboard/components/DashboardLayout";
+import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
 
 const App = () => {
   return (
