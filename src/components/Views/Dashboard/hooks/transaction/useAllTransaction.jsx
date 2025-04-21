@@ -27,7 +27,6 @@ const useAllTransaction = () => {
           },
         }
       );
-      console.log(response.data.data);
       setTransactions(response.data.data);
     } catch (error) {
       console.error(error);

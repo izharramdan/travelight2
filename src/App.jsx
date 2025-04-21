@@ -6,7 +6,7 @@ import { UserProvider } from "./context/userContext";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout/Layout";
 import Register from "./pages/Register/Index";
-import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
+import DashboardLayout from "./components/Dashboard/components/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Activity from "./pages/Activity/Index";
 import Category from "./pages/Category/Index";
@@ -17,6 +17,7 @@ import Cart from "./pages/Cart";
 import MyTransaction from "./pages/Transaction/MyTransaction";
 import TransactionById from "./pages/Transaction/TransactionById";
 import AllTransaction from "./pages/Dashboard/Transaction";
+import AllUsers from "./pages/Dashboard/User";
 
 const App = () => {
   return (
@@ -67,10 +68,18 @@ const App = () => {
             }
           >
             <Route
-              path="transactions"
+              path="transaction"
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <AllTransaction />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="user"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AllUsers />
                 </ProtectedRoute>
               }
             />

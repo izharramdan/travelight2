@@ -128,15 +128,6 @@ const TransactionById = () => {
           </div>
           {transaction.status === "pending" && (
             <div className="mt-6 space-y-3 flex flex-col">
-              {/* <Button
-                fullWidth
-                className="bg-green-600 text-white hover:bg-green-700 rounded-lg flex items-center justify-center gap-2"
-                onClick={() => alert("Upload payment proof")}
-              >
-                <Upload className="w-4 h-4" />
-                Upload Payment Proof
-              </Button> */}
-
               <Button
                 fullWidth
                 className="bg-red-600 text-white hover:bg-red-700 rounded-lg flex items-center justify-center gap-2"

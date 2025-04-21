@@ -60,13 +60,13 @@ const Sidebar = () => {
     {
       icon: Bin,
       title: "Transaction",
-      href: "/dashboard/transactions",
+      href: "/dashboard/transaction",
       badge: 20,
     },
     {
       icon: Bin,
       title: "User",
-      href: "/dashboard/users",
+      href: "/dashboard/user",
     },
   ];
 
