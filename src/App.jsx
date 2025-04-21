@@ -16,6 +16,7 @@ import ActivityById from "./pages/Activity/ActivityById";
 import Cart from "./pages/Cart";
 import MyTransaction from "./pages/Transaction/MyTransaction";
 import TransactionById from "./pages/Transaction/TransactionById";
+import AllTransaction from "./pages/Dashboard/Transaction";
 
 const App = () => {
   return (
@@ -64,7 +65,16 @@ const App = () => {
                 <DashboardLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route
+              path="transactions"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AllTransaction />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
         </Routes>
       </Router>
     </UserProvider>

@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import useMyTransactions from "../../components/Views/Home/hooks/transaction/useMyTransactions";
 import { Card, Typography, Button } from "@material-tailwind/react";
-import {
-  Cart,
-  Wallet,
-  Upload,
-} from "iconoir-react";
+import { Cart, Wallet, XmarkCircle } from "iconoir-react";
 import { useNavigate } from "react-router-dom";
 import useCancelTransaction from "../../components/Views/Home/hooks/transaction/useCancelTransaction";
 import TransactionStatus from "../../components/Views/Home/transaction/TransactionStatus";
@@ -42,7 +38,7 @@ const MyTransaction = () => {
   if (transactions.length === 0) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4">
-        <Card className="w-full max-w-md p-8 text-center bg-white shadow-lg rounded-xl border border-gray-200">
+        <Card className="w-full max-w-md p-8 text-center bg-white/50 backdrop-blur-xl shadow-xl rounded-3xl border border-blue-gray-100 animate-fade-in">
           <div className="mx-auto mb-6 bg-blue-100 p-4 rounded-full w-fit">
             <Wallet className="w-12 h-12 text-blue-600" />
           </div>
@@ -53,8 +49,11 @@ const MyTransaction = () => {
             Your transaction history will appear here once you make your first
             purchase.
           </Typography>
-          <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded-lg shadow-sm">
-            Start Shopping
+          <Button
+            className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium px-6 py-3 rounded-lg shadow hover:scale-105 transition-transform"
+            onClick={() => navigate("/activity")}
+          >
+            Explore Your Destinations
           </Button>
         </Card>
       </div>
@@ -137,29 +136,18 @@ const MyTransaction = () => {
                   <Cart className="w-4 h-4" />
                   Details
                 </Button>
-
-                <Button
-                  fullwidth="true"
-                  className="bg-green-600 text-white hover:bg-green-700 rounded-lg shadow-sm flex items-center justify-center gap-2"
-                  onClick={() =>
-                    alert(`Upload payment proof for ${transaction.invoiceId}`)
-                  }
-                >
-                  <Upload className="w-4 h-4" />
-                  Upload
-                </Button>
-
                 {(status === "pending" || status === "cancelled") && (
                   <Button
                     fullwidth="true"
                     disabled={status === "cancelled"}
                     className={`rounded-lg shadow-sm ${
                       status === "pending"
-                        ? "bg-red-600 text-white hover:bg-red-700"
-                        : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                        ? "bg-red-600 text-white hover:bg-red-700 gap-2"
+                        : "bg-gray-300 text-gray-600 cursor-not-allowed gap-2"
                     }`}
                     onClick={() => handleCancelTransaction(transaction.id)}
                   >
+                    <XmarkCircle className="w-4 h-4" />
                     {status === "pending" ? "Cancel" : "Cancelled"}
                   </Button>
                 )}

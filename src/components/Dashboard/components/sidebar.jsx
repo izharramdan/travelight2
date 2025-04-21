@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Logo from "../../../assets/travelight.png";
 import { useNavigate } from "react-router-dom";
+import useLogout from "../../../hooks/useLogout";
 import {
   Card,
   List,
-  Typography,
   Chip,
   Collapse,
   Avatar,
@@ -25,49 +25,50 @@ import {
   UserXmark,
 } from "iconoir-react";
 
-const Links = [
-  {
-    icon: Mail,
-    title: "Dashboard",
-    href: "#",
-    badge: 14,
-  },
-  {
-    icon: SendDiagonal,
-    title: "Banner",
-    href: "#",
-  },
-  {
-    icon: EmptyPage,
-    title: "Promo",
-    href: "#",
-  },
-  {
-    icon: Pin,
-    title: "Category",
-    href: "#",
-  },
-  {
-    icon: Archive,
-    title: "Activity",
-    href: "#",
-  },
-  {
-    icon: Bin,
-    title: "Transaction",
-    href: "#",
-  },
-  {
-    icon: Bin,
-    title: "User",
-    href: "#",
-  },
-];
-
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { handleLogout, isLoading } = useLogout();
   const navigate = useNavigate();
+
+  const Links = [
+    {
+      icon: Mail,
+      title: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      icon: SendDiagonal,
+      title: "Banner",
+      href: "/dashboard/banner",
+    },
+    {
+      icon: EmptyPage,
+      title: "Promo",
+      href: "/dashboard/promo",
+    },
+    {
+      icon: Pin,
+      title: "Category",
+      href: "/dashboard/category",
+    },
+    {
+      icon: Archive,
+      title: "Activity",
+      href: "/dashboard/activity",
+    },
+    {
+      icon: Bin,
+      title: "Transaction",
+      href: "/dashboard/transactions",
+      badge: 20,
+    },
+    {
+      icon: Bin,
+      title: "User",
+      href: "/dashboard/users",
+    },
+  ];
 
   return (
     <div
@@ -89,9 +90,6 @@ const Sidebar = () => {
               className={`${isCollapsed ? "hidden" : "block"} cursor-pointer`}
               onClick={() => navigate("/")}
             />
-            {/* {!isCollapsed && (
-              <Typography className="font-semibold">Dashboard</Typography>
-            )} */}
           </div>
           <IconButton
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -110,24 +108,31 @@ const Sidebar = () => {
             {Links.map(({ icon: Icon, title, href, badge }) => (
               <List.Item
                 key={title}
-                href={href}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 cursor-pointer"
               >
-                <List.ItemStart>
-                  <Icon className="h-[18px] w-[18px]" />
-                </List.ItemStart>
-                {!isCollapsed && (
-                  <>
-                    {title}
-                    {badge && (
-                      <List.ItemEnd>
-                        <Chip size="sm" variant="ghost">
-                          <Chip.Label>{badge}</Chip.Label>
-                        </Chip>
-                      </List.ItemEnd>
-                    )}
-                  </>
-                )}
+                <a
+                  onClick={(e) => {
+                    e.preventDefault(); // Cegah reload halaman
+                    navigate(href); // Navigasi internal menggunakan navigate
+                  }}
+                  className="flex items-center gap-2 w-full"
+                >
+                  <List.ItemStart>
+                    <Icon className="h-[18px] w-[18px]" />
+                  </List.ItemStart>
+                  {!isCollapsed && (
+                    <>
+                      {title}
+                      {badge && (
+                        <List.ItemEnd>
+                          <Chip size="sm" variant="ghost">
+                            <Chip.Label>{badge}</Chip.Label>
+                          </Chip>
+                        </List.ItemEnd>
+                      )}
+                    </>
+                  )}
+                </a>
               </List.Item>
             ))}
             <hr className="-mx-3 my-3 border-secondary" />
@@ -174,7 +179,7 @@ const Sidebar = () => {
           </List>
         </Card.Body>
         <Card.Footer className="mt-auto p-3">
-          <List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error flex items-center gap-2">
+          <List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error flex items-center gap-2" onClick={handleLogout}>
             <List.ItemStart>
               <LogOut className="h-[18px] w-[18px]" />
             </List.ItemStart>

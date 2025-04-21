@@ -1,12 +1,12 @@
 import { API_KEY, BASE_URL, END_POINT } from "../services/endpoint";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "../context/userContext";
 
 const useLogout = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [logoutState, setLogoutState] = useState({
     isLoggedOut: false,
@@ -66,7 +66,7 @@ const useLogout = () => {
     if (logoutState.shouldRedirect && logoutState.isLoggedOut) {
       // navigate("/login");
     }
-  }, [logoutState, navigate]);
+  }, [logoutState]);
 
   return { handleLogout, isLoading };
 };

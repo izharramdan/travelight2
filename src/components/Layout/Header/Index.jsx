@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Logo from "../../../assets/travelight.png";
-import { LogOut, Cart } from "iconoir-react";
+import { LogOut, CartAlt } from "iconoir-react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/userContext";
 import useLogout from "../../../hooks/useLogout";
@@ -126,7 +126,7 @@ const Navbar = () => {
             {user && (
               <Badge color="error">
                 <Badge.Content onClick={() => navigate("/cart")}>
-                  <Cart className="h-6 w-6 text-gray-800 cursor-pointer" />
+                  <CartAlt className="h-6 w-6 text-gray-800 cursor-pointer" />
                 </Badge.Content>
                 {cartItems.length > 0 && (
                   <Badge.Indicator>{cartItems.length}</Badge.Indicator>
