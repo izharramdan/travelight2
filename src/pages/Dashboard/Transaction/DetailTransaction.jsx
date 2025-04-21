@@ -13,11 +13,22 @@ import {
 } from "iconoir-react";
 import { Button } from "@material-tailwind/react";
 import TransactionStatus from "../../../components/Views/Home/transaction/TransactionStatus";
+import useUpdateTransaction from "../../../components/Views/Dashboard/hooks/transaction/useUpdateTransaction";
 
 const DetailTransaction = () => {
   const { transactionId } = useParams();
   const { transaction, isLoading, error } = useTransactionById(transactionId);
   const [localStatus, setLocalStatus] = useState(null);
+  const { updateTransaction, isLoading: isUpdating } = useUpdateTransaction();
+
+  const handleUpdateTransaction = async (transactionId, status) => {
+    const data = { status };
+    const success = await updateTransaction(transactionId, data);
+    if (success) {
+      setLocalStatus(status); // Perbarui status secara lokal
+      // refetch();
+    }
+  };
 
   if (isLoading) {
     return (
@@ -115,21 +126,29 @@ const DetailTransaction = () => {
               </span>
             </div>
           </div>
-          {transaction.status === "pending" && (
+          {["pending", "success", "cancelled", "failed"].includes(status) && (
             <div className="mt-6 space-y-3 flex flex-col">
               <Button
                 fullWidth
-                className="bg-green-600 text-white hover:bg-red-700 rounded-lg flex items-center justify-center gap-2"
+                className="bg-green-600 text-white hover:bg-green-700 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50"
+                onClick={() =>
+                  handleUpdateTransaction(transaction.id, "success")
+                }
+                disabled={status !== "pending" || isUpdating}
               >
                 <CheckCircle className="w-4 h-4" />
-                Approve
+                {isUpdating ? "Processing..." : "Approve"}
               </Button>
               <Button
                 fullWidth
-                className="bg-red-600 text-white hover:bg-red-700 rounded-lg flex items-center justify-center gap-2"
+                className="bg-red-600 text-white hover:bg-red-700 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50"
+                onClick={() =>
+                  handleUpdateTransaction(transaction.id, "failed")
+                }
+                disabled={status !== "pending" || isUpdating}
               >
                 <XmarkCircle className="w-4 h-4" />
-                Decline
+                {isUpdating ? "Processing..." : "Decline"}
               </Button>
             </div>
           )}
