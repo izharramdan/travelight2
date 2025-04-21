@@ -1,5 +1,10 @@
 import React from "react";
-import { Clock, CheckCircle, XmarkCircle, Triangle } from "iconoir-react";
+import {
+  Clock,
+  CheckCircle,
+  XmarkCircle,
+  WarningCircle,
+} from "iconoir-react";
 import { Chip } from "@material-tailwind/react";
 
 const TransactionStatus = ({ status }) => {
@@ -13,8 +18,8 @@ const TransactionStatus = ({ status }) => {
   const icon = {
     pending: <Clock className="w-4 h-4" />,
     success: <CheckCircle className="w-4 h-4" />,
-    cancelled: <XmarkCircle className="w-4 h-4" />,
-    failed: <Triangle className="w-4 h-4" />,
+    cancelled: <WarningCircle className="w-4 h-4" />,
+    failed: <XmarkCircle className="w-4 h-4" />,
   };
 
   return (

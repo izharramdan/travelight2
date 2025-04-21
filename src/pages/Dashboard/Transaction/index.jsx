@@ -4,10 +4,12 @@ import useTableData from "../../../components/Views/Dashboard/hooks/useTableData
 import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import TransactionStatus from "../../../components/Views/Home/transaction/TransactionStatus";
 import Pagination from "../../../components/Dashboard/components/Pagination";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 
 const AllTransaction = () => {
   const { transactions, isLoading } = useAllTransaction();
+  const navigate = useNavigate();
 
   // Menggunakan useTableData untuk logika filtering, sorting, dan pagination
   const {
@@ -35,7 +37,7 @@ const AllTransaction = () => {
         <img
           src={row.payment_method.imageUrl}
           alt="Payment Method"
-          className="h-8 w-8 object-contain"
+          className="h-10 w-10 object-contain"
         />
       ),
     },
@@ -59,7 +61,20 @@ const AllTransaction = () => {
     {
       key: "actions",
       label: "Actions",
-      render: (row) => <Button>View Detail</Button>,
+      render: (row) => {
+        const href = `/dashboard/transaction/${row.id}`; // Definisikan href
+        return (
+          <a
+            href={href} // Tetap gunakan href untuk fallback
+            onClick={(e) => {
+              navigate(href); // Navigasi menggunakan useNavigate
+            }}
+            className="text-blue-500 hover:underline"
+          >
+            <Button>View Detail</Button>
+          </a>
+        );
+      },
     },
   ];
 

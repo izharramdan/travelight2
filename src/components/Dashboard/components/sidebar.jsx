@@ -11,18 +11,19 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import {
-  Archive,
-  EmptyPage,
   Folder,
   LogOut,
-  Mail,
   MoreHorizCircle,
   NavArrowRight,
   NavArrowLeft,
-  Pin,
-  SendDiagonal,
-  Bin,
   UserXmark,
+  MoneySquare,
+  User,
+  Activity,
+  GridPlus,
+  Percentage,
+  WhiteFlagSolid,
+  Dashboard,
 } from "iconoir-react";
 
 const Sidebar = () => {
@@ -33,38 +34,38 @@ const Sidebar = () => {
 
   const Links = [
     {
-      icon: Mail,
+      icon: Dashboard,
       title: "Dashboard",
       href: "/dashboard",
     },
     {
-      icon: SendDiagonal,
+      icon: WhiteFlagSolid,
       title: "Banner",
       href: "/dashboard/banner",
     },
     {
-      icon: EmptyPage,
+      icon: Percentage,
       title: "Promo",
       href: "/dashboard/promo",
     },
     {
-      icon: Pin,
+      icon: GridPlus,
       title: "Category",
       href: "/dashboard/category",
     },
     {
-      icon: Archive,
+      icon: Activity,
       title: "Activity",
       href: "/dashboard/activity",
     },
     {
-      icon: Bin,
+      icon: MoneySquare,
       title: "Transaction",
       href: "/dashboard/transaction",
       badge: 20,
     },
     {
-      icon: Bin,
+      icon: User,
       title: "User",
       href: "/dashboard/user",
     },
@@ -72,7 +73,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`flex flex-col h-screen ${
+      className={`sticky top-0 flex flex-col h-screen ${
         isCollapsed ? "w-16" : "w-64"
       } transition-width duration-300`}
     >
@@ -179,7 +180,10 @@ const Sidebar = () => {
           </List>
         </Card.Body>
         <Card.Footer className="mt-auto p-3">
-          <List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error flex items-center gap-2" onClick={handleLogout}>
+          <List.Item
+            className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error flex items-center gap-2"
+            onClick={handleLogout}
+          >
             <List.ItemStart>
               <LogOut className="h-[18px] w-[18px]" />
             </List.ItemStart>
