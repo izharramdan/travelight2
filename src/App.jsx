@@ -6,7 +6,7 @@ import { UserProvider } from "./context/userContext";
 import { Toaster } from "react-hot-toast";
 import Layout from "./components/Layout/Layout";
 import Register from "./pages/Register/Index";
-import DashboardLayout from "./components/Dashboard/components/DashboardLayout";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 import Activity from "./pages/Activity/Index";
 import Category from "./pages/Category/Index";
@@ -18,6 +18,7 @@ import MyTransaction from "./pages/Transaction/MyTransaction";
 import TransactionById from "./pages/Transaction/TransactionById";
 import AllTransaction from "./pages/Dashboard/Transaction";
 import AllUsers from "./pages/Dashboard/User";
+import DashboardLayout from "./components/Dashboard/components/DashboardLayout";
 
 const App = () => {
   return (
