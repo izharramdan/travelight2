@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_KEY, BASE_URL, END_POINT } from "../../../../../services/endpoint";
 
-const useAllUser = () => {
+const useBanner = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [banners, setBanners] = useState([]);
 
   const fetcher = async () => {
     const getToken = () => {
@@ -19,7 +19,7 @@ const useAllUser = () => {
     try {
       const token = getToken();
       const response = await axios.get(
-        `${BASE_URL.API}${END_POINT.GET_ALL_USER}`,
+        `${BASE_URL.API}${END_POINT.GET_BANNER}`,
         {
           headers: {
             apiKey: API_KEY,
@@ -27,7 +27,7 @@ const useAllUser = () => {
           },
         }
       );
-      setUsers(response.data.data);
+      setBanners(response.data.data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -41,9 +41,9 @@ const useAllUser = () => {
 
   return {
     isLoading,
-    users,
+    banners,
     fetcher,
   };
 };
 
-export default useAllUser;
+export default useBanner;
