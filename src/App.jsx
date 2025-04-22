@@ -20,7 +20,7 @@ import AllTransaction from "./pages/Dashboard/Transaction";
 import AllUsers from "./pages/Dashboard/User";
 import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
 import DetailTransaction from "./pages/Dashboard/Transaction/DetailTransaction";
-import Banner from "./pages/Dashboard/Banner";
+import Banners from "./pages/Dashboard/Banner";
 
 const App = () => {
   return (
@@ -74,7 +74,7 @@ const App = () => {
               path="banner"
               element={
                 <ProtectedRoute roles={["admin"]}>
-                  <Banner />
+                  <Banners />
                 </ProtectedRoute>
               }
             />
