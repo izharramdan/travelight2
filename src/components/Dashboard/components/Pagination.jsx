@@ -2,13 +2,12 @@ import { Button, IconButton } from "@material-tailwind/react";
 import { NavArrowRight, NavArrowLeft } from "iconoir-react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const maxVisiblePages = 5;
+  const maxVisiblePages = 3;
 
-  // Hitung rentang halaman yang ditampilkan
+  // Hitung rentang halaman
   let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
   let endPage = startPage + maxVisiblePages - 1;
 
-  // Pastikan endPage tidak melebihi totalPages
   if (endPage > totalPages) {
     endPage = totalPages;
     startPage = Math.max(1, endPage - maxVisiblePages + 1);
@@ -20,21 +19,24 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   );
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center justify-center gap-2 mt-6">
       {/* Tombol Previous */}
       <Button
-        variant="outline"
-        onClick={() => onPageChange(currentPage - 1)}
+
+        className="p-2 min-w-10"
+        onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        <NavArrowLeft className="mr-1.5 h-4 w-4 stroke-2" />
+        <NavArrowLeft className="h-5 w-5" />
       </Button>
 
       {/* Nomor Halaman */}
       {pageNumbers.map((page) => (
         <IconButton
           key={page}
-          variant={page === currentPage ? "outline" : "ghost"}
+          variant={page === currentPage ? "gradient" : "solid"}
+          color={page === currentPage ? "primary" : "secondary"}
+          className="min-w-10"
           onClick={() => onPageChange(page)}
         >
           {page}
@@ -43,11 +45,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
       {/* Tombol Next */}
       <Button
-        variant="outline"
-        onClick={() => onPageChange(currentPage + 1)}
+
+        className="p-2 min-w-10"
+        onClick={() =>
+          currentPage < totalPages && onPageChange(currentPage + 1)
+        }
         disabled={currentPage === totalPages}
       >
-        <NavArrowRight className="ml-1.5 h-4 w-4 stroke-2" />
+        <NavArrowRight className="h-5 w-5" />
       </Button>
     </div>
   );

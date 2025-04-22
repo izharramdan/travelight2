@@ -5,6 +5,7 @@ import Pagination from "../../../components/Dashboard/components/Pagination";
 import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
 import useUpdateRole from "../../../components/Views/Dashboard/hooks/user/useUpdateRole";
 import { Button, Spinner } from "@material-tailwind/react";
+import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 
 const AllUsers = () => {
   const { users, isLoading } = useAllUser();
@@ -96,12 +97,10 @@ const AllUsers = () => {
 
       {/* Search Input */}
       <div className="mb-6">
-        <input
-          type="text"
-          placeholder="Search by Name or Email"
+        <SearchBar
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2 w-full"
+          placeholder="Search by Name"
         />
       </div>
 

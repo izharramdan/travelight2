@@ -7,6 +7,7 @@ import Pagination from "../../../components/Dashboard/components/Pagination";
 import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "@material-tailwind/react";
 import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
+import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 
 const AllTransaction = () => {
   const { transactions, isLoading } = useAllTransaction();
@@ -117,12 +118,10 @@ const AllTransaction = () => {
 
       {/* Search Input */}
       <div className="mb-6">
-        <input
-          type="text"
-          placeholder="Search by Invoice ID"
+        <SearchBar
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2 w-full"
+          placeholder="Search by Invoice ID"
         />
       </div>
 
