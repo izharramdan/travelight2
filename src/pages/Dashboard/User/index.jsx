@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
 import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
 import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
-import { Button, Spinner, Chip } from "@material-tailwind/react";
+import useUpdateRole from "../../../components/Views/Dashboard/hooks/user/useUpdateRole";
+import { Button, Spinner } from "@material-tailwind/react";
 
 const AllUsers = () => {
   const { users, isLoading } = useAllUser();
+  const [selectedRoles, setSelectedRoles] = useState({});
+  const { updateRole, isLoading: isUpdating } = useUpdateRole();
+
+  const handleUpdateRole = async (id, role) => {
+    const data = { role: role };
+    const success = await updateRole(id, data);
+    if (success) {
+      setSelectedRoles((prev) => ({ ...prev, [id]: role }));
+    }
+  };
 
   const {
     search,
@@ -44,23 +55,30 @@ const AllUsers = () => {
       key: "role",
       label: "Role",
       sortable: true,
-      render: (row) =>
-        row.role === "admin" ? (
-          <Chip color="info" isPill={false} variant="ghost">
-            <Chip.Label>Admin</Chip.Label>
-          </Chip>
-        ) : row.role === "user" ? (
-          <Chip color="warning" isPill={false} variant="ghost">
-            <Chip.Label>User</Chip.Label>
-          </Chip>
-        ) : (
-          row.role
-        ),
+      render: (row) => (
+        <select
+          value={selectedRoles[row.id] || row.role}
+          onChange={(e) =>
+            setSelectedRoles((prev) => ({
+              ...prev,
+              [row.id]: e.target.value,
+            }))
+          }
+          className="border border-gray-300 rounded-lg p-1"
+        >
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+        </select>
+      ),
     },
     {
       key: "actions",
       label: "Actions",
-      render: (row) => <Button>Edit</Button>,
+      render: (row) => (
+        <Button onClick={() => handleUpdateRole(row.id, selectedRoles[row.id])}>
+          Update Role
+        </Button>
+      ),
     },
   ];
 

@@ -8,6 +8,13 @@ const useUpdateTransaction = () => {
 
   const updateTransaction = async (id, data) => {
     try {
+      const userConfirmed = window.confirm(
+        "Are you sure you want to update this transaction?"
+      );
+
+      if (!userConfirmed) {
+        return false; // Jika pengguna membatalkan, hentikan proses
+      }
       setIsLoading(true);
 
       // Ambil token dari cookie
