@@ -11,15 +11,17 @@ import {
   Copy,
   CheckCircle,
 } from "iconoir-react";
-import { Button } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 import TransactionStatus from "../../../components/Views/Home/transaction/TransactionStatus";
 import useUpdateTransaction from "../../../components/Views/Dashboard/hooks/transaction/useUpdateTransaction";
+import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
 
 const DetailTransaction = () => {
   const { transactionId } = useParams();
   const { transaction, isLoading, error } = useTransactionById(transactionId);
   const [localStatus, setLocalStatus] = useState(null);
   const { updateTransaction, isLoading: isUpdating } = useUpdateTransaction();
+  const { users } = useAllUser();
 
   const handleUpdateTransaction = async (transactionId, status) => {
     const data = { status };
@@ -33,11 +35,7 @@ const DetailTransaction = () => {
   if (isLoading) {
     return (
       <div className="text-center py-10 animate-pulse space-y-4">
-        <div className="h-8 bg-gray-100 rounded-full w-48 mx-auto"></div>
-        <div className="space-y-2">
-          <div className="h-4 bg-gray-100 rounded-full max-w-[300px] mx-auto"></div>
-          <div className="h-4 bg-gray-100 rounded-full max-w-[280px] mx-auto"></div>
-        </div>
+        <Spinner className="h-16 w-16" />;
       </div>
     );
   }
@@ -72,11 +70,32 @@ const DetailTransaction = () => {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-gray-600 to-gray-500 text-white p-8 rounded-2xl shadow-lg">
+      <div className="bg-gradient-to-br from-gray-700 via-gray-600 to-gray-500 text-white p-6 md:p-8 rounded-2xl shadow-2xl border border-gray-400/30 backdrop-blur-sm">
         <h1 className="text-3xl font-bold mb-2">Transaction Details</h1>
-        <div className="flex items-center gap-2">
-          <Wallet className="w-6 h-6" />
-          <span className="font-semibold">{transaction.invoiceId}</span>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          {/* Invoice ID Section */}
+          <div className="flex items-center gap-3">
+            <Wallet className="w-7 h-7 text-white" />
+            <span className="text-xl font-semibold tracking-wide">
+              {transaction.invoiceId}
+            </span>
+          </div>
+
+          {/* User Info Section */}
+          <div className="flex items-center gap-4">
+            <img
+              src={
+                users.find((user) => user.id === transaction.userId)
+                  ?.profilePictureUrl || "https://via.placeholder.com/40"
+              }
+              alt="Profile"
+              className="h-14 w-14 rounded-full object-cover border-2 border-white shadow-md"
+            />
+            <span className="text-lg md:text-xl font-medium text-white">
+              {users.find((user) => user.id === transaction.userId)?.name ||
+                "Unknown User"}
+            </span>
+          </div>
         </div>
       </div>
 

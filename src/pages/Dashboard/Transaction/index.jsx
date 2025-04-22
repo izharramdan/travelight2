@@ -6,9 +6,11 @@ import TransactionStatus from "../../../components/Views/Home/transaction/Transa
 import Pagination from "../../../components/Dashboard/components/Pagination";
 import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "@material-tailwind/react";
+import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
 
 const AllTransaction = () => {
   const { transactions, isLoading } = useAllTransaction();
+  const { users } = useAllUser();
   const navigate = useNavigate();
 
   // Menggunakan useTableData untuk logika filtering, sorting, dan pagination
@@ -29,6 +31,29 @@ const AllTransaction = () => {
       key: "invoiceId",
       label: "Invoice ID",
       sortable: true,
+    },
+    {
+      key: "userId",
+      label: "User",
+      sortable: true,
+      render: (row) => {
+        const user = users.find((user) => user.id === row.userId);
+        return user ? (
+          <div className="flex items-center gap-3">
+            <img
+              src={
+                user.profilePictureUrl ||
+                "https://img.freepik.com/free-vector/man-profile-account-picture_24908-81754.jpg?t=st=1745291107~exp=1745294707~hmac=cf9ac9989ac147e1227dceb140b56d30c543853c13f2bfacc8c0b7582130a8ff&w=826"
+              }
+              alt={user.name}
+              className="h-10 w-10 rounded-full object-cover"
+            />
+            <span>{user.name}</span>
+          </div>
+        ) : (
+          "Unknown User"
+        );
+      },
     },
     {
       key: "payment_method",
@@ -85,8 +110,6 @@ const AllTransaction = () => {
       </div>
     );
   }
-
-  const handleUpdateTransaction = (transactionId) => {};
 
   return (
     <div className="p-6">

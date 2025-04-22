@@ -3,7 +3,7 @@ import useTableData from "../../../components/Views/Dashboard/hooks/useTableData
 import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
 import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
-import { Button, Spinner } from "@material-tailwind/react";
+import { Button, Spinner, Chip } from "@material-tailwind/react";
 
 const AllUsers = () => {
   const { users, isLoading } = useAllUser();
@@ -24,6 +24,16 @@ const AllUsers = () => {
       key: "name",
       label: "Name",
       sortable: true,
+      render: (row) => (
+        <div className="flex items-center gap-3">
+          <img
+            src={row.profilePictureUrl}
+            alt={row.name}
+            className="h-10 w-10 rounded-full object-cover"
+          />
+          <span>{row.name}</span>
+        </div>
+      ),
     },
     {
       key: "email",
@@ -34,6 +44,18 @@ const AllUsers = () => {
       key: "role",
       label: "Role",
       sortable: true,
+      render: (row) =>
+        row.role === "admin" ? (
+          <Chip color="info" isPill={false} variant="ghost">
+            <Chip.Label>Admin</Chip.Label>
+          </Chip>
+        ) : row.role === "user" ? (
+          <Chip color="warning" isPill={false} variant="ghost">
+            <Chip.Label>User</Chip.Label>
+          </Chip>
+        ) : (
+          row.role
+        ),
     },
     {
       key: "actions",
