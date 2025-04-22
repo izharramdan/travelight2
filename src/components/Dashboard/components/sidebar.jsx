@@ -2,21 +2,11 @@ import { useState } from "react";
 import Logo from "../../../assets/travelight.png";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../../../hooks/useLogout";
+import { Card, List, Chip, Avatar, IconButton } from "@material-tailwind/react";
 import {
-  Card,
-  List,
-  Chip,
-  Collapse,
-  Avatar,
-  IconButton,
-} from "@material-tailwind/react";
-import {
-  Folder,
   LogOut,
-  MoreHorizCircle,
   NavArrowRight,
   NavArrowLeft,
-  UserXmark,
   MoneySquare,
   User,
   Activity,
@@ -27,7 +17,6 @@ import {
 } from "iconoir-react";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { handleLogout, isLoading } = useLogout();
   const navigate = useNavigate();
@@ -62,7 +51,6 @@ const Sidebar = () => {
       icon: MoneySquare,
       title: "Transaction",
       href: "/dashboard/transaction",
-      badge: 20,
     },
     {
       icon: User,
@@ -137,46 +125,6 @@ const Sidebar = () => {
               </List.Item>
             ))}
             <hr className="-mx-3 my-3 border-secondary" />
-            <List.Item
-              onClick={() => setIsOpen((cur) => !cur)}
-              className="flex items-center gap-2"
-            >
-              <List.ItemStart>
-                <MoreHorizCircle className="h-[18px] w-[18px]" />
-              </List.ItemStart>
-              {!isCollapsed && (
-                <>
-                  More
-                  <List.ItemEnd>
-                    <NavArrowRight
-                      className={`h-4 w-4 ${isOpen ? "rotate-90" : ""}`}
-                    />
-                  </List.ItemEnd>
-                </>
-              )}
-            </List.Item>
-            <Collapse open={isOpen}>
-              <List>
-                <List.Item className="flex items-center gap-2">
-                  <List.ItemStart>
-                    <Folder className="h-[18px] w-[18px]" />
-                  </List.ItemStart>
-                  {!isCollapsed && "Spam"}
-                </List.Item>
-                <List.Item className="flex items-center gap-2">
-                  <List.ItemStart>
-                    <UserXmark className="h-[18px] w-[18px]" />
-                  </List.ItemStart>
-                  {!isCollapsed && "Blocked"}
-                </List.Item>
-                <List.Item className="flex items-center gap-2">
-                  <List.ItemStart>
-                    <Folder className="h-[18px] w-[18px]" />
-                  </List.ItemStart>
-                  {!isCollapsed && "Important"}
-                </List.Item>
-              </List>
-            </Collapse>
           </List>
         </Card.Body>
         <Card.Footer className="mt-auto p-3">

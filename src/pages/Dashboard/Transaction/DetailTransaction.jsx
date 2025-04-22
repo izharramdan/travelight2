@@ -86,7 +86,8 @@ const DetailTransaction = () => {
             <img
               src={
                 users.find((user) => user.id === transaction.userId)
-                  ?.profilePictureUrl || "https://via.placeholder.com/40"
+                  ?.profilePictureUrl ||
+                "https://static.vecteezy.com/system/resources/thumbnails/046/929/339/small/abstract-faceless-young-man-with-stylish-haircut-male-avatar-illustration-free-vector.jpg"
               }
               alt="Profile"
               className="h-14 w-14 rounded-full object-cover border-2 border-white shadow-md"

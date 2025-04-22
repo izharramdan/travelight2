@@ -39,7 +39,10 @@ const AllUsers = () => {
       render: (row) => (
         <div className="flex items-center gap-3">
           <img
-            src={row.profilePictureUrl}
+            src={
+              row.profilePictureUrl ||
+              "https://static.vecteezy.com/system/resources/thumbnails/046/929/339/small/abstract-faceless-young-man-with-stylish-haircut-male-avatar-illustration-free-vector.jpg"
+            }
             alt={row.name}
             className="h-10 w-10 rounded-full object-cover"
           />

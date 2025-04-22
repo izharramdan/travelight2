@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useAllTransaction from "../../../components/Views/Dashboard/hooks/transaction/useAllTransaction";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
 import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
@@ -8,12 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "@material-tailwind/react";
 import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
+import DropdownFilter from "../../../components/Dashboard/components/DropdownFilter";
 
 const AllTransaction = () => {
   const { transactions, isLoading } = useAllTransaction();
   const { users } = useAllUser();
   const navigate = useNavigate();
+  const [statusFilter, setStatusFilter] = useState([]);
 
+  const filteredTransactions = transactions.filter((transaction) =>
+    statusFilter.length > 0 ? statusFilter.includes(transaction.status) : true
+  );
   // Menggunakan useTableData untuk logika filtering, sorting, dan pagination
   const {
     search,
@@ -24,7 +29,7 @@ const AllTransaction = () => {
     setCurrentPage,
     handleSort,
     sortConfig,
-  } = useTableData(transactions, 10);
+  } = useTableData(filteredTransactions, 10);
 
   // Definisi kolom untuk ReusableTable
   const columns = [
@@ -44,7 +49,7 @@ const AllTransaction = () => {
             <img
               src={
                 user.profilePictureUrl ||
-                "https://img.freepik.com/free-vector/man-profile-account-picture_24908-81754.jpg?t=st=1745291107~exp=1745294707~hmac=cf9ac9989ac147e1227dceb140b56d30c543853c13f2bfacc8c0b7582130a8ff&w=826"
+                "https://static.vecteezy.com/system/resources/thumbnails/046/929/339/small/abstract-faceless-young-man-with-stylish-haircut-male-avatar-illustration-free-vector.jpg"
               }
               alt={user.name}
               className="h-10 w-10 rounded-full object-cover"
@@ -117,11 +122,25 @@ const AllTransaction = () => {
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Transactions</h1>
 
       {/* Search Input */}
-      <div className="mb-6">
+      <div className="flex flex-wrap gap-4 mb-6">
         <SearchBar
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by Invoice ID"
+        />
+        <DropdownFilter
+          options={[
+            { value: "pending", label: <TransactionStatus status="pending" /> },
+            { value: "success", label: <TransactionStatus status="success" /> },
+            { value: "failed", label: <TransactionStatus status="failed" /> },
+            {
+              value: "cancelled",
+              label: <TransactionStatus status="cancelled" />,
+            },
+          ]}
+          selectedOptions={statusFilter}
+          onChange={setStatusFilter}
+          placeholder="Filter by Status"
         />
       </div>
 
