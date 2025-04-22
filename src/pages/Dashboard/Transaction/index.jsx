@@ -5,7 +5,7 @@ import ReusableTable from "../../../components/Dashboard/components/ReusableTabl
 import TransactionStatus from "../../../components/Views/Home/transaction/TransactionStatus";
 import Pagination from "../../../components/Dashboard/components/Pagination";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 
 const AllTransaction = () => {
   const { transactions, isLoading } = useAllTransaction();
@@ -81,7 +81,7 @@ const AllTransaction = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+        <Spinner className="h-16 w-16" />;
       </div>
     );
   }

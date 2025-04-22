@@ -2,16 +2,11 @@ import React from "react";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
 import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
-import { Button } from "@material-tailwind/react";
+import useAllUser from "../../../components/Views/Dashboard/hooks/user/useAllUser";
+import { Button, Spinner } from "@material-tailwind/react";
 
 const AllUsers = () => {
-  const users = [
-    { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "User" },
-    { id: 3, name: "Alice Johnson", email: "alice@example.com", role: "User" },
-    { id: 4, name: "Bob Brown", email: "bob@example.com", role: "Admin" },
-    // Tambahkan data pengguna lainnya
-  ];
+  const { users, isLoading } = useAllUser();
 
   const {
     search,
@@ -46,6 +41,14 @@ const AllUsers = () => {
       render: (row) => <Button>Edit</Button>,
     },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Spinner className="h-16 w-16" />;
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
