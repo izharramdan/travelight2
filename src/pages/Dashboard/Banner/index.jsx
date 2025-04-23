@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
 import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
@@ -75,7 +75,7 @@ const Banners = () => {
 
   return (
     <div className="p-6">
-     <h1 className="text-2xl font-bold mb-6 text-gray-800">Banner</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-800">Banner</h1>
 
       <div className="mb-6">
         <SearchBar
