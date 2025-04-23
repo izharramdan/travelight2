@@ -21,6 +21,8 @@ import AllUsers from "./pages/Dashboard/User";
 import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
 import DetailTransaction from "./pages/Dashboard/Transaction/DetailTransaction";
 import Banners from "./pages/Dashboard/Banner";
+import DashboardPromos from "./pages/Dashboard/Promo";
+
 
 const App = () => {
   return (
@@ -70,6 +72,14 @@ const App = () => {
               </ProtectedRoute>
             }
           >
+            <Route
+              path="promo"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <DashboardPromos />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="banner"
               element={
