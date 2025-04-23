@@ -4,7 +4,7 @@ import ReusableTable from "../../../components/Dashboard/components/ReusableTabl
 import Pagination from "../../../components/Dashboard/components/Pagination";
 import { Button, Spinner } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
-import useCategoryDashboard from "../../../components/Views/Dashboard/hooks/promo/usePromoDashboard";
+import useCategoryDashboard from "../../../components/Views/Dashboard/hooks/category/useCategoryDashboard";
 
 const DashboardCategories = () => {
   const { categories, isLoading } = useCategoryDashboard();
@@ -34,8 +34,8 @@ const DashboardCategories = () => {
       ),
     },
     {
-      key: "title",
-      label: "Title",
+      key: "name",
+      label: "name",
       sortable: true,
       className: "font-medium text-gray-800",
     },

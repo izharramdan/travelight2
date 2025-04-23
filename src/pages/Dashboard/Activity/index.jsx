@@ -4,7 +4,7 @@ import ReusableTable from "../../../components/Dashboard/components/ReusableTabl
 import Pagination from "../../../components/Dashboard/components/Pagination";
 import { Button, Spinner } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
-import useActivityDashboard from "../../../components/Views/Dashboard/hooks/promo/usePromoDashboard";
+import useActivityDashboard from "../../../components/Views/Dashboard/hooks/activity/useActivityDashboard";
 
 const DashboardActivities = () => {
   const { activities, isLoading } = useActivityDashboard();

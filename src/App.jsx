@@ -22,6 +22,8 @@ import DashboardLayout from "./components/Dashboard/components/dashboardLayout";
 import DetailTransaction from "./pages/Dashboard/Transaction/DetailTransaction";
 import Banners from "./pages/Dashboard/Banner";
 import DashboardPromos from "./pages/Dashboard/Promo";
+import DashboardActivities from "./pages/Dashboard/Activity";
+import DashboardCategories from "./pages/Dashboard/Category";
 
 
 const App = () => {
@@ -77,6 +79,22 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <DashboardPromos />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="activity"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <DashboardActivities />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="category"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <DashboardCategories />
                 </ProtectedRoute>
               }
             />

@@ -13,9 +13,6 @@ const SearchBar = ({ value, onChange, placeholder = "Search..." }) => {
         onChange={onChange}
         placeholder={placeholder}
         className="pl-10 !border !border-gray-300 !rounded-lg"
-        labelProps={{
-          className: "before:content-none after:content-none",
-        }}
       />
     </div>
   );
