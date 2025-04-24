@@ -1,11 +1,11 @@
 import React from "react";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
-import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
-import { Button, Spinner } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 import useBanner from "../../../components/Views/Dashboard/hooks/banner/useBanner";
 import AddButton from "../../../components/Dashboard/components/AddButton";
+import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
 
 const Banners = () => {
   const { banners, isLoading } = useBanner();
@@ -17,54 +17,17 @@ const Banners = () => {
     totalPages,
     currentPage,
     setCurrentPage,
-    handleSort,
-    sortConfig,
-  } = useTableData(banners, 10);
+  } = useTableData(banners, 8);
 
-  const columns = [
-    {
-      key: "imageUrl",
-      label: "Image",
-      sortable: true,
-      render: (row) => (
-        <img
-          src={row.imageUrl}
-          alt={row.name}
-          className="h-24 w-36 rounded-lg object-cover border border-gray-200"
-        />
-      ),
-    },
-    {
-      key: "name",
-      label: "Name",
-      sortable: true,
-      className: "font-medium text-gray-800",
-    },
-    {
-      key: "actions",
-      label: "Actions",
-      render: (row) => (
-        <div>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-            onClick={() => handleUpdateRole(row.id, selectedRoles[row.id])}
-          >
-            Edit
-          </Button>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-            onClick={() => handleUpdateRole(row.id, selectedRoles[row.id])}
-          >
-            Delete
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const handleEdit = (id) => {
+    console.log("Edit banner with ID:", id);
+    // Tambahkan logika untuk mengedit banner
+  };
+
+  const handleDelete = (id) => {
+    console.log("Delete banner with ID:", id);
+    // Tambahkan logika untuk menghapus banner
+  };
 
   if (isLoading) {
     return (
@@ -76,10 +39,13 @@ const Banners = () => {
 
   return (
     <div className="p-6">
+      {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Banner</h1>
         <AddButton className="bg-blue-500 text-white">Add Banner</AddButton>
       </div>
+
+      {/* Search Bar */}
       <div className="mb-6">
         <SearchBar
           value={search}
@@ -88,16 +54,21 @@ const Banners = () => {
         />
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-4">
-        <ReusableTable
-          columns={columns}
-          data={currentData}
-          onSort={handleSort}
-          sortConfig={sortConfig}
-        />
+      {/* Grid Layout for Banners */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        {currentData.map((banner) => (
+          <CardDashboard
+            key={banner.id}
+            imageUrl={banner.imageUrl}
+            name={banner.name}
+            onEdit={() => handleEdit(banner.id)}
+            onDelete={() => handleDelete(banner.id)}
+          />
+        ))}
       </div>
 
-      <div className="flex justify-between items-center mt-6 px-1">
+      {/* Pagination Section */}
+      <div className="flex justify-between items-center mt-8 px-1">
         <span className="text-sm text-gray-600">
           Page {currentPage} of {totalPages}
         </span>
