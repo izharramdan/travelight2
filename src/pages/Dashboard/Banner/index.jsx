@@ -60,7 +60,7 @@ const Banners = () => {
           <CardDashboard
             key={banner.id}
             imageUrl={banner.imageUrl}
-            name={banner.name}
+            title={banner.name}
             onEdit={() => handleEdit(banner.id)}
             onDelete={() => handleDelete(banner.id)}
           />

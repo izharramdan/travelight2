@@ -1,10 +1,10 @@
 import React from "react";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
-import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
-import { Button, Spinner } from "@material-tailwind/react";
+import { Spinner, Typography } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 import usePromoDashboard from "../../../components/Views/Dashboard/hooks/promo/usePromoDashboard";
+import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
 
 const DashboardPromos = () => {
   const { promos, isLoading } = usePromoDashboard();
@@ -16,58 +16,17 @@ const DashboardPromos = () => {
     totalPages,
     currentPage,
     setCurrentPage,
-    handleSort,
-    sortConfig,
-  } = useTableData(promos, 10);
+  } = useTableData(promos, 8); // Show 8 promos per page
 
-  const columns = [
-    {
-      key: "imageUrl",
-      label: "Image",
-      sortable: true,
-      render: (row) => (
-        <img
-          src={row.imageUrl}
-          alt={row.name}
-          className="h-24 w-36 rounded-lg object-cover border border-gray-200"
-        />
-      ),
-    },
-    {
-      key: "title",
-      label: "Title",
-      sortable: true,
-      className: "font-medium text-gray-800",
-    },
-    {
-      key: "promo_code",
-      label: "Code",
-      sortable: true,
-      className: "font-medium text-gray-800",
-    },
-    {
-      key: "actions",
-      label: "Actions",
-      render: (row) => (
-        <div>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-          >
-            Edit
-          </Button>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-          >
-            Delete
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const handleEdit = (id) => {
+    console.log("Edit promo with ID:", id);
+    // Tambahkan logika untuk mengedit promo
+  };
+
+  const handleDelete = (id) => {
+    console.log("Delete promo with ID:", id);
+    // Tambahkan logika untuk menghapus promo
+  };
 
   if (isLoading) {
     return (
@@ -79,8 +38,12 @@ const DashboardPromos = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Promo</h1>
+      {/* Header Section */}
+      <Typography variant="h4" color="blue-gray" className="mb-6 font-bold">
+        Promo
+      </Typography>
 
+      {/* Search Bar */}
       <div className="mb-6">
         <SearchBar
           value={search}
@@ -89,19 +52,57 @@ const DashboardPromos = () => {
         />
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-4">
-        <ReusableTable
-          columns={columns}
-          data={currentData}
-          onSort={handleSort}
-          sortConfig={sortConfig}
-        />
+      {/* Grid Layout for Promos */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        {currentData.map((promo) => (
+          <CardDashboard
+            key={promo.id}
+            imageUrl={promo.imageUrl}
+            title={promo.title}
+            onEdit={() => handleEdit(promo.id)}
+            onDelete={() => handleDelete(promo.id)}
+          >
+            <div className="space-y-4">
+              {/* Promo Code */}
+              <Typography variant="h6" color="blue-gray" className="font-medium">
+                Promo Code:{" "}
+                <Typography
+                  as="span"
+                  variant="small"
+                  color="blue"
+                  className="font-semibold"
+                >
+                  {promo.promo_code}
+                </Typography>
+              </Typography>
+
+              {/* Discount Price */}
+              <div className="flex items-baseline gap-1">
+                <Typography
+                  variant="h5"
+                  color="green"
+                  className="font-semibold"
+                >
+                  Rp {promo.promo_discount_price.toLocaleString()}
+                </Typography>
+                <Typography
+                  variant="small"
+                  color="gray"
+                  className="line-through"
+                >
+                  Rp {promo.minimum_claim_price.toLocaleString()}
+                </Typography>
+              </div>
+            </div>
+          </CardDashboard>
+        ))}
       </div>
 
-      <div className="flex justify-between items-center mt-6 px-1">
-        <span className="text-sm text-gray-600">
+      {/* Pagination Section */}
+      <div className="flex justify-between items-center mt-8 px-1">
+        <Typography variant="small" color="gray">
           Page {currentPage} of {totalPages}
-        </span>
+        </Typography>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

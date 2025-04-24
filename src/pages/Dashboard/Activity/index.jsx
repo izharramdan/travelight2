@@ -1,10 +1,10 @@
 import React from "react";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
-import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
-import { Button, Spinner } from "@material-tailwind/react";
+import { Spinner, Typography } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 import useActivityDashboard from "../../../components/Views/Dashboard/hooks/activity/useActivityDashboard";
+import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
 
 const DashboardActivities = () => {
   const { activities, isLoading } = useActivityDashboard();
@@ -16,52 +16,17 @@ const DashboardActivities = () => {
     totalPages,
     currentPage,
     setCurrentPage,
-    handleSort,
-    sortConfig,
-  } = useTableData(activities, 10);
+  } = useTableData(activities, 8); // Show 8 activities per page
 
-  const columns = [
-    {
-      key: "imageUrl",
-      label: "Image",
-      sortable: true,
-      render: (row) => (
-        <img
-          src={row.imageUrls[0]}
-          alt={row.name}
-          className="h-24 w-36 rounded-lg object-cover border border-gray-200"
-        />
-      ),
-    },
-    {
-      key: "title",
-      label: "Title",
-      sortable: true,
-      className: "font-medium text-gray-800",
-    },
-    {
-      key: "actions",
-      label: "Actions",
-      render: (row) => (
-        <div>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-          >
-            Edit
-          </Button>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-          >
-            Delete
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const handleEdit = (id) => {
+    console.log("Edit activity with ID:", id);
+    // Tambahkan logika untuk mengedit aktivitas
+  };
+
+  const handleDelete = (id) => {
+    console.log("Delete activity with ID:", id);
+    // Tambahkan logika untuk menghapus aktivitas
+  };
 
   if (isLoading) {
     return (
@@ -73,8 +38,10 @@ const DashboardActivities = () => {
 
   return (
     <div className="p-6">
+      {/* Header Section */}
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Activity</h1>
 
+      {/* Search Bar */}
       <div className="mb-6">
         <SearchBar
           value={search}
@@ -83,16 +50,36 @@ const DashboardActivities = () => {
         />
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-4">
-        <ReusableTable
-          columns={columns}
-          data={currentData}
-          onSort={handleSort}
-          sortConfig={sortConfig}
-        />
+      {/* Grid Layout for Activities */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        {currentData.map((activity) => (
+          <CardDashboard
+            key={activity.id}
+            imageUrl={
+              activity.imageUrls && activity.imageUrls.length > 0 && activity.imageUrls[0].trim() !== ""
+                ? activity.imageUrls[0]
+                : "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg"
+            }
+            title={activity.title}
+            onEdit={() => handleEdit(activity.id)}
+            onDelete={() => handleDelete(activity.id)}
+          >
+            <div className="space-y-2">
+              <Typography className="text-sm text-gray-600">
+                City: <span className="font-semibold">{activity.city}</span>
+              </Typography>
+
+              <Typography className="text-sm text-gray-600">
+                Rating: <span className="font-semibold">{activity.rating}</span>{" "}
+                ({activity.total_reviews} reviews)
+              </Typography>
+            </div>
+          </CardDashboard>
+        ))}
       </div>
 
-      <div className="flex justify-between items-center mt-6 px-1">
+      {/* Pagination Section */}
+      <div className="flex justify-between items-center mt-8 px-1">
         <span className="text-sm text-gray-600">
           Page {currentPage} of {totalPages}
         </span>

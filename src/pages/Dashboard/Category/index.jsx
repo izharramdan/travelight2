@@ -1,10 +1,10 @@
 import React from "react";
 import useTableData from "../../../components/Views/Dashboard/hooks/useTableData";
-import ReusableTable from "../../../components/Dashboard/components/ReusableTable";
 import Pagination from "../../../components/Dashboard/components/Pagination";
-import { Button, Spinner } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 import useCategoryDashboard from "../../../components/Views/Dashboard/hooks/category/useCategoryDashboard";
+import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
 
 const DashboardCategories = () => {
   const { categories, isLoading } = useCategoryDashboard();
@@ -16,52 +16,17 @@ const DashboardCategories = () => {
     totalPages,
     currentPage,
     setCurrentPage,
-    handleSort,
-    sortConfig,
-  } = useTableData(categories, 10);
+  } = useTableData(categories, 8); // Show 8 categories per page
 
-  const columns = [
-    {
-      key: "imageUrl",
-      label: "Image",
-      sortable: true,
-      render: (row) => (
-        <img
-          src={row.imageUrl}
-          alt={row.name}
-          className="h-24 w-36 rounded-lg object-cover border border-gray-200"
-        />
-      ),
-    },
-    {
-      key: "name",
-      label: "name",
-      sortable: true,
-      className: "font-medium text-gray-800",
-    },
-    {
-      key: "actions",
-      label: "Actions",
-      render: (row) => (
-        <div>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-          >
-            Edit
-          </Button>
-          <Button
-            size="sm"
-            color="blue"
-            className="rounded-md px-4 py-1 text-sm font-semibold"
-          >
-            Delete
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const handleEdit = (id) => {
+    console.log("Edit category with ID:", id);
+    // Tambahkan logika untuk mengedit kategori
+  };
+
+  const handleDelete = (id) => {
+    console.log("Delete category with ID:", id);
+    // Tambahkan logika untuk menghapus kategori
+  };
 
   if (isLoading) {
     return (
@@ -73,8 +38,10 @@ const DashboardCategories = () => {
 
   return (
     <div className="p-6">
+      {/* Header Section */}
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Category</h1>
 
+      {/* Search Bar */}
       <div className="mb-6">
         <SearchBar
           value={search}
@@ -83,16 +50,21 @@ const DashboardCategories = () => {
         />
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-4">
-        <ReusableTable
-          columns={columns}
-          data={currentData}
-          onSort={handleSort}
-          sortConfig={sortConfig}
-        />
+      {/* Grid Layout for Categories */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        {currentData.map((category) => (
+          <CardDashboard
+            key={category.id}
+            imageUrl={category.imageUrl}
+            title={category.name}
+            onEdit={() => handleEdit(category.id)}
+            onDelete={() => handleDelete(category.id)}
+          />
+        ))}
       </div>
 
-      <div className="flex justify-between items-center mt-6 px-1">
+      {/* Pagination Section */}
+      <div className="flex justify-between items-center mt-8 px-1">
         <span className="text-sm text-gray-600">
           Page {currentPage} of {totalPages}
         </span>
