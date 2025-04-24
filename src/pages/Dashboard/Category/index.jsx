@@ -66,7 +66,7 @@ const DashboardCategories = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Spinner className="h-16 w-16 text-blue-500" />
+        <Spinner className="h-16 w-16" />
       </div>
     );
   }

@@ -34,7 +34,7 @@ const DetailTransaction = () => {
 
   if (isLoading) {
     return (
-      <div className="text-center py-10 animate-pulse space-y-4">
+      <div className="flex justify-center items-center h-64">
         <Spinner className="h-16 w-16" />;
       </div>
     );

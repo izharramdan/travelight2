@@ -5,6 +5,7 @@ import Pagination from "../../../components/Dashboard/components/Pagination";
 import { Button, Spinner } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 import useBanner from "../../../components/Views/Dashboard/hooks/banner/useBanner";
+import AddButton from "../../../components/Dashboard/components/AddButton";
 
 const Banners = () => {
   const { banners, isLoading } = useBanner();
@@ -68,15 +69,17 @@ const Banners = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Spinner className="h-16 w-16 text-blue-500" />
+        <Spinner className="h-16 w-16" />
       </div>
     );
   }
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Banner</h1>
-
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Banner</h1>
+        <AddButton className="bg-blue-500 text-white">Add Banner</AddButton>
+      </div>
       <div className="mb-6">
         <SearchBar
           value={search}
