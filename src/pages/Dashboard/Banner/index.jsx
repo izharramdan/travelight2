@@ -44,7 +44,12 @@ const Banners = () => {
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Banner</h1>
-        <AddButton className="bg-blue-500 text-white" onClick={() => navigate("/dashboard/add-banner")}>Add Banner</AddButton>
+        <AddButton
+          className="bg-blue-500 text-white"
+          onClick={() => navigate("/dashboard/add-banner")}
+        >
+          Add Banner
+        </AddButton>
       </div>
 
       {/* Search Bar */}
@@ -63,7 +68,7 @@ const Banners = () => {
             key={banner.id}
             imageUrl={banner.imageUrl}
             title={banner.name}
-            onEdit={() => handleEdit(banner.id)}
+            onEdit={() => navigate(`/dashboard/edit-banner/${banner.id}`)}
             onDelete={() => handleDelete(banner.id)}
           />
         ))}

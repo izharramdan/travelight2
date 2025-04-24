@@ -25,6 +25,7 @@ import DashboardPromos from "./pages/Dashboard/Promo";
 import DashboardActivities from "./pages/Dashboard/Activity";
 import DashboardCategories from "./pages/Dashboard/Category";
 import AddBanner from "./pages/Dashboard/Banner/AddBanner";
+import EditBanner from "./pages/Dashboard/Banner/EditBanner";
 
 const App = () => {
   return (
@@ -111,6 +112,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <AddBanner />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="edit-banner/:bannerId"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <EditBanner />
                 </ProtectedRoute>
               }
             />

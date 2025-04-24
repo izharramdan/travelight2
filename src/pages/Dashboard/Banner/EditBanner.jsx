@@ -4,7 +4,7 @@ import ActionButton from "../../../components/Dashboard/components/ActionButton"
 import useAddBanner from "../../../components/Views/Dashboard/hooks/banner/useAddBanner";
 import useUploadImage from "../../../hooks/useUploadImage";
 
-const AddBanner = () => {
+const EditBanner = () => {
   const [formData, setFormData] = useState({
     name: "",
     imageUrl: "",
@@ -156,4 +156,4 @@ const AddBanner = () => {
   );
 };
 
-export default AddBanner;
+export default EditBanner;
