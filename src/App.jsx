@@ -24,7 +24,7 @@ import Banners from "./pages/Dashboard/Banner";
 import DashboardPromos from "./pages/Dashboard/Promo";
 import DashboardActivities from "./pages/Dashboard/Activity";
 import DashboardCategories from "./pages/Dashboard/Category";
-
+import AddBanner from "./pages/Dashboard/Banner/AddBanner";
 
 const App = () => {
   return (
@@ -103,6 +103,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <Banners />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="add-banner"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AddBanner />
                 </ProtectedRoute>
               }
             />

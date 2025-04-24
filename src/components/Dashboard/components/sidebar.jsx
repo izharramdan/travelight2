@@ -100,6 +100,7 @@ const Sidebar = () => {
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <a
+                  href={href}
                   onClick={(e) => {
                     e.preventDefault(); // Cegah reload halaman
                     navigate(href); // Navigasi internal menggunakan navigate

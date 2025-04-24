@@ -18,7 +18,7 @@ const AddModal = ({
   };
 
   return (
-    <Dialog open={open} handler={onClose} size="sm" className="p-4">
+    <Dialog open={open} handler={onClose} size="sm" className="p-4 z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
         {/* Header */}
         <div className="text-xl font-semibold text-gray-800 border-b pb-2">
@@ -41,10 +41,10 @@ const AddModal = ({
 
         {/* Footer Buttons */}
         <div className="flex justify-end gap-2 pt-4 border-t">
-          <Button variant="text" color="gray" onClick={onClose}>
+          <Button onClick={onClose} color="red">
             Cancel
           </Button>
-          <Button variant="filled" color="blue" onClick={onSubmit}>
+          <Button onClick={onSubmit} color="blue">
             Submit
           </Button>
         </div>

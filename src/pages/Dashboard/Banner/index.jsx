@@ -6,8 +6,10 @@ import SearchBar from "../../../components/Dashboard/components/DashboardSearchB
 import useBanner from "../../../components/Views/Dashboard/hooks/banner/useBanner";
 import AddButton from "../../../components/Dashboard/components/AddButton";
 import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
+import { useNavigate } from "react-router-dom";
 
 const Banners = () => {
+  const navigate = useNavigate();
   const { banners, isLoading } = useBanner();
 
   const {
@@ -42,7 +44,7 @@ const Banners = () => {
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Banner</h1>
-        <AddButton className="bg-blue-500 text-white">Add Banner</AddButton>
+        <AddButton className="bg-blue-500 text-white" onClick={() => navigate("/dashboard/add-banner")}>Add Banner</AddButton>
       </div>
 
       {/* Search Bar */}
