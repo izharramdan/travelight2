@@ -27,7 +27,7 @@ const DashboardActivities = () => {
       sortable: true,
       render: (row) => (
         <img
-          src={row.imageUrl}
+          src={row.imageUrls[0]}
           alt={row.name}
           className="h-24 w-36 rounded-lg object-cover border border-gray-200"
         />
@@ -73,13 +73,13 @@ const DashboardActivities = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Promo</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-800">Activity</h1>
 
       <div className="mb-6">
         <SearchBar
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search promo"
+          placeholder="Search activity"
         />
       </div>
 

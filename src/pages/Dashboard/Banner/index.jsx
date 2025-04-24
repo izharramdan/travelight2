@@ -81,7 +81,7 @@ const Banners = () => {
         <SearchBar
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search banners by name"
+          placeholder="Search banner"
         />
       </div>
 
