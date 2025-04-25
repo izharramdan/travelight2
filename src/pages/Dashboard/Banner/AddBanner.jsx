@@ -49,10 +49,10 @@ const AddBanner = () => {
     e.preventDefault();
 
     // Validasi input
-    if (!formData.name || !formData.imageUrl) {
-      alert("Please fill in all fields and upload an image.");
-      return;
-    }
+    // if (!formData.name || !formData.imageUrl) {
+    //   alert("Please fill in all fields and upload an image.");
+    //   return;
+    // }
 
     // Panggil fungsi addBanner dari useAddBanner
     const success = await addBanner({

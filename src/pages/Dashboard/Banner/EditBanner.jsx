@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@material-tailwind/react";
 import ActionButton from "../../../components/Dashboard/components/ActionButton";
-import useAddBanner from "../../../components/Views/Dashboard/hooks/banner/useAddBanner";
+import useEditBanner from "../../../components/Views/Dashboard/hooks/banner/useEditBanner";
 import useUploadImage from "../../../hooks/useUploadImage";
+import { useParams, useNavigate } from "react-router-dom";
+import useBannerById from "../../../components/Views/Dashboard/hooks/banner/useBannerById";
 
 const EditBanner = () => {
+  const { bannerId } = useParams(); // Ambil bannerId banner dari URL
+  const navigate = useNavigate();
+  const { banner, isLoading: isFetching } = useBannerById(bannerId); // Ambil data banner berdasarkan bannerId
+  const { editBanner, isLoading: isEditing } = useEditBanner();
+  const { uploadImage, uploadProgress } = useUploadImage();
+  const [isUploading, setIsUploading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     imageUrl: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
-  const { addBanner, isLoading: isAdding } = useAddBanner();
-  const { uploadImage, uploadProgress } = useUploadImage();
-  const [isUploading, setIsUploading] = useState(false);
+
+  // Set data banner ke formData saat data banner berhasil diambil
+  useEffect(() => {
+    if (banner) {
+      setFormData({
+        name: banner.name,
+        imageUrl: banner.imageUrl,
+      });
+      setPreviewImage(banner.imageUrl); // Set preview image dari data existing
+    }
+  }, [banner]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,25 +71,27 @@ const EditBanner = () => {
       return;
     }
 
-    // Panggil fungsi addBanner dari useAddBanner
-    const success = await addBanner({
+    // Panggil fungsi editBanner dari useEditBanner
+    const success = await editBanner({
+      bannerId,
       name: formData.name,
       imageUrl: formData.imageUrl,
     });
 
     if (success) {
-      // Reset form jika berhasil
-      setFormData({ name: "", imageUrl: "" });
-      setPreviewImage(null);
+      // Redirect ke halaman banner setelah berhasil
+      navigate("/dashboard/banner");
     }
   };
+
+  if (isFetching) {
+    return <div>Loading banner data...</div>;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          Add New Banner
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Edit Banner</h1>
 
         {/* Image Preview Box */}
         <div className="mb-8">
@@ -108,7 +127,7 @@ const EditBanner = () => {
             </label>
             <Input
               type="text"
-              id="name"
+              id="name" // Ganti bannerId dengan id
               name="name"
               value={formData.name}
               onChange={handleInputChange}
@@ -127,7 +146,7 @@ const EditBanner = () => {
             </label>
             <input
               type="file"
-              id="image"
+              id="image" // Ganti bannerId dengan id
               name="image"
               accept="image/*"
               onChange={handleFileChange}
@@ -144,10 +163,10 @@ const EditBanner = () => {
           <div className="text-right">
             <ActionButton
               type="submit"
-              label={isAdding ? "Submitting..." : "Submit"}
+              label={isEditing ? "Saving..." : "Save Changes"}
               color="info"
               className="px-6 py-2"
-              disabled={isAdding || isUploading}
+              disabled={isEditing || isUploading}
             />
           </div>
         </form>

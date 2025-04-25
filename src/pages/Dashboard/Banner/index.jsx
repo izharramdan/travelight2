@@ -66,7 +66,13 @@ const Banners = () => {
         {currentData.map((banner) => (
           <CardDashboard
             key={banner.id}
-            imageUrl={banner.imageUrl}
+            imageUrl={
+              banner.imageUrl &&
+              banner.imageUrl.length > 0 &&
+              banner.imageUrl.trim() !== ""
+                ? banner.imageUrl
+                : "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg"
+            }
             title={banner.name}
             onEdit={() => navigate(`/dashboard/edit-banner/${banner.id}`)}
             onDelete={() => handleDelete(banner.id)}

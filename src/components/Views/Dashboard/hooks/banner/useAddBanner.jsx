@@ -31,9 +31,11 @@ const useAddBanner = () => {
       );
       if (response.status === 200) {
         toast.success(response.data.message);
+        return true;
       }
     } catch (error) {
       console.error(error);
+      return false;
     } finally {
       setIsLoading(false);
     }
