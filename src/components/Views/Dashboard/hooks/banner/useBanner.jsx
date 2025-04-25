@@ -33,6 +33,7 @@ const useBanner = () => {
     isLoading,
     banners,
     fetcher,
+    setBanners,
   };
 };
 

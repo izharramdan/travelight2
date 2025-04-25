@@ -7,10 +7,12 @@ import useBanner from "../../../components/Views/Dashboard/hooks/banner/useBanne
 import AddButton from "../../../components/Dashboard/components/AddButton";
 import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
 import { useNavigate } from "react-router-dom";
+import useDeleteBanner from "../../../components/Views/Dashboard/hooks/banner/useDeleteBanner";
 
 const Banners = () => {
   const navigate = useNavigate();
-  const { banners, isLoading } = useBanner();
+  const { banners, isLoading, setBanners } = useBanner();
+  const { deleteBanner } = useDeleteBanner();
 
   const {
     search,
@@ -21,16 +23,6 @@ const Banners = () => {
     setCurrentPage,
   } = useTableData(banners, 8);
 
-  const handleEdit = (id) => {
-    console.log("Edit banner with ID:", id);
-    // Tambahkan logika untuk mengedit banner
-  };
-
-  const handleDelete = (id) => {
-    console.log("Delete banner with ID:", id);
-    // Tambahkan logika untuk menghapus banner
-  };
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -38,6 +30,17 @@ const Banners = () => {
       </div>
     );
   }
+
+  const handleEdit = (id) => {
+    navigate(`/dashboard/edit-banner/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    const success = await deleteBanner(id);
+    if (success) {
+      setBanners((prevBanners) => prevBanners.filter((b) => b.id !== id));
+    }
+  };
 
   return (
     <div className="p-6">
@@ -74,7 +77,7 @@ const Banners = () => {
                 : "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg"
             }
             title={banner.name}
-            onEdit={() => navigate(`/dashboard/edit-banner/${banner.id}`)}
+            onEdit={() => handleEdit(banner.id)}
             onDelete={() => handleDelete(banner.id)}
           />
         ))}
