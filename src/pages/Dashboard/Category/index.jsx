@@ -66,7 +66,13 @@ const DashboardCategories = () => {
         {currentData.map((category) => (
           <CardDashboard
             key={category.id}
-            imageUrl={category.imageUrl}
+            imageUrl={
+              category.imageUrl &&
+              category.imageUrl.length > 0 &&
+              category.imageUrl.trim() !== ""
+                ? category.imageUrl
+                : "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg"
+            }
             title={category.name}
             onEdit={() => handleEdit(category.id)}
             onDelete={() => handleDelete(category.id)}

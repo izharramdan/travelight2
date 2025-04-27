@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "@material-tailwind/react";
 import ActionButton from "../../../components/Dashboard/components/ActionButton";
-import useAddCategory from "../../../components/Views/Dashboard/hooks/category/useAddCategory"; // Ganti hook untuk kategori
+import useAddCategory from "../../../components/Views/Dashboard/hooks/category/useAddCategory";
 import useUploadImage from "../../../hooks/useUploadImage";
 
 const AddCategory = () => {
@@ -10,7 +10,7 @@ const AddCategory = () => {
     imageUrl: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
-  const { addCategory, isLoading: isAdding } = useAddCategory(); // Ganti hook untuk kategori
+  const { addCategory, isLoading: isAdding } = useAddCategory();
   const { uploadImage, uploadProgress } = useUploadImage();
   const [isUploading, setIsUploading] = useState(false);
 
@@ -49,10 +49,10 @@ const AddCategory = () => {
     e.preventDefault();
 
     // Validasi input
-    if (!formData.name || !formData.imageUrl) {
-      alert("Please fill in all fields and upload an image.");
-      return;
-    }
+    // if (!formData.name || !formData.imageUrl) {
+    //   alert("Please fill in all fields and upload an image.");
+    //   return;
+    // }
 
     // Panggil fungsi addCategory dari useAddCategory
     const success = await addCategory({
