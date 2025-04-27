@@ -26,6 +26,8 @@ import DashboardActivities from "./pages/Dashboard/Activity";
 import DashboardCategories from "./pages/Dashboard/Category";
 import AddBanner from "./pages/Dashboard/Banner/AddBanner";
 import EditBanner from "./pages/Dashboard/Banner/EditBanner";
+import EditCategory from "./pages/Dashboard/Category/EditCategory";
+import AddCategory from "./pages/Dashboard/Category/AddCategory";
 
 const App = () => {
   return (
@@ -96,6 +98,22 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <DashboardCategories />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="add-category"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AddCategory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="edit-category/:categoryId"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <EditCategory />
                 </ProtectedRoute>
               }
             />

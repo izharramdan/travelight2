@@ -15,12 +15,12 @@ const CardDashboard = ({
   customActions, // custom button area (can override default buttons)
 }) => {
   return (
-    <Card className="shadow-md rounded-md hover:shadow-lg transition duration-300 flex flex-col">
+    <Card className="bg-gray-100 shadow-md rounded-md hover:shadow-lg transition duration-300 flex flex-col">
       {imageUrl && (
         <img
           src={imageUrl}
           alt={title}
-          className="h-40 w-full object-cover rounded-t-xl"
+          className="h-40 w-full object-cover"
         />
       )}
 

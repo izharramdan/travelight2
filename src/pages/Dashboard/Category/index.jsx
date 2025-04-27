@@ -5,8 +5,11 @@ import { Spinner } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 import useCategoryDashboard from "../../../components/Views/Dashboard/hooks/category/useCategoryDashboard";
 import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
+import AddButton from "../../../components/Dashboard/components/AddButton";
+import { useNavigate } from "react-router-dom";
 
 const DashboardCategories = () => {
+  const navigate = useNavigate();
   const { categories, isLoading } = useCategoryDashboard();
 
   const {
@@ -19,7 +22,7 @@ const DashboardCategories = () => {
   } = useTableData(categories, 8); // Show 8 categories per page
 
   const handleEdit = (id) => {
-    console.log("Edit category with ID:", id);
+    navigate(`/dashboard/edit-category/${id}`);
     // Tambahkan logika untuk mengedit kategori
   };
 
@@ -39,7 +42,15 @@ const DashboardCategories = () => {
   return (
     <div className="p-6">
       {/* Header Section */}
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Category</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Category</h1>
+        <AddButton
+          className="bg-blue-500 text-white"
+          onClick={() => navigate("/dashboard/add-category")}
+        >
+          Add Category
+        </AddButton>
+      </div>
 
       {/* Search Bar */}
       <div className="mb-6">
