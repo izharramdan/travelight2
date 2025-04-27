@@ -28,7 +28,7 @@ const useCategoryDashboard = () => {
     fetcher();
   }, []);
 
-  return { categories, isLoading, fetcher };
+  return { categories, isLoading, fetcher, setCategories };
 };
 
 export default useCategoryDashboard;

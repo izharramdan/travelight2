@@ -7,10 +7,12 @@ import useCategoryDashboard from "../../../components/Views/Dashboard/hooks/cate
 import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
 import AddButton from "../../../components/Dashboard/components/AddButton";
 import { useNavigate } from "react-router-dom";
+import useDeleteCategory from "../../../components/Views/Dashboard/hooks/category/useDeleteCategory";
 
 const DashboardCategories = () => {
   const navigate = useNavigate();
-  const { categories, isLoading } = useCategoryDashboard();
+  const { categories, isLoading, setCategories } = useCategoryDashboard();
+  const { deleteCategory } = useDeleteCategory();
 
   const {
     search,
@@ -19,16 +21,19 @@ const DashboardCategories = () => {
     totalPages,
     currentPage,
     setCurrentPage,
-  } = useTableData(categories, 8); // Show 8 categories per page
+  } = useTableData(categories, 8);
 
   const handleEdit = (id) => {
     navigate(`/dashboard/edit-category/${id}`);
-    // Tambahkan logika untuk mengedit kategori
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete category with ID:", id);
-    // Tambahkan logika untuk menghapus kategori
+  const handleDelete = async (id) => {
+    const success = await deleteCategory(id);
+    if (success) {
+      setCategories((prevCategories) =>
+        prevCategories.filter((category) => category.id !== id)
+      );
+    }
   };
 
   if (isLoading) {
