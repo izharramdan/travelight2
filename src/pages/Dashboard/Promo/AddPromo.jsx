@@ -19,12 +19,31 @@ const AddPromo = () => {
   const { uploadImage, uploadProgress } = useUploadImage();
   const [isUploading, setIsUploading] = useState(false);
 
+  const formatToIDR = (value) => {
+    if (!value) return "";
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(value.replace(/\D/g, ""));
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    if (name === "promo_discount_price" || name === "minimum_claim_price") {
+      // Hanya simpan angka di state
+      const numericValue = value.replace(/\D/g, ""); // Hapus karakter non-angka
+      setFormData((prev) => ({
+        ...prev,
+        [name]: numericValue, // Simpan angka murni
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleFileChange = async (e) => {
@@ -53,21 +72,6 @@ const AddPromo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validasi input
-    if (
-      !formData.title ||
-      !formData.description ||
-      !formData.imageUrl ||
-      !formData.terms_condition ||
-      !formData.promo_code ||
-      !formData.promo_discount_price ||
-      !formData.minimum_claim_price
-    ) {
-      alert("Please fill in all fields and upload an image.");
-      return;
-    }
-
-    // Panggil fungsi addPromo dari useAddPromo
     const success = await addPromo({
       title: formData.title,
       description: formData.description,
@@ -79,7 +83,6 @@ const AddPromo = () => {
     });
 
     if (success) {
-      // Reset form jika berhasil
       setFormData({
         title: "",
         description: "",
@@ -98,7 +101,6 @@ const AddPromo = () => {
       <div className="w-full bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Add New Promo</h1>
 
-        {/* Image Preview Box */}
         <div className="mb-8">
           <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden border-2 border-dashed border-gray-300">
             {previewImage ? (
@@ -172,10 +174,10 @@ const AddPromo = () => {
               Promo Discount Price
             </label>
             <Input
-              type="number"
+              type="text"
               id="promo_discount_price"
               name="promo_discount_price"
-              value={formData.promo_discount_price}
+              value={formatToIDR(formData.promo_discount_price)}
               onChange={handleInputChange}
               placeholder="Enter promo discount price"
               className="w-full"
@@ -191,10 +193,10 @@ const AddPromo = () => {
               Minimum Claim Price
             </label>
             <Input
-              type="number"
+              type="text"
               id="minimum_claim_price"
               name="minimum_claim_price"
-              value={formData.minimum_claim_price}
+              value={formatToIDR(formData.minimum_claim_price)} 
               onChange={handleInputChange}
               placeholder="Enter minimum claim price"
               className="w-full"

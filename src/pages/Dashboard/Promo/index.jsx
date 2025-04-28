@@ -68,7 +68,13 @@ const DashboardPromos = () => {
         {currentData.map((promo) => (
           <CardDashboard
             key={promo.id}
-            imageUrl={promo.imageUrl}
+            imageUrl={
+              promo.imageUrl &&
+              promo.imageUrl.length > 0 &&
+              promo.imageUrl.trim() !== ""
+                ? promo.imageUrl
+                : "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg"
+            }
             title={promo.title}
             onEdit={() => handleEdit(promo.id)}
             onDelete={() => handleDelete(promo.id)}
@@ -103,17 +109,6 @@ const DashboardPromos = () => {
                   Rp {promo.minimum_claim_price.toLocaleString()}
                 </Typography>
               </div>
-
-              {/* Optional: Description */}
-              {/* {promo.description && (
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="text-sm line-clamp-2"
-                >
-                  {promo.description}
-                </Typography>
-              )} */}
             </div>
           </CardDashboard>
         ))}
