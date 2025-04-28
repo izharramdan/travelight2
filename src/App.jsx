@@ -28,6 +28,7 @@ import AddBanner from "./pages/Dashboard/Banner/AddBanner";
 import EditBanner from "./pages/Dashboard/Banner/EditBanner";
 import EditCategory from "./pages/Dashboard/Category/EditCategory";
 import AddCategory from "./pages/Dashboard/Category/AddCategory";
+import AddPromo from "./pages/Dashboard/Promo/AddPromo";
 
 const App = () => {
   return (
@@ -82,6 +83,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <DashboardPromos />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="add-promo"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <AddPromo />
                 </ProtectedRoute>
               }
             />
