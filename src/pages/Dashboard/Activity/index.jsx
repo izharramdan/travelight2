@@ -5,9 +5,14 @@ import { Spinner, Typography } from "@material-tailwind/react";
 import SearchBar from "../../../components/Dashboard/components/DashboardSearchBar";
 import useActivityDashboard from "../../../components/Views/Dashboard/hooks/activity/useActivityDashboard";
 import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
+import AddButton from "../../../components/Dashboard/components/AddButton";
+import { useNavigate } from "react-router-dom";
+import useDeleteActivity from "../../../components/Views/Dashboard/hooks/activity/useDeleteActivity";
 
 const DashboardActivities = () => {
-  const { activities, isLoading } = useActivityDashboard();
+  const { activities, isLoading, setActivities } = useActivityDashboard();
+  const { deleteActivity } = useDeleteActivity();
+  const navigate = useNavigate();
 
   const {
     search,
@@ -23,9 +28,13 @@ const DashboardActivities = () => {
     // Tambahkan logika untuk mengedit aktivitas
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete activity with ID:", id);
-    // Tambahkan logika untuk menghapus aktivitas
+  const handleDelete = async (id) => {
+    const success = await deleteActivity(id);
+    if (success) {
+      setActivities((prevActivities) =>
+        prevActivities.filter((activity) => activity.id !== id)
+      );
+    }
   };
 
   if (isLoading) {
@@ -39,7 +48,15 @@ const DashboardActivities = () => {
   return (
     <div className="p-6">
       {/* Header Section */}
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Activity</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Activity</h1>
+        <AddButton
+          className="bg-blue-500 text-white"
+          onClick={() => navigate("/dashboard/add-activity")}
+        >
+          Add Activity
+        </AddButton>
+      </div>
 
       {/* Search Bar */}
       <div className="mb-6">

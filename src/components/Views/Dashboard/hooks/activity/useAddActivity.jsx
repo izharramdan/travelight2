@@ -20,8 +20,11 @@ const useAddActivity = () => {
           .find((row) => row.startsWith("token="))
           ?.split("=")[1] || null;
 
+      console.log("Data sent to API:", data);
+      console.log("URL:", `${BASE_URL.API}${END_POINT.CREATE_ACTIVITY}`);
+
       const response = await axios.post(
-        `${BASE_URL}${END_POINT.ACTIVITY}`,
+        `${BASE_URL.API}${END_POINT.CREATE_ACTIVITY}`,
         data,
         {
           headers: {

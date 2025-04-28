@@ -11,7 +11,6 @@ const useAddPromo = () => {
       const userConfirmed = window.confirm("Confirm to add this promo?");
 
       if (!userConfirmed) {
-        // Jika pengguna membatalkan, hentikan proses
         return false;
       }
       setIsLoading(true);
