@@ -28,7 +28,7 @@ const useActivityDashboard = () => {
     fetcher();
   }, []);
 
-  return { activities, isLoading, fetcher };
+  return { activities, isLoading, fetcher, setActivities };
 };
 
 export default useActivityDashboard;

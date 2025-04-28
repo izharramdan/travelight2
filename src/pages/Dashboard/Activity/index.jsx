@@ -56,7 +56,9 @@ const DashboardActivities = () => {
           <CardDashboard
             key={activity.id}
             imageUrl={
-              activity.imageUrls && activity.imageUrls.length > 0 && activity.imageUrls[0].trim() !== ""
+              activity.imageUrls &&
+              activity.imageUrls.length > 0 &&
+              activity.imageUrls[0].trim() !== ""
                 ? activity.imageUrls[0]
                 : "https://www.hiphopshakespeare.com/wp-content/uploads/2013/11/dummy-image-landscape-1024x585.jpg"
             }
@@ -70,8 +72,9 @@ const DashboardActivities = () => {
               </Typography>
 
               <Typography className="text-sm text-gray-600">
-                Rating: <span className="font-semibold">{activity.rating}</span>{" "}
-                ({activity.total_reviews} reviews)
+                Rating:{" "}
+                <span className="font-semibold">{activity.rating} / 10</span> (
+                {activity.total_reviews} reviews)
               </Typography>
             </div>
           </CardDashboard>
