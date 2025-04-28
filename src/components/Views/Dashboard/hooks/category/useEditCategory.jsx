@@ -3,7 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { API_KEY, BASE_URL, END_POINT } from "../../../../../services/endpoint";
 
-export const useEditCategory = () => {
+const useEditCategory = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const editCategory = async (data) => {

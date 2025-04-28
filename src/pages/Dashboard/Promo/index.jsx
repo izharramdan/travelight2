@@ -22,7 +22,7 @@ const DashboardPromos = () => {
   } = useTableData(promos, 8); // Show 8 promos per page
 
   const handleEdit = (id) => {
-    console.log("Edit promo with ID:", id);
+    navigate(`/dashboard/edit-promo/${id}`);
     // Tambahkan logika untuk mengedit promo
   };
 

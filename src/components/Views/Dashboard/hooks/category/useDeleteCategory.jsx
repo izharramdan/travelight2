@@ -3,7 +3,7 @@ import { useState } from "react";
 import { API_KEY, BASE_URL, END_POINT } from "../../../../../services/endpoint";
 import toast from "react-hot-toast";
 
-export const useDeleteCategory = () => {
+const useDeleteCategory = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteCategory = async (categoryId) => {

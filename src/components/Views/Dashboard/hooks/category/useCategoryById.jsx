@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_KEY, BASE_URL, END_POINT } from "../../../../../services/endpoint";
 
-export const useCategoryById = (categoryId) => {
+const useCategoryById = (categoryId) => {
   const [category, setCategory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
