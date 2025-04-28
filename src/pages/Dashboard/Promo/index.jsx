@@ -6,11 +6,13 @@ import SearchBar from "../../../components/Dashboard/components/DashboardSearchB
 import usePromoDashboard from "../../../components/Views/Dashboard/hooks/promo/usePromoDashboard";
 import CardDashboard from "../../../components/Dashboard/components/CardDashboard";
 import AddButton from "../../../components/Dashboard/components/AddButton";
+import useDeletePromo from "../../../components/Views/Dashboard/hooks/promo/useDeletePromo";
 import { useNavigate } from "react-router-dom";
 
 const DashboardPromos = () => {
   const navigate = useNavigate();
-  const { promos, isLoading } = usePromoDashboard();
+  const { deletePromo } = useDeletePromo();
+  const { promos, isLoading, setPromos } = usePromoDashboard();
 
   const {
     search,
@@ -26,9 +28,13 @@ const DashboardPromos = () => {
     // Tambahkan logika untuk mengedit promo
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete promo with ID:", id);
-    // Tambahkan logika untuk menghapus promo
+  const handleDelete = async (id) => {
+    const success = await deletePromo(id);
+    if (success) {
+      setPromos((prevPromos) =>
+        prevPromos.filter((promo) => promo.id !== id)
+      );
+    }
   };
 
   if (isLoading) {
@@ -83,18 +89,9 @@ const DashboardPromos = () => {
               {/* Promo Badge */}
               <div className="flex justify-start">
                 <Chip color="info" size="sm" isPill={false}>
-                  <Chip.Label>PROMO CODE</Chip.Label>
+                  <Chip.Label>{promo.promo_code}</Chip.Label>
                 </Chip>
               </div>
-
-              {/* Promo Code */}
-              <Typography
-                variant="small"
-                color="blue"
-                className="font-semibold uppercase tracking-wide"
-              >
-                {promo.promo_code}
-              </Typography>
 
               {/* Discount Price */}
               <div className="flex items-baseline gap-2">

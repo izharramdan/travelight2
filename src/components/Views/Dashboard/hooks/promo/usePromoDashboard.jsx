@@ -28,7 +28,7 @@ const usePromoDashboard = () => {
     fetcher();
   }, []);
 
-  return { promos, isLoading, fetcher };
+  return { promos, isLoading, fetcher, setPromos };
 };
 
 export default usePromoDashboard;
