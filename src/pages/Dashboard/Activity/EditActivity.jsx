@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Textarea } from "@material-tailwind/react";
 import ActionButton from "../../../components/Dashboard/components/ActionButton";
 import useUploadImage from "../../../hooks/useUploadImage";
-import useAddActivity from "../../../components/Views/Dashboard/hooks/activity/useAddActivity";
+import useEditActivity from "../../../components/Views/Dashboard/hooks/activity/useEditActivity";
 import useCategoryDashboard from "../../../components/Views/Dashboard/hooks/category/useCategoryDashboard";
+import useActivityById from "../../../components/Views/Dashboard/hooks/activity/useActivityById";
+import { useParams, useNavigate } from "react-router-dom";
 
-const AddActivity = () => {
+const EditActivity = () => {
   const [formData, setFormData] = useState({
     categoryId: "",
     title: "",
@@ -21,12 +23,36 @@ const AddActivity = () => {
     city: "",
     location_maps: "",
   });
+  const { activityId } = useParams();
+  const navigate = useNavigate();
   const [previewImages, setPreviewImages] = useState([]);
-  const { addActivity, isLoading: isAdding } = useAddActivity();
   const { uploadImage, uploadProgress } = useUploadImage();
+  const { activity, isLoading: isFetching } = useActivityById(activityId);
   const [isUploading, setIsUploading] = useState(false);
   const { categories, isLoading: isFetchingCategories } =
     useCategoryDashboard();
+  const { editActivity, isLoading: isEditing } = useEditActivity();
+
+  useEffect(() => {
+    if (activity) {
+      setFormData({
+        categoryId: activity.categoryId,
+        title: activity.title,
+        description: activity.description,
+        imageUrls: activity.imageUrls,
+        price: activity.price,
+        price_discount: activity.price_discount,
+        rating: activity.rating,
+        total_reviews: activity.total_reviews,
+        facilities: activity.facilities,
+        address: activity.address,
+        province: activity.province,
+        city: activity.city,
+        location_maps: activity.location_maps,
+      });
+      setPreviewImages(activity.imageUrls);
+    }
+  }, [activity]);
 
   const formatToIDR = (value) => {
     if (!value) return "";
@@ -89,7 +115,8 @@ const AddActivity = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const success = await addActivity({
+    const success = await editActivity({
+      activityId,
       categoryId: formData.categoryId,
       title: formData.title,
       description: formData.description,
@@ -106,24 +133,13 @@ const AddActivity = () => {
     });
 
     if (success) {
-      setFormData({
-        categoryId: "",
-        title: "",
-        description: "",
-        imageUrls: [],
-        price: "",
-        price_discount: "",
-        rating: "",
-        total_reviews: "",
-        facilities: "",
-        address: "",
-        province: "",
-        city: "",
-        location_maps: "",
-      });
-      setPreviewImages([]);
+      navigate("/dashboard/activity");
     }
   };
+
+  if (isFetching) {
+    return <div>Loading activity data...</div>;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
@@ -419,10 +435,10 @@ const AddActivity = () => {
           <div className="col-span-2 text-right">
             <ActionButton
               type="submit"
-              label={isAdding ? "Submitting..." : "Submit"}
+              label={isEditing ? "Submitting..." : "Submit"}
               color="info"
               className="px-6 py-2"
-              disabled={isAdding || isUploading}
+              disabled={isEditing || isUploading}
             />
           </div>
         </form>
@@ -431,4 +447,4 @@ const AddActivity = () => {
   );
 };
 
-export default AddActivity;
+export default EditActivity;

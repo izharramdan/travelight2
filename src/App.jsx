@@ -31,6 +31,7 @@ import AddCategory from "./pages/Dashboard/Category/AddCategory";
 import AddPromo from "./pages/Dashboard/Promo/AddPromo";
 import EditPromo from "./pages/Dashboard/Promo/EditPromo";
 import AddActivity from "./pages/Dashboard/Activity/AddActivity";
+import EditActivity from "./pages/Dashboard/Activity/EditActivity";
 
 const App = () => {
   return (
@@ -117,6 +118,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin"]}>
                   <AddActivity />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="edit-activity/:activityId"
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <EditActivity />
                 </ProtectedRoute>
               }
             />

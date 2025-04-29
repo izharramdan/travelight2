@@ -21,11 +21,10 @@ const DashboardActivities = () => {
     totalPages,
     currentPage,
     setCurrentPage,
-  } = useTableData(activities, 8); // Show 8 activities per page
+  } = useTableData(activities, 8);
 
   const handleEdit = (id) => {
-    console.log("Edit activity with ID:", id);
-    // Tambahkan logika untuk mengedit aktivitas
+    navigate(`/dashboard/edit-activity/${id}`);
   };
 
   const handleDelete = async (id) => {
