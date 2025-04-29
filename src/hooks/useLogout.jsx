@@ -1,12 +1,11 @@
 import { API_KEY, BASE_URL, END_POINT } from "../services/endpoint";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "../context/userContext";
 
 const useLogout = () => {
-  // const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [logoutState, setLogoutState] = useState({
     isLoggedOut: false,
@@ -25,7 +24,7 @@ const useLogout = () => {
   };
 
   const handleLogout = async () => {
-    setIsLoading(true);
+    setIsLoading(true); // Set loading hanya jika pengguna mengonfirmasi logout
     const token = getToken("token");
     if (!token) {
       setIsLoading(false);
@@ -34,6 +33,10 @@ const useLogout = () => {
     }
 
     try {
+      const userConfirmed = window.confirm("Are you sure you want to logout?");
+      if (!userConfirmed) {
+        return;
+      }
       const response = await axios.get(`${BASE_URL.API}${END_POINT.LOGOUT}`, {
         headers: {
           apiKey: API_KEY,
@@ -41,7 +44,6 @@ const useLogout = () => {
         },
       });
       if (response.data?.code === "200") {
-        window.confirm("Are you sure you want to logout?");
         deleteCookie("token");
         setUser(null);
         toast(`See you again`, {
@@ -61,10 +63,8 @@ const useLogout = () => {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     if (logoutState.shouldRedirect && logoutState.isLoggedOut) {
-      // navigate("/login");
     }
   }, [logoutState]);
 
