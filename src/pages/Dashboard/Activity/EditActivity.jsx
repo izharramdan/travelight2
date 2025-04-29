@@ -145,7 +145,7 @@ const EditActivity = () => {
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="w-full bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          Add New Activity
+          Edit Activity
         </h1>
 
         <div className="mb-8">
