@@ -32,6 +32,7 @@ import AddPromo from "./pages/Dashboard/Promo/AddPromo";
 import EditPromo from "./pages/Dashboard/Promo/EditPromo";
 import AddActivity from "./pages/Dashboard/Activity/AddActivity";
 import EditActivity from "./pages/Dashboard/Activity/EditActivity";
+import DashboardMainPage from "./pages/Dashboard/DashboardMainPage";
 
 const App = () => {
   return (
@@ -74,13 +75,21 @@ const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route
-            path="dashboard/*"
+            path="dashboard/"
             element={
               <ProtectedRoute roles={["admin"]}>
                 <DashboardLayout />
               </ProtectedRoute>
             }
           >
+            <Route
+              path=""
+              element={
+                <ProtectedRoute roles={["admin"]}>
+                  <DashboardMainPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="promo"
               element={

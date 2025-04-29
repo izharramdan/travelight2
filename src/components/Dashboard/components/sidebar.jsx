@@ -25,7 +25,7 @@ const Sidebar = () => {
     {
       icon: Dashboard,
       title: "Dashboard",
-      href: "/dashboard",
+      href: "/dashboard/",
     },
     {
       icon: WhiteFlagSolid,

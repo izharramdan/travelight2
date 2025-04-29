@@ -43,6 +43,7 @@ const useAllTransaction = () => {
   return {
     fetcher,
     transactions,
+    data: transactions,
     isLoading,
   };
 };
