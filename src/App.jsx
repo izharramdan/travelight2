@@ -33,6 +33,7 @@ import EditPromo from "./pages/Dashboard/Promo/EditPromo";
 import AddActivity from "./pages/Dashboard/Activity/AddActivity";
 import EditActivity from "./pages/Dashboard/Activity/EditActivity";
 import DashboardMainPage from "./pages/Dashboard/DashboardMainPage";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 const App = () => {
   return (
@@ -58,6 +59,14 @@ const App = () => {
               element={
                 <ProtectedRoute roles={["admin", "user"]}>
                   <MyTransaction />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="editprofile"
+              element={
+                <ProtectedRoute roles={["admin", "user"]}>
+                  <EditProfile />
                 </ProtectedRoute>
               }
             />
