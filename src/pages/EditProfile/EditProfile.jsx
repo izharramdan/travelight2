@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Input } from "@material-tailwind/react";
 import ActionButton from "../../components/Dashboard/components/ActionButton";
 import useUploadImage from "../../hooks/useUploadImage";
+import useEditProfile from "../../hooks/useEditProfile";
 import { useUser } from "../../context/userContext";
 
 const EditProfile = () => {
-  const { user, refreshUserData } = useUser();
+  const { user, refreshUserData } = useUser(); // Ambil data pengguna dari userContext
+  const { editProfile, isLoading: isEditing } = useEditProfile(); // Integrasi dengan useEditProfile
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,7 +18,6 @@ const EditProfile = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const { uploadImage, uploadProgress } = useUploadImage();
   const [isUploading, setIsUploading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -63,20 +64,11 @@ const EditProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsEditing(true);
 
-    // Simulasi pengiriman data ke server
-    try {
-      console.log("Submitting profile data:", formData);
-      // Tambahkan logika untuk mengirim data ke server di sini
-      alert("Profile updated successfully!");
+    const success = await editProfile(formData); // Kirim data ke server menggunakan useEditProfile
+    if (success) {
       await refreshUserData(); // Refresh data pengguna setelah berhasil diperbarui
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("Failed to update profile.");
-    } finally {
-      setIsEditing(false);
-    }
+    } 
   };
 
   return (
@@ -190,7 +182,7 @@ const EditProfile = () => {
           <div className="text-right">
             <ActionButton
               type="submit"
-              label={isEditing ? "Submitting..." : "Submit"}
+              label={isEditing || isUploading ? "Submitting..." : "Submit"}
               color="info"
               className="px-6 py-2"
               disabled={isEditing || isUploading}
