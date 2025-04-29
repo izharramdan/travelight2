@@ -18,7 +18,6 @@ const useAddPromo = () => {
         .split("; ")
         .find((row) => row.startsWith("token="))
         ?.split("=")[1];
-      console.log("Data sent to API:", data);
       const response = await axios.post(
         `${BASE_URL.API}${END_POINT.CREATE_PROMO}`,
         data,
