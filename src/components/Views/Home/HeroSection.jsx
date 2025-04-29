@@ -80,7 +80,7 @@ const HeroSection = () => {
         ))}
         <CustomNavigation />
       </Swiper>
-      <SearchBar />
+      {/* <SearchBar /> */}
     </div>
   );
 };
