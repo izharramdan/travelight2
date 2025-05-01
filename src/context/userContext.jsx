@@ -1,10 +1,10 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { API_KEY, BASE_URL, END_POINT } from "../services/endpoint";
 
 const UserContext = createContext(undefined);
 
-export function UserProvider({ children }) {
+const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -57,7 +57,7 @@ export function UserProvider({ children }) {
       {children}
     </UserContext.Provider>
   );
-}
+};
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -66,3 +66,5 @@ export const useUser = () => {
   }
   return context;
 };
+
+export default UserProvider;
